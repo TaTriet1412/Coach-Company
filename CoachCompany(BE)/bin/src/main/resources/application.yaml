@@ -1,0 +1,13 @@
+server:
+  port: 8080
+  servlet:
+    content-path: /main
+spring:
+    datasource:
+      url: "jdbc:mysql://localhost:3306/CoachCompany"
+      username: root
+      password: root
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
