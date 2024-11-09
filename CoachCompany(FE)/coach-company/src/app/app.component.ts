@@ -21,6 +21,8 @@ export class AppComponent implements OnInit,OnDestroy{
   ngOnInit(): void {
     if(this.authService.getAdminStatus()){
       this.router.navigate(['/admin'])
+    }else if(this.authService.getStaffStatus()){
+      this.router.navigate(['/staff'])
     }
     else{
       this.router.navigate(['/'])
@@ -29,5 +31,6 @@ export class AppComponent implements OnInit,OnDestroy{
 
   ngOnDestroy(): void {     
     localStorage.removeItem('userRole');
+    localStorage.removeItem('user');
   }
 }

@@ -1,0 +1,26 @@
+<div class="overlay">
+    <form [formGroup]="sendEmailForm" (ngSubmit)="handleSendEmail($event)">
+       <div class="con">
+       <header class="head-form">
+          <h2>Quên mật khẩu</h2>
+          <p>Dùng email của bạn để lấy lại mật khẩu</p>
+       </header>
+       <br>
+       <div class="field-set">
+             <span class="input-item">
+               <i class="fa fa-user-circle"></i>
+             </span>
+             <input formControlName="email" class="form-input" id="txt-input" type="text" placeholder="Nhập Email">
+          <br>
+          <!-- Warning -->
+          <c-alert class="d-flex align-items-center mt-2" [(visible)]="visibleWarning" [dismissible]="dismissible" color="warning" fade>
+            <i class="fa fa-warning"></i>
+            <div>{{warningMessage}}</div>
+          </c-alert>
+          <br>
+          <button class="log-in" type="submit">Gửi</button>
+       </div>
+         
+      </div>
+    </form>
+    </div>

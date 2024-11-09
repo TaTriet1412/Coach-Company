@@ -10,6 +10,9 @@ import { ContactComponent } from "./contact/contact.component";
 import { LoginComponent } from "./login/login.component";
 import { ChooseChairComponent } from "./choose-chair/choose-chair.component";
 import { DefaultUserUiComponent } from "./default-user-ui/default-user-ui.component";
+import { ForgotPassswordComponent } from "./login/forgot-passsword/forgot-passsword.component";
+import { VerificationCodeComponent } from "./login/verification-code/verification-code.component";
+import { ResetPasswordComponent } from "./login/reset-password/reset-password.component";
 
 const routes: Routes = [
     { path: "", 
@@ -23,7 +26,14 @@ const routes: Routes = [
         { path: "blog", component: BlogComponent},
         { path: "contact-us", component: ContactComponent},
         { path: "register", component: RegisterComponent},
-        { path: "login", component: LoginComponent},
+        { path: "login", 
+          children: [
+            { path: "",component: LoginComponent},
+            { path: "forgot-password",component: ForgotPassswordComponent},
+            { path: "verification-code",component: VerificationCodeComponent},
+            { path: "reset-password",component: ResetPasswordComponent},
+          ]
+        },
         { path: "choose-chair", component: ChooseChairComponent},
       ]
     },

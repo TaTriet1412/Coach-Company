@@ -10,21 +10,23 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HeaderUserComponent } from './layout/header/header.component';
 import { FooterUserComponent } from './layout/footer/footer.component';
-import { AlertComponent, AlertModule, DropdownModule } from '@coreui/angular';
+import { AlertModule, DropdownModule } from '@coreui/angular';
 import { CarourselHomeUserComponent } from './home/caroursel-home-user/caroursel-home-user.component';
 import { UserRoutingModule } from './user-routing.module';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule} from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { ChooseChairComponent } from './choose-chair/choose-chair.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { DefaultUserUiComponent } from './default-user-ui/default-user-ui.component';
-import { RouterModule } from '@angular/router';
-import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideClientHydration } from '@angular/platform-browser';
+import { ForgotPassswordComponent } from './login/forgot-passsword/forgot-passsword.component';
+import { VerificationCodeComponent } from './login/verification-code/verification-code.component';
+import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,6 @@ import { provideClientHydration } from '@angular/platform-browser';
     FooterUserComponent,
     ChooseChairComponent,
     DefaultUserUiComponent,
-    
   ],
   imports: [
     LoginComponent,
@@ -54,7 +55,10 @@ import { provideClientHydration } from '@angular/platform-browser';
     FormsModule,
     NgxCaptchaModule,
     AlertModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ForgotPassswordComponent,
+    VerificationCodeComponent,
+    ResetPasswordComponent,
   ],
   exports: [
     HomeUserComponent,
@@ -63,6 +67,10 @@ import { provideClientHydration } from '@angular/platform-browser';
     ScheduleComponent,
     ContactComponent,
     DefaultUserUiComponent,
+    ForgotPassswordComponent,
+    VerificationCodeComponent,
+    ResetPasswordComponent,
+
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { response } from 'express';
+import { UserService } from '../../../core/services/user.service';
 
 
 @Component({
@@ -15,8 +16,10 @@ import { response } from 'express';
   imports: [AlertModule,ReactiveFormsModule],
 })
 export class LoginComponent {
-  visible = false;
+  visibleWarning = false;
+  visibleError = false;
   dismissible = true;
+  warningMessage = "";
   errorMessage = "";
   isAdmin = true;
   userForm = new FormGroup({
@@ -25,7 +28,12 @@ export class LoginComponent {
   })
 
 
-  constructor(private authService: AuthService,private router:Router,private http:HttpClient) {}
+  constructor(
+    private authService: AuthService,
+    private router:Router,
+    private http:HttpClient,
+    private userService: UserService,
+  ) {}
   
   handleLogin(event: Event){
     event.preventDefault();
@@ -33,20 +41,23 @@ export class LoginComponent {
     const emailInputValue = this.userForm.get("email")?.value?.trim() || ""; 
     const passwordInputValue = this.userForm.get("password")?.value?.trim() || ""; 
     if (emailInputValue==="") {
-        this.errorMessage = "Vui lòng nhập email";
-        this.visible = true;
+        this.warningMessage = "Vui lòng nhập email";
+        this.visibleWarning = true;
     }else if(!emailPattern.test(emailInputValue)){
-      this.errorMessage = "Email không hợp lệ";
-      this.visible = true;      
+      this.warningMessage = "Email không hợp lệ";
+      this.visibleWarning = true;      
     }else if (passwordInputValue===""){
-      this.errorMessage  = "Vui lòng nhập mật khẩu";
-      this.visible = true;
+      this.warningMessage  = "Vui lòng nhập mật khẩu";
+      this.visibleWarning = true;
     }else{
-      this.visible = false;
+      // Tát thông báo khi điền đúng form
+      this.visibleWarning = false;
       this.http.post<Object>('http://localhost:8080/api/users/login', this.userForm.value)
         .subscribe({
           next: (response:any) => {
-            console.log(response);
+            // Ẩn error khi người dùng đăng nhập đúng
+            this.visibleError = false
+            this.userService.setUser(response);
             if(response.role == 1) {
               this.authService.loginAsAdmin();
               this.router.navigate(["/admin"]);
@@ -55,14 +66,19 @@ export class LoginComponent {
               this.router.navigate(["/staff"]);
             }
           },
-          error: (error:any) => {
-            console.log(error.error);
+          error: (response:any) => {
+            // Thống báo error khi đăng nhập sai
+            this.errorMessage = response.error.message;
+            this.visibleError = true
           }
 
         })
-
-        
     }
   }
+
+  goToForgotPassword(){
+    this.router.navigate(['/login/forgot-password'])
+  }
+
 
 }
