@@ -1,0 +1,38 @@
+.container h1 {
+    color: #1b5e20;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #666;
+}
+
+.form-input::placeholder {
+    color: #b0b0b0;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #5abd12;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background-color: #66d01b;
+}
+
+.captcha {
+    margin-bottom: 15px;
+}

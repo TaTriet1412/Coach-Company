@@ -1,0 +1,61 @@
+<div class="container">
+    <h4>Chỉnh Sửa Vé</h4>
+    <form asp-action="AddTicket" method="post">
+        <div class="form-group">
+            <label for="TripId">Chuyến xe</label>
+            <select class="form-control select2" id="TripId" name="TripId" required>
+                <option value="">Chọn chuyến xe</option>
+                <option value="">Sài Gòn - Trà Vinh</option>
+                <option value="">Sài Gòn - Cần Thơ</option>
+                <option value="">Sài Gòn - Bến Tre</option>
+                <option value="">Sài Gòn - Tây Ninh</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="PassengerName">Tên hành khách</label>
+            <input type="text" class="form-control" id="PassengerName" name="PassengerName" placeholder="Tên hành khách" required>
+        </div>
+
+        <div class="form-group">
+            <label for="PassengerPhone">Số điện thoại hành khách</label>
+            <input type="tel" class="form-control" id="PassengerPhone" name="PassengerPhone" placeholder="Số điện thoại" required>
+        </div>
+
+        <div class="form-group">
+            <label for="PassengerEmail">Email</label>
+            <input type="email" class="form-control" id="PassengerEmail" name="PassengerEmail" placeholder="Email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="SeatNumber">Số ghế</label>
+            <input type="text" class="form-control" id="SeatNumber" name="SeatNumber" placeholder="Số ghế" required>
+        </div>
+
+        <div class="form-group">
+            <label for="IsPaid">Trạng thái thanh toán</label>
+            <select class="form-control" id="IsPaid" name="IsPaid" required>
+                <option value="true">Đã thanh toán</option>
+                <option value="false">Chưa thanh toán</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="BookingDate">Ngày đặt vé</label>
+            <input type="datetime-local" class="form-control" id="BookingDate" name="BookingDate" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-100">
+                <i class="fas fa-check-circle"></i>
+            </span>
+            <span class="text">Thêm Vé</span>
+        </button>
+        <a href="" class="btn btn-outline-secondary btn-icon-split">
+            <span class="icon text-white-100">
+                <i class="fas fa-trash-restore-alt"></i>
+            </span>
+            <span class="text">Hủy</span>
+        </a>
+    </form>
+</div>

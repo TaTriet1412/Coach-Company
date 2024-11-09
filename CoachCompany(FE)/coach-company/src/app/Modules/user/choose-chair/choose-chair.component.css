@@ -1,0 +1,25 @@
+.sold {color: #999; cursor:not-allowed}
+.available {color: #ade6f6; cursor: pointer;}
+.selected {color: #d84315; cursor: pointer;}
+.info-box { background-color: white; padding: 15px; border-radius: 5px; }
+.info-box p{
+    line-height: 2rem;
+}
+.total-price { font-weight: bold; color: #d84315; }
+.seat-container { position: relative; display: inline-block; text-align: center; }
+.seat-label {
+    position: absolute;
+    top: 55%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-weight:400;
+    font-size: 0.75em;
+    pointer-events: none;
+}
+
+.seat-container .fa-couch {
+    position: relative;
+    font-size: 3em;
+}
+

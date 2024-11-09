@@ -1,0 +1,58 @@
+.schedule-item .btn-book {
+    background-color: #00b98e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+.schedule-item .btn-book:hover {
+    background-color: #00b98e;
+}
+
+.schedule-item {
+    border: 1px solid #00b98e;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+    
+.schedule-item .schedule-header {
+    font-size: 18px;
+    font-weight: bold;
+    color: #00b98e;
+}
+    
+.schedule-item .schedule-info {
+    color: #6c757d;
+}
+
+.schedule-item .price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #dc3545;
+}
+    
+    
+.schedule-item .warning-note {
+    color: #ffc107;
+    font-size: 14px;
+}
+
+a{
+    color:#00B98E;
+    text-decoration:none
+}
+
+/* Center text with dots */
+.centered-text {
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap; /* Prevent wrapping */
+    position: relative; /* Needed for pseudo-elements */
+  }
+  

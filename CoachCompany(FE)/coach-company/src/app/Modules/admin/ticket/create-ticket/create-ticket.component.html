@@ -1,0 +1,52 @@
+<div class="container">
+    <h4>Chỉnh sửa thông tin nhân viên</h4>
+    <form asp-action="EditEmployee" method="post">
+        <!-- ID của nhân viên, hidden để giữ lại -->
+        <input type="hidden" asp-for="EmployeeId" />
+
+        <!-- Tên đầy đủ -->
+        <div class="form-group">
+            <label for="FullName">Tên đầy đủ</label>
+            <input type="text" asp-for="FullName" class="form-control" id="FullName" placeholder="Tên đầy đủ" required />
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="email" asp-for="Email" class="form-control" id="Email" placeholder="Email" required />
+        </div>
+
+        <!-- Số điện thoại -->
+        <div class="form-group">
+            <label for="PhoneNumber">Số điện thoại</label>
+            <input type="tel" asp-for="PhoneNumber" class="form-control" id="PhoneNumber" placeholder="Số điện thoại" required />
+        </div>
+
+        <!-- Ngày sinh -->
+        <div class="form-group">
+            <label for="DateOfBirth">Ngày sinh</label>
+            <input type="date" asp-for="DateOfBirth" class="form-control" id="DateOfBirth" required />
+        </div>
+
+        <!-- Mật khẩu -->
+        <div class="form-group">
+            <label for="Password">Mật khẩu mới</label>
+            <input type="password" class="form-control" id="Password" name="Password" placeholder="Để trống nếu không muốn thay đổi mật khẩu" />
+        </div>
+
+
+        <!-- Nút Lưu và Hủy -->
+        <button type="submit" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-100">
+                <i class="fas fa-save"></i>
+            </span>
+            <span class="text">Lưu</span>
+        </button>
+        <a href="" class="btn btn-outline-secondary btn-icon-split">
+            <span class="icon text-white-100">
+                <i class="fas fa-ban"></i>
+            </span>
+            <span class="text">Hủy</span>
+        </a>
+    </form>
+</div>

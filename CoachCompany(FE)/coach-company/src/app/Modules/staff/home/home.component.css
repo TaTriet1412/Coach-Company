@@ -1,0 +1,8 @@
+.hover-card {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.hover-card:hover {
+    background-color: aqua;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+}

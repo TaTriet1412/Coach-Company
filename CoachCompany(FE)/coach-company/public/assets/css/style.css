@@ -8,7 +8,7 @@
 
 .back-to-top {
     position: fixed;
-    display: none;
+    display: none !important;
     right: 45px;
     bottom: 45px;
     z-index: 99;
@@ -77,7 +77,8 @@
 }
 
 .nav-bar.sticky-top {
-    position: sticky;
+    margin-top: 0;
+    position: fixed;
     padding: 0;
     z-index: 9999;
 }
@@ -247,7 +248,7 @@
 }
 
 .cat-item:hover div {
-    background: var(--primary);
+    background: #12e366;
     border-color: transparent;
 }
 
@@ -369,6 +370,37 @@
     background: var(--dark);
 }
 
+/* Fade IN and OUT */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.showFadeIn {
+    animation: fadeIn 0.5s ease-in-out forwards;
+    display: flex !important;
+}
+
+.showFadeOut {
+    display: flex !important;
+    animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+
+
 
 /*** Footer ***/
 .footer .btn.btn-social {
@@ -437,4 +469,9 @@
     margin-right: 0;
     padding-right: 0;
     border-right: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
 }

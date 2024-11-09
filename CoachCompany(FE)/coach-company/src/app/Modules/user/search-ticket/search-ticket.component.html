@@ -1,1 +1,13 @@
-<p>search-ticket works!</p>
+<div class="container">
+    <h1>TRA CỨU THÔNG TIN ĐẶT VÉ</h1>
+    <input type="text" class="form-input" placeholder="Vui lòng nhập số điện thoại">
+    <input type="text" class="form-input" placeholder="Vui lòng nhập mã vé">
+    <form [formGroup]="aFormGroup">
+        <ngx-recaptcha2 #captchaElem
+          [siteKey]="siteKey"
+          (success)="handleSuccess()"
+          formControlName="recaptcha">
+        </ngx-recaptcha2>
+      </form>
+    <button class="btn-submit" [disabled]="disabled">Tra cứu</button>
+</div>
