@@ -1,3 +1,4 @@
+@import url("../../../../../public/assets/css/bootstrap.min.css");
 @import url("../../../../../public/assets/admin/admin.css");
 .w-7rem{
     width: 7rem;
@@ -30,3 +31,13 @@
  .t-center{
     text-align: center !important;
  }
+
+.active {
+    background-color: green !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.inactive {
+    background-color: gray !important;
+}

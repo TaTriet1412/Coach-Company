@@ -11,15 +11,6 @@
                 <span class="text">Thêm</span>
             </a>
     </div>
-    <!-- <div class="card-header py-3 d-flex align-items-center f-end" style="justify-content: flex-end;">
-        <p class="m-0 ">
-            <mat-form-field appearance="outline">
-                <mat-label>Tìm kiếm</mat-label>
-                <input matInput placeholder="vé xe">
-                <mat-icon matSuffix>search</mat-icon>
-            </mat-form-field>
-        </p>
-    </div> -->
 
     <div class="card-body">
         <div class="table-responsive">
@@ -44,10 +35,10 @@
                             <td>{{ticket.tripId}}</td>
                             <td>{{ticket.price}}</td>
                             <td class="d-flex justify-content-around">
-                                <a (click)="updateElement()" class="btn btn-outline-info">
+                                <a  class="btn btn-outline-info">
                                     <i class="fas fa-wrench"></i>
                                 </a>
-                                <button (click)="deleteElement()" class="btn btn-outline-danger">
+                                <button class="btn btn-outline-danger">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </td>
@@ -65,13 +56,61 @@
                             <td>{{news.hide}}</td>
                             <td>{{news.dateBegin | date:"'M/d/yy, h:mm a"}}</td>
                             <td class="d-flex justify-content-around">
-                                <a (click)="updateElement()" class="btn btn-outline-info">
+                                <a  class="btn btn-outline-info">
                                     <i class="fas fa-wrench"></i>
                                 </a>
-                                <button (click)="deleteElement()" class="btn btn-outline-danger">
+                                <button  class="btn btn-outline-danger">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </td>
+                        </tr>
+                    </ng-container>
+
+                    <!-- ROUTE -->
+                    <ng-container *ngIf="pageType=='route'">
+                        <tr *ngFor="let route of routeList; trackBy: trackById">
+                            <td>{{route.id}}</td>
+                            <td>{{route.start_point}}</td>
+                            <td>{{route.rest_point}}</td>
+                            <td>{{route.end_point}}</td>
+                            <td>{{route.duration}}</td>
+                            <td>{{route.distance}}</td>
+                            <td [ngClass]="{'active': route.enable, 'inactive': !route.enable}">
+                                {{ route.enable ? 'Đang hoạt động' : 'Không hoạt động' }}
+                            </td>
+                            <td>{{route.price}}</td>
+                            <td>{{route.date_begin | date:"'M/d/yy, h:mm a"}}</td>
+                            <td class="d-flex justify-content-around">
+                                <a (click)="updateElement(route.id)" class="btn btn-outline-info">
+                                    <i class="fas fa-wrench"></i>
+                                </a>
+                                <button class="btn btn-outline-danger" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModal'+route.id" >
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+
+                            <!-- Model Xoa -->
+
+                            <div class="modal fade" [id]="'exampleModal'+route.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Xóa dữ liệu có mã tuyến = <span style="color: red;font-weight: 400;">{{route.id}}</span>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-danger" (click)="deleteElement(route.id)" data-bs-dismiss="modal">Xóa</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
                         </tr>
                     </ng-container>
                 </tbody>
@@ -79,3 +118,4 @@
         </div>
     </div>
 </div>
+

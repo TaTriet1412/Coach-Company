@@ -25,7 +25,13 @@
           </c-alert>
           <br>
           <button class="log-in" type="submit">Tiếp tục</button>
-       </div>
+          <br>
+          <a class="resend-code" [class.disabled]="resendDisabled"  (click)="cd.restart()" (click)="resendCode()" [attr.disabled]="resendDisabled ? true : null">Gửi lại mã</a>
+          <br>
+          
+          <countdown #cd [config]="config" (event)="handleEvent($event)" />
+          
+        </div>
       </div>
     </form>
     </div>

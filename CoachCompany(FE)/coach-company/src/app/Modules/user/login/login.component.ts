@@ -4,7 +4,6 @@ import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { response } from 'express';
 import { UserService } from '../../../core/services/user.service';
 
 
@@ -31,7 +30,6 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router:Router,
-    private http:HttpClient,
     private userService: UserService,
   ) {}
   
@@ -52,7 +50,11 @@ export class LoginComponent {
     }else{
       // Tát thông báo khi điền đúng form
       this.visibleWarning = false;
-      this.http.post<Object>('http://localhost:8080/api/users/login', this.userForm.value)
+      const userFormValue = {
+        email: emailInputValue,
+        password: passwordInputValue
+      }
+      this.userService.loginAccount(userFormValue)
         .subscribe({
           next: (response:any) => {
             // Ẩn error khi người dùng đăng nhập đúng

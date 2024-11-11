@@ -14,6 +14,9 @@ import { CreateNewsComponent } from './news/create-news/create-news.component';
 import { UpdateNewsComponent } from './news/update-news/update-news.component';
 import { DeleteNewsComponent } from './news/delete-news/delete-news.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CreateRouteComponent } from './route/create-route/create-route.component';
+import { DeleteRouteComponent } from './route/delete-route/delete-route.component';
+import { UpdateRouteComponent } from './route/update-route/update-route.component';
 
 
 
@@ -25,6 +28,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     DefaultAdminUiComponent,
     UpdateNewsComponent,
     DeleteNewsComponent,
+
   ],
   imports: [
     CommonModule,
@@ -35,7 +39,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     LayoutCrudComponent,
     NewsComponent,
     CreateNewsComponent,
-    CKEditorModule
+    CKEditorModule,
+    CreateRouteComponent,
+    DeleteRouteComponent,
+    UpdateRouteComponent,
 ],
   exports: [
     HeaderAdminComponent,
@@ -43,6 +50,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     SidebarAdminComponent,
     HomeAdminComponent,
     DefaultAdminUiComponent,
+
   ]
 })
 export class AdminModule { }

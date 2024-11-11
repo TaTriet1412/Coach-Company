@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable, OnDestroy } from '@angular/core';
 import { User } from 'ckeditor5-premium-features';
+import { response } from 'express';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,9 +11,18 @@ export class UserService implements OnDestroy{
   private apiUserUrl = "http://localhost:8080/api/users";
   private user: User | undefined;
   userStatusChanged: EventEmitter<User | undefined> = new EventEmitter();
-
+  username = "triet"
+  password = "123"
+  headers = new HttpHeaders({ 'Authorization': 'Basic ' + btoa(`${this.username}:${this.password}`) });
+  
   constructor(private http:HttpClient) {
     this.loadUserStatus();
+  }
+
+  loginAccount(user: { email: string, password: string }){
+    const headers = this.headers;
+    return this.http.post(`${this.apiUserUrl}/login`, 
+      user, {headers});
   }
 
   // Set dữ liệu user sao khi đăng nhập
@@ -59,20 +69,41 @@ export class UserService implements OnDestroy{
 
   // Gửi mã lấy lại mật khẩu 
   sendVerificationCode(email: string):   Observable<any> { 
+    const headers = this.headers;
+    this.saveEmailToVerifyCode(email);
     return this.http.post(`${this.apiUserUrl}/send-verification-code`, 
-      { email});
+      { email}, {headers});
+  }
+
+  // Gửi lại mã 
+  resendCode(): void {
+    const email = this.getEmailToVerifyCode();
+    if(email){
+      this.sendVerificationCode(email).subscribe({
+        next: (response: any) => {
+          console.log("Code resent successfully!",response)
+        },
+        error: (response: any) => {
+          console.error('Error to resend code', response.error)
+        }
+      });
+    }else {
+      console.error("No mail to resend verification code!")
+    }
   }
 
   // Xác thực mã
   verifyCode(email:string, code:string): Observable<any> {
+    const headers = this.headers;
     return this.http.post(`${this.apiUserUrl}/verify-code`, 
-      { email, code});
+      { email, code}, {headers});
   }
 
   // Nhập mật khẩu mới
   resetPassword(email:string, password:string): Observable<any>{
+    const headers = this.headers;
     return this.http.put(`${this.apiUserUrl}/reset-password`, 
-      { email, password});
+      { email, password}, {headers});
   }
 
 

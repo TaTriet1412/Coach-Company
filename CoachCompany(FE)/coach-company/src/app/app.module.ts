@@ -12,7 +12,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StaffModule } from './Modules/staff/staff.module';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { StaffModule } from './Modules/staff/staff.module';
     AdminRoutingModule,
     CKEditorModule,
     ReactiveFormsModule,
-
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   providers: [
     provideClientHydration(),

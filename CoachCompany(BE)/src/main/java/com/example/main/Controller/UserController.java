@@ -6,6 +6,7 @@ import com.example.main.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,25 +20,25 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers(){
+    public ResponseEntity<List<User>> getUsers(@RequestHeader Map<String,String> header){
         List<User> users = userService.getUsers();
         return new ResponseEntity<>(users,HttpStatus.ACCEPTED);
     }
 
     @GetMapping("{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable String userId){
+    public ResponseEntity<User> getUserById(@PathVariable String userId,@RequestHeader Map<String,String> header){
         User user = userService.getUserById(userId);
         return new ResponseEntity<>(user,HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> getEmployeeById(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<User> getEmployeeById(@RequestBody LoginRequest loginRequest,@RequestHeader Map<String,String> header){
         User userIsLogined = userService.handleLogin(loginRequest.getEmail(),loginRequest.getPassword());
         return new ResponseEntity<>(userIsLogined, HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/send-verification-code")
-    public ResponseEntity<?> sendVerificationCode(@RequestBody Map<String,String> infoCodeAndEmail){
+    public ResponseEntity<?> sendVerificationCode(@RequestBody Map<String,String> infoCodeAndEmail,@RequestHeader Map<String,String> header){
         String email = infoCodeAndEmail.get("email");
         if(!userService.sendVerificationCode(email)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -47,21 +48,31 @@ public class UserController {
     }
 
     @PostMapping("/verify-code")
-    public ResponseEntity<Object> verifiesCode(@RequestBody Map<String,String> infoCodeAndEmail){
+    public ResponseEntity<Object> verifiesCode(@RequestBody Map<String,String> infoCodeAndEmail,@RequestHeader Map<String,String> header){
         String email = infoCodeAndEmail.get("email");
         String code = infoCodeAndEmail.get("code");
         if (userService.verifyCode(email,code)){
             return new ResponseEntity<>(HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
     @PutMapping("/reset-password")
-    public ResponseEntity<Object> resetPassword(@RequestBody Map<String,String> passwordRequest){
+    public ResponseEntity<Object> resetPassword(@RequestBody Map<String,String> passwordRequest,@RequestHeader Map<String,String> header){
         String password = passwordRequest.get("password");
         String email = passwordRequest.get("email");
         User user = userService.updatePassword(email,password);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+//    Lấy nhân viên bán vé
+    @GetMapping("/staff")
+    public ResponseEntity<List<User>> getStaffs(@RequestHeader Map<String,String> header){
+//        Them exception
+        List<User> staffList = userService.getStaffs();
+        return new ResponseEntity<>(staffList,HttpStatus.ACCEPTED);
+    }
+
+
 }

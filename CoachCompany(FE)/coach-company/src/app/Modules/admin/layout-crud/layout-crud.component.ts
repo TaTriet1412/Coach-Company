@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Ticket } from '../../dto/ticket';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -11,6 +11,10 @@ import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/cor
 import { MatPaginatorModule  } from '@angular/material/paginator';
 import { DataTablesModule} from "angular-datatables"
 import { News } from '../../dto/news';
+import { Route } from '../../dto/route';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { response } from 'express';
+import { RouteService } from '../../../core/services/route.service';
 
 @Component({
   selector: 'app-layout-crud',
@@ -34,7 +38,17 @@ export class LayoutCrudComponent implements AfterViewInit {
   @Input('headerList') headerList!: String[];
   @Input('ticketList') ticketList!: Ticket[];
   @Input('newsList') newsList!: News[];
-  constructor(private router: Router){}
+  @Input('routeList') routeList!: Route[];
+  constructor(
+    private router: Router,
+    private http:HttpClient,
+    private routeService:RouteService,
+    private cdr: ChangeDetectorRef
+  ){}
+  username = "triet"
+  password = "123"
+  headers = new HttpHeaders({ 'Authorization': 'Basic ' + btoa(`${this.username}:${this.password}`) });
+  @ViewChild('closeModalButton') closeModalButton!: ElementRef;
   
   ngAfterViewInit(): void {
     $('#dataTable').DataTable({
@@ -64,13 +78,33 @@ export class LayoutCrudComponent implements AfterViewInit {
     this.router.navigate([this.createUrl]);
   }
 
-  updateElement(){
-      this.router.navigate([this.updateUrl]);
+  updateElement(id: number){
+      this.router.navigate([`${this.updateUrl}/${id}`]);
   }
 
-  deleteElement(){
-    this.router.navigate([this.deleteUrl]);
+  deleteElement(id: number){
+    const headers = this.headers;
+    this.http.delete(`http://localhost:8080/api/${this.deleteUrl}/${id}`, {headers} )
+      .subscribe({
+        next: (response: any) => {
+          // Xóa Route
+          if(this.pageType==="route"){
+            const routes = this.routeService.getRoutesCurrent().filter(route => route.id !== id);
+            this.routeService.setRoutes(routes);
+            this.routeList = this.routeService.getRoutesCurrent();
+            this.cdr.markForCheck();
+          }
+        },
+        error: (response:any) =>{
+          console.error(response.error.message);
+        }
+      })
   }
+
+  trackById(id: number, route: Route): number{
+    return route.id
+  }
+
   
 
 }

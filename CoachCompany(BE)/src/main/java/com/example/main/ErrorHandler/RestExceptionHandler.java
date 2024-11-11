@@ -1,6 +1,7 @@
 package com.example.main.ErrorHandler;
 
 import com.example.main.Exception.UserException;
+import com.example.main.Exception.VerifyException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +32,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UserException.class)
     protected ResponseEntity<Object> handleEntityNotFound(
             UserException ex) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(VerifyException.class)
+    protected ResponseEntity<Object> handleVerificationCode(
+            VerifyException ex) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);

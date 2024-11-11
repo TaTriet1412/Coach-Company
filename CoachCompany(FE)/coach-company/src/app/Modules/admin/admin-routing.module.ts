@@ -11,6 +11,10 @@ import { CreateNewsComponent } from "./news/create-news/create-news.component";
 import { UpdateNewsComponent } from "./news/update-news/update-news.component";
 import { DeleteNewsComponent } from "./news/delete-news/delete-news.component";
 import { DefaultAdminUiComponent } from "./default-admin-ui/default-admin-ui.component";
+import { RouteComponent } from "./route/route.component";
+import { CreateRouteComponent } from "./route/create-route/create-route.component";
+import { UpdateRouteComponent } from "./route/update-route/update-route.component";
+import { DeleteRouteComponent } from "./route/delete-route/delete-route.component";
 
 const routes: Routes = [
   { path: "", 
@@ -35,6 +39,17 @@ const routes: Routes = [
             { path: "create-news", component: CreateNewsComponent},
             { path: "update-news", component: UpdateNewsComponent},
             { path: "delete-news", component: DeleteNewsComponent},
+          ]
+      },
+      { 
+        path: "route",
+        children: [
+            { path: "", component: RouteComponent},
+
+            // Update later
+            { path: "create-route", component: CreateRouteComponent},
+            { path: "update-route/:id", component: UpdateRouteComponent},
+            { path: "delete-route", component: DeleteRouteComponent},
           ]
       },
     ]

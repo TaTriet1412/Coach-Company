@@ -1,0 +1,63 @@
+<div class="container">
+    <h4>Sửa tuyến xe</h4>
+    <form [formGroup]="routeForm" (ngSubmit)="handleUpdateRoute($event)">
+        <div class="form-group">
+            <label for="route_id">Mã tuyến</label>
+            <input formControlName="route_id" type="number" class="form-control" id="route_id" placeholder="Điểm bắt đầu" readonly/>
+        </div>
+
+        <div class="form-group">
+            <label for="start_point">Điểm bắt đầu</label>
+            <input formControlName="start_point" type="text" class="form-control" id="start_point" placeholder="Điểm bắt đầu"  />
+        </div>
+
+        <div class="form-group">
+            <label for="rest_point">Các điểm dừng</label>
+            <input formControlName="rest_point" type="text" class="form-control" id="rest_point" placeholder="Các điểm dừng"  />
+        </div>
+
+        <div class="form-group">
+            <label for="end_point">Điểm kết thúc</label>
+            <input formControlName="end_point" type="text" class="form-control" id="end_point" placeholder="Điểm kết thúc"  />
+        </div>
+
+        <div class="form-group">
+            <label for="hours">Giờ:</label>
+            <input formControlName="hours" id="hours" type="number" class="input-time"  min="0" max="23">
+            <label for="minutes">Phút:</label>
+            <input formControlName="minutes" id="minutes" type="number" class="input-time"  min="0" max="59">            
+        </div>
+
+        <div class="form-group">
+            <label for="distance">Quãng đường (Km)</label>
+            <input formControlName="distance" type="number" class="form-control" id="distance" placeholder="Số Km" min="0"  />
+        </div>
+
+        <div class="form-group">
+            <label for="price">Giá vé (VND)</label>
+            <input formControlName="price" type="number" class="form-control" id="price" placeholder="Giá vé"   min="0"/>
+        </div>
+
+        <div class="form-group">
+            <label for="state">Trạng thái</label>
+            <select formControlName="enable" class="form-control" id="state" name="state" required>
+                <option value="true">Đang hoạt động</option>
+                <option value="false">Không hoạt động</option>
+            </select>
+        </div>
+
+        <!-- Nút Lưu và Hủy -->
+        <button type="submit" class="btn btn-primary btn-icon-split mr-2" >
+            <span class="icon text-white-100">
+                <i class="fas fa-save" ></i>
+            </span>
+            <span class="text">Lưu</span>
+        </button>
+        <a (click)="backList()" class="btn btn-outline-secondary btn-icon-split" >
+            <span class="icon text-white-100">
+                <i class="fas fa-ban"></i>
+            </span>
+            <span class="text">Hủy</span>
+        </a>
+    </form>
+</div>

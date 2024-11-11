@@ -203,3 +203,15 @@ button:hover {
         width: 100%;
     }
 }
+
+.resend-code {
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}
+
+.disabled {
+    pointer-events: none;
+    color: gray;
+    cursor: not-allowed;
+}

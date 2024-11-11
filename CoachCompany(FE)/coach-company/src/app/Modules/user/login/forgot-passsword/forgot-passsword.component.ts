@@ -37,7 +37,6 @@ export class ForgotPassswordComponent {
     }else{
       this.visibleWarning = false;
 
-      this.userService.saveEmailToVerifyCode(emailInputValue);
       this.userService.sendVerificationCode(emailInputValue)
       .subscribe({
         next: (response:any) => {},
