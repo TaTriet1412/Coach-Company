@@ -1,5 +1,10 @@
 package com.example.main.Service;
 
+import com.example.main.DTO.CreateRouteRequest;
+import com.example.main.DTO.CreateUserRequest;
+import com.example.main.DTO.UpdateRouteRequest;
+import com.example.main.DTO.UpdateUserRequest;
+import com.example.main.Entity.Route;
 import com.example.main.Entity.User;
 import com.example.main.Exception.UserException;
 import com.example.main.Exception.VerifyException;
@@ -10,6 +15,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -46,7 +54,12 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-//    Send code to email
+    public User getUserById(Long id){
+        return this.userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+
+    //    Send code to email
     public boolean sendVerificationCode(String email) {
         if(getUserByEmail(email) == null){
             return false;
@@ -132,4 +145,75 @@ public class UserService {
             }
         }
     }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public User addUser(CreateUserRequest request) {
+        List<User> userList = getUsers();
+        for(User user: userList){
+            if(user.getEmail().equals(request.getEmail())){
+                throw new UserException("Email đã được đăng kí trong hệ thống");
+            }else if(user.getPhone().equals(request.getPhone())){
+                throw new UserException("Số điện thoại đã tồn tại trong hệ thống");
+            }
+        }
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(request.getBirthday());
+        User user = new User(
+                request.getName(),
+                request.getEmail(),
+                request.getPhone(),
+                date,
+                request.getRole(),
+                request.isGender()
+        );
+        user.setPassword("123");
+        user.setImg("assets/driver/image6.jpg");
+        encoder.encode(user.getPassword());
+        return userRepository.save(user);
+    }
+
+    public String updatePhoneUser(String phone,User currUser){
+        List<User> userList = getUsers();
+        userList.remove(currUser);
+        for(User user:userList){
+            if(user.getPhone().equals(phone)){
+                throw new UserException("Số điện thoại đã tồn tại trong hệ thống!");
+            }
+        }
+        return phone;
+    }
+
+    public String updateEmailUser(String email,User currUser){
+        List<User> userList = getUsers();
+        userList.remove(currUser);
+        for(User user:userList){
+            if(user.getEmail().equals(email)){
+                throw new UserException("Email đã tồn tại trong hệ thống!");
+            }
+        }
+        return email;
+    }
+
+    public User updateUser(Long id, UpdateUserRequest request){
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(request.getBirthday());
+
+        User user = getUserById(id);
+        user.setBirthday(date);
+        user.setEnable(request.isEnable());
+        user.setName(request.getName());
+        user.setEnable(request.isEnable());
+        user.setPhone(updatePhoneUser(request.getPhone(), user));
+        user.setEmail(updateEmailUser(request.getEmail(), user));
+        user.setDate_begin(LocalDateTime.now());
+
+
+        return userRepository.save(user);
+    }
+
+
 }

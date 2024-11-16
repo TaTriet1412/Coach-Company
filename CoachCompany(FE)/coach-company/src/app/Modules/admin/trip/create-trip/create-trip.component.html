@@ -1,0 +1,107 @@
+<div class="container">
+    <h4>Thêm chuyến xe</h4>
+    <form [formGroup]="tripForm" (ngSubmit)="handleCreateTrip($event)">
+
+        <div class="form-group mr-24 parent-flex" >
+            <!-- Search Input Field -->
+            <mat-form-field appearance="fill" class="br-black" >
+                <mat-label>Tìm kiếm tuyến</mat-label>
+                <input matInput placeholder="Tìm kiếm tuyến" (input)="onRouteSearch($event)">
+            </mat-form-field>
+            
+            <!-- Select Input Field -->
+            <mat-form-field appearance="fill" class="last-flex-item">
+                <mat-label >Chọn Tuyến</mat-label>
+                <mat-select formControlName="route_id" id="route_id" name="route_id" (selectionChange)="removeBusId()" #routeSelect required >
+                <mat-option *ngFor="let route of filteredRoutesList" value="{{route.id}}">
+                    {{ route.start_point }} - {{ route.end_point }}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group mr-24 parent-flex" >
+            <!-- Search Input Field -->
+            <mat-form-field appearance="fill" class="br-black" >
+                <mat-label>Tìm kiếm xe</mat-label>
+                <input matInput placeholder="Tìm kiếm xe" (input)="onBusSearch($event)">
+            </mat-form-field>
+            
+            <!-- Select Input Field -->
+            <mat-form-field appearance="fill" class="last-flex-item">
+                <mat-label>Chọn xe</mat-label>
+                <mat-select formControlName="bus_id" id="bus_id" name="bus_id" #busSelect required>
+                <mat-option *ngFor="let bus of filteredBusList" value="{{bus.id}}">
+                    {{ bus.number_bus}}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+        <div class="form-group mr-24 parent-flex" >
+            <!-- Search Input Field -->
+            <mat-form-field appearance="fill" class="br-black" >
+                <mat-label>Tìm kiếm tài xế</mat-label>
+                <input matInput placeholder="Tìm kiếm tài xế" (input)="onDriverSearch($event)">
+            </mat-form-field>
+            
+            <!-- Select Input Field -->
+            <mat-form-field appearance="fill" class="last-flex-item">
+                <mat-label>Chọn tài xế</mat-label>
+                <mat-select formControlName="driver_id" id="driver_id" name="driver_id" #driverSelect required>
+                <mat-option *ngFor="let driver of filteredDriverList" value="{{driver.id}}">
+                    {{ driver.name }}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group mr-24 parent-flex" >
+            <!-- Search Input Field -->
+            <mat-form-field appearance="fill" class="br-black" >
+                <mat-label>Tìm kiếm phụ lái</mat-label>
+                <input matInput placeholder="Tìm kiếm phụ lái" (input)="onCoDriverSearch($event)">
+            </mat-form-field>
+            
+            <!-- Select Input Field -->
+            <mat-form-field appearance="fill" class="last-flex-item">
+                <mat-label>Chọn phụ lái</mat-label>
+                <mat-select formControlName="co_driver_id" id="co_driver_id" name="co_driver_id" #coDriverSelect required>
+                <mat-option *ngFor="let coDriver of filteredCoDriverList" value="{{coDriver.id}}">
+                    {{ coDriver.name }} 
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <label for="dateStart">Ngày đi</label>
+            <input formControlName="dateStart" id="dateStart" type="date" class="form-control" [min]="today">
+        </div>
+
+        <div class="form-group">
+            <label for="time_start">Giờ bắt đầu</label>
+            <input formControlName="time_start" type="time" class="form-control" id="time_start" />
+        </div>
+
+        <div class="form-group">
+            <label for="time_end">Giờ kết thúc</label>
+            <input formControlName="time_end" type="time" class="form-control" id="time_end" readonly/>
+        </div>
+
+        <!-- Nút Lưu và Hủy -->
+        <button type="submit" class="btn btn-success btn-icon-split mr-2" >
+            <span class="icon text-white-100">
+                <i class="fas fa-plus" ></i>
+            </span>
+            <span class="text">Tạo mới</span>
+        </button>
+        <a (click)="backList()" class="btn btn-outline-secondary btn-icon-split" >
+            <span class="icon text-white-100">
+                <i class="fas fa-ban"></i>
+            </span>
+            <span class="text">Hủy</span>
+        </a>
+    </form>
+</div>

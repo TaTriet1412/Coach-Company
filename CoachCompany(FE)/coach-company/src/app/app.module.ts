@@ -13,7 +13,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StaffModule } from './Modules/staff/staff.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
-import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FormatNumberDot3Pipe } from './core/pipes/format-number-dot-3.pipe'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
     CKEditorModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    
   ],
   providers: [
     provideClientHydration(),

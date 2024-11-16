@@ -1,7 +1,6 @@
 package com.example.main.ErrorHandler;
 
-import com.example.main.Exception.UserException;
-import com.example.main.Exception.VerifyException;
+import com.example.main.Exception.*;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -45,5 +44,35 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
+    @ExceptionHandler(BusException.class)
+    protected ResponseEntity<Object> handleBusException(
+            BusException ex) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
 
+    @ExceptionHandler(TripException.class)
+    protected ResponseEntity<Object> handleBusException(
+            TripException ex) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(TicketException.class)
+    protected ResponseEntity<Object> handleTicketException(
+            TicketException ex) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(SeatException.class)
+    protected ResponseEntity<Object> handleSeatException(
+            SeatException ex) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
 }

@@ -1,9 +1,14 @@
 package com.example.main.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -67,4 +72,8 @@ public class Route {
             date_begin = LocalDateTime.now();
         }
     }
+
+    @OneToMany(mappedBy = "route", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Bus> busList;
 }

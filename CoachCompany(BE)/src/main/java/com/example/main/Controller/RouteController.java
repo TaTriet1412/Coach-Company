@@ -25,6 +25,12 @@ public class RouteController {
         return new ResponseEntity<>(routeList, HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Route> getRouteById(@PathVariable Long id, @RequestHeader Map<String,String> header){
+        Route route = routeService.getRouteById(id);
+        return new ResponseEntity<>(route, HttpStatus.ACCEPTED);
+    }
+
     @PostMapping
     public ResponseEntity<Route> addRoute(@RequestBody CreateRouteRequest request, @RequestHeader Map<String,String> header){
         Route route = routeService.addRoute(request);

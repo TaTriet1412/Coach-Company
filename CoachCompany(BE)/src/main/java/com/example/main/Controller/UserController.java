@@ -1,6 +1,7 @@
 package com.example.main.Controller;
 
-import com.example.main.DTO.LoginRequest;
+import com.example.main.DTO.*;
+import com.example.main.Entity.Route;
 import com.example.main.Entity.User;
 import com.example.main.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,24 @@ public class UserController {
 //        Them exception
         List<User> staffList = userService.getStaffs();
         return new ResponseEntity<>(staffList,HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> removeRoute(@PathVariable Long id, @RequestHeader Map<String,String> header){
+        userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping
+    public ResponseEntity<User> addRoute(@RequestBody CreateUserRequest request, @RequestHeader Map<String,String> header){
+        User user = userService.addUser(request);
+        return new ResponseEntity<>(user,HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UpdateUserRequest request, @RequestHeader Map<String,String> header){
+        User user = userService.updateUser(id,request);
+        return new ResponseEntity<>(user,HttpStatus.ACCEPTED);
     }
 
 

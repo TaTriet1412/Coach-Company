@@ -1,0 +1,15 @@
+export interface Company{
+    id: number,
+    name: string,
+    email: string,
+    address: string,
+    map: string,
+    phone: string,
+    x: string,
+    facebook: string,
+    linkedin: string,
+    youtube: string,
+    open_date: string,
+    date_begin: string,
+    enable: boolean,
+}

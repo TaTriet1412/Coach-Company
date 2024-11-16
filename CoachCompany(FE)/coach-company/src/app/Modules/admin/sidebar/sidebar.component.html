@@ -12,7 +12,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item ">
+    <li class="nav-item " routerLink="/admin/statistic">
         <a class="nav-link">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Thống kê</span>
@@ -35,10 +35,18 @@
         </a>
     </li>
 
+    <!-- Nav Item - Tables -->
+    <li class="nav-item" routerLink="/admin/bus">
+        <a class="nav-link">
+            <i class="fas fa-truck"></i>
+            <span>Quản lý xe</span>
+        </a>
+    </li>
+    
     <!-- Nav Item - Charts -->
     <li class="nav-item" routerLink="/admin/trip">
         <a class="nav-link" >
-            <i class="fas fa-fw fa-truck"></i>
+            <i class="fas fa-route"></i>
             <span>Quản lý chuyến xe</span>
         </a>
     </li>
@@ -60,15 +68,15 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item" routerLink="/admin/staff">
         <a class="nav-link collapsed">
             <i class="fas fa-user "></i>
-            <span>Quản lý nhân viên</span>
+            <span>Quản lý NV bán vé</span>
         </a>
     </li>
 
     <!-- Nav Item - Charts -->
-    <li class="nav-item ">
+    <li class="nav-item " routerLink="/admin/driver">
         <a class="nav-link">
             <i class="fas fa-shuttle-van"></i>
             <span>Quản lý tài xế</span>
@@ -76,7 +84,7 @@
     </li>
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
+    <li class="nav-item" routerLink="/admin/co-driver">
         <a class="nav-link">
             <i class="fas fa-user-cog"></i>
             <span>Quản lý phụ lái</span>

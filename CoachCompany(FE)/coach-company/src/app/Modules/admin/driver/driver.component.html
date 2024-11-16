@@ -1,1 +1,82 @@
-<p>driver works!</p>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    
+
+    <div class="card-header py-3 d-flex align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Dữ liệu</h6>
+            <a *ngIf="pageType!=='contact'"  (click)="createElement()" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-100">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Thêm</span>
+            </a>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableDriver" width="100%" cellspacing="0">
+                <thead>
+                    <tr >
+                        <th *ngFor="let header of headerList">{{header}}</th>
+                        <th class="t-center">Hành động</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr >
+                        <th *ngFor="let header of headerList">{{header}}</th>
+                        <th class="t-center">Hành động</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr *ngFor="let driver of driverList; trackBy: trackByIdDriver">
+                        <td>{{driver.id}}</td>
+                        <td>{{driver.name}}</td>
+                        <td>{{driver.email}}</td>
+                        <td>{{driver.phone}}</td>
+                        <td>{{driver.birthday| date:"'M/d/yy, h:mm a"}}</td>
+                        <td>
+                            {{ driver.role === 1 ? 'Quản lý' : (driver.role === 2 ? 'Nhân viên bán vé' : (driver.role === 3 ? 'Tài xế' : (driver.role === 4 ? 'Phụ lái' : 'Vai trò không xác định'))) }}
+                        </td>                              
+                        <td >{{ driver.gender ? 'Nam' : 'Nữ' }}</td>
+                        <td><img src={{driver.img}} style="width:100px" alt="Image"/></td>
+                        <td [ngClass]="{'active': driver.enable, 'inactive': !driver.enable}">
+                            {{ driver.enable ? 'Còn hợp đồng' : 'Hết hợp đồng' }}
+                        </td>
+                        <td>{{driver.date_begin | date:"'M/d/yy, h:mm a"}}</td>
+                        <td class="d-flex justify-content-around">
+                            <a (click)="updateElement(driver.id)" class="btn btn-outline-info">
+                                <i class="fas fa-wrench"></i>
+                            </a>
+                            <!-- <button class="btn btn-outline-danger" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModal'+driver.id" >
+                                <i class="fas fa-trash-alt"></i>
+                            </button> -->
+                        </td>
+
+                        <!-- Model Xoa -->
+
+                        <div class="modal fade" [id]="'exampleModal'+driver.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                Xóa tài xế có mã nhân sự = <span style="color: red;font-weight: 400;">{{driver.id}}</span>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-danger" (click)="deleteElement(driver.id)" data-bs-dismiss="modal">Xóa</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

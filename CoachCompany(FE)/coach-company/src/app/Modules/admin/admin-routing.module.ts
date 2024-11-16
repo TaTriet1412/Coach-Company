@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { HomeAdminComponent } from "./home/home.component";
 import { StatisticComponent } from "./statistic/statistic.component";
 import { TicketComponent } from "./ticket/ticket.component";
 import { CreateTicketComponent } from "./ticket/create-ticket/create-ticket.component";
@@ -15,20 +14,35 @@ import { RouteComponent } from "./route/route.component";
 import { CreateRouteComponent } from "./route/create-route/create-route.component";
 import { UpdateRouteComponent } from "./route/update-route/update-route.component";
 import { DeleteRouteComponent } from "./route/delete-route/delete-route.component";
+import { DriverComponent } from "./driver/driver.component";
+import { CreateDriverComponent } from "./driver/create-driver/create-driver.component";
+import { UpdateDriverComponent } from "./driver/update-driver/update-driver.component";
+import { StaffComponent } from "./staff/staff.component";
+import { CreateStaffComponent } from "./staff/create-staff/create-staff.component";
+import { UpdateStaffComponent } from "./staff/update-staff/update-staff.component";
+import { CoDriverComponent } from "./co-driver/co-driver.component";
+import { CreateCoDriverComponent } from "./co-driver/create-co-driver/create-co-driver.component";
+import { UpdateCoDriverComponent } from "./co-driver/update-co-driver/update-co-driver.component";
+import { BusComponent } from "./bus/bus.component";
+import { CreateBusComponent } from "./bus/create-bus/create-bus.component";
+import { UpdateBusComponent } from "./bus/update-bus/update-bus.component";
+import { TripComponent } from "./trip/trip.component";
+import { CreateTripComponent } from "./trip/create-trip/create-trip.component";
+import { UpdateTripComponent } from "./trip/update-trip/update-trip.component";
 
 const routes: Routes = [
   { path: "", 
     component: DefaultAdminUiComponent,
     children: [
-      { path: "", component: HomeAdminComponent},
-      { path: "home", component: HomeAdminComponent},
+      { path: "", component: StatisticComponent},
+      { path: "home", component: StatisticComponent},
       { path: "statistic", component: StatisticComponent},
       { 
         path: "ticket",
         children: [
             { path: "", component: TicketComponent},
             { path: "create-ticket", component: CreateTicketComponent},
-            { path: "update-ticket", component: UpdateTicketComponent},
+            { path: "update-ticket/:id", component: UpdateTicketComponent},
             { path: "delete-ticket", component: DeleteTicketComponent},
           ]
       },
@@ -37,7 +51,7 @@ const routes: Routes = [
         children: [
             { path: "", component: NewsComponent},
             { path: "create-news", component: CreateNewsComponent},
-            { path: "update-news", component: UpdateNewsComponent},
+            { path: "update-news/:id", component: UpdateNewsComponent},
             { path: "delete-news", component: DeleteNewsComponent},
           ]
       },
@@ -45,11 +59,49 @@ const routes: Routes = [
         path: "route",
         children: [
             { path: "", component: RouteComponent},
-
-            // Update later
             { path: "create-route", component: CreateRouteComponent},
             { path: "update-route/:id", component: UpdateRouteComponent},
             { path: "delete-route", component: DeleteRouteComponent},
+          ]
+      },
+      { 
+        path: "driver",
+        children: [
+            { path: "", component: DriverComponent},
+            { path: "create-driver", component: CreateDriverComponent},
+            { path: "update-driver/:id", component: UpdateDriverComponent},
+          ]
+      },
+      { 
+        path: "staff",
+        children: [
+            { path: "", component: StaffComponent},
+            { path: "create-staff", component: CreateStaffComponent},
+            { path: "update-staff/:id", component: UpdateStaffComponent},
+          ]
+      },
+      { 
+        path: "co-driver",
+        children: [
+            { path: "", component: CoDriverComponent},
+            { path: "create-co-driver", component: CreateCoDriverComponent},
+            { path: "update-co-driver/:id", component: UpdateCoDriverComponent},
+          ]
+      },
+      { 
+        path: "bus",
+        children: [
+            { path: "", component: BusComponent},
+            { path: "create-bus", component: CreateBusComponent},
+            { path: "update-bus/:id", component: UpdateBusComponent},
+          ]
+      },
+      { 
+        path: "trip",
+        children: [
+            { path: "", component: TripComponent},
+            { path: "create-trip", component: CreateTripComponent},
+            { path: "update-trip/:id", component: UpdateTripComponent},
           ]
       },
     ]

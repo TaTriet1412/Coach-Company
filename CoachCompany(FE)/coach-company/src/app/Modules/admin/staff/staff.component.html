@@ -1,0 +1,86 @@
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    
+
+    <div class="card-header py-3 d-flex align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Dữ liệu</h6>
+            <a *ngIf="pageType!=='contact'"  (click)="createElement()" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-100">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Thêm</span>
+            </a>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableStaff" width="100%" cellspacing="0">
+                <thead>
+                    <tr >
+                        <th *ngFor="let header of headerList">{{header}}</th>
+                        <th class="t-center">Hành động</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr >
+                        <th *ngFor="let header of headerList">{{header}}</th>
+                        <th class="t-center">Hành động</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <!-- Staff -->
+                    <ng-container *ngIf="pageType=='staff'">
+                        <tr *ngFor="let staff of staffList; trackBy: trackByIdStaff">
+                            <td>{{staff.id}}</td>
+                            <td>{{staff.name}}</td>
+                            <td>{{staff.email}}</td>
+                            <td>{{staff.phone}}</td>
+                            <td>{{staff.birthday| date:"'M/d/yy, h:mm a"}}</td>
+                            <td>
+                                {{ staff.role === 1 ? 'Quản lý' : (staff.role === 2 ? 'Nhân viên bán vé' : (staff.role === 3 ? 'Tài xế' : (staff.role === 4 ? 'Phụ lái' : 'Vai trò không xác định'))) }}
+                            </td>                              
+                            <td >{{ staff.gender ? 'Nam' : 'Nữ' }}</td>
+                            <td><img src={{staff.img}} style="width:100px" alt="Image"/></td>
+                            <td [ngClass]="{'active': staff.enable, 'inactive': !staff.enable}">
+                                {{ staff.enable ? 'Còn hợp đồng' : 'Hết hợp đồng' }}
+                            </td>
+                            <td>{{staff.date_begin | date:"'M/d/yy, h:mm a"}}</td>
+                            <td class="d-flex justify-content-around">
+                                <a (click)="updateElement(staff.id)" class="btn btn-outline-info">
+                                    <i class="fas fa-wrench"></i>
+                                </a>
+                                <!-- <button class="btn btn-outline-danger" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModal'+staff.id" >
+                                    <i class="fas fa-trash-alt"></i>
+                                </button> -->
+                            </td>
+
+                            <!-- Model Xoa -->
+
+                            <div class="modal fade" [id]="'exampleModal'+staff.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Xóa tài xế có mã nhân sự = <span style="color: red;font-weight: 400;">{{staff.id}}</span>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-danger" (click)="deleteElement(staff.id)" data-bs-dismiss="modal">Xóa</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

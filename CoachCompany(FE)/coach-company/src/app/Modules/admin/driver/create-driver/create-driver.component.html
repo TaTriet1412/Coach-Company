@@ -1,0 +1,46 @@
+<div class="container">
+    <h4>Thêm tài xế</h4>
+    <form [formGroup]="driverForm" (ngSubmit)="handleCreateDriver($event)">
+        <div class="form-group">
+            <label for="name">Họ tên</label>
+            <input formControlName="name" type="text" class="form-control" id="name" placeholder="Họ tên"  />
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input formControlName="email" type="email" class="form-control" id="email" placeholder="nhập email"  />
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Số điện thoại</label>
+            <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại"  />
+        </div>
+
+        <div class="form-group">
+            <label for="birthday">Ngày sinh</label>
+            <input formControlName="birthday" id="birthday" type="date" class="form-control" [max]="today">
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Giới tính</label>
+            <select formControlName="gender" class="form-control" id="gender" name="gender" required>
+                <option value="true">Nam</option>
+                <option value="false">Nữ</option>
+            </select>
+        </div>
+
+        <!-- Nút Lưu và Hủy -->
+        <button type="submit" class="btn btn-success btn-icon-split mr-2" >
+            <span class="icon text-white-100">
+                <i class="fas fa-plus" ></i>
+            </span>
+            <span class="text">Tạo mới</span>
+        </button>
+        <a (click)="backList()" class="btn btn-outline-secondary btn-icon-split" >
+            <span class="icon text-white-100">
+                <i class="fas fa-ban"></i>
+            </span>
+            <span class="text">Hủy</span>
+        </a>
+    </form>
+</div>

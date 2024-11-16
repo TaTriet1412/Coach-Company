@@ -13,7 +13,7 @@
 }
 
 canvas{
-    width: 50%;
-    height: 50%;
+    width: 90% !important;
+    height: 50% !important;
     margin: auto;
 }

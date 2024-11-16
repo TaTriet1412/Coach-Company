@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SnackBarService } from '../../../../core/services/snack-bar.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouteService } from '../../../../core/services/route.service';
@@ -14,7 +14,11 @@ import { Router } from '@angular/router';
 
 })
 export class CreateRouteComponent{
-  constructor(private snackBarService: SnackBarService,private routeService:RouteService,private router:Router) {}
+  constructor(
+    private snackBarService: SnackBarService,
+    private routeService:RouteService,
+    private router:Router,
+  ) {}
   routeForm= new FormGroup({
     start_point: new FormControl(''),
     rest_point: new FormControl(''),
@@ -39,6 +43,7 @@ export class CreateRouteComponent{
     const minutes = this.routeForm.get("minutes")?.value!; 
     const distance = this.routeForm.get("distance")?.value!; 
     const price = this.routeForm.get("price")?.value!; 
+    
     // Thông báo warning
     if(start_point==""){
       this.snackBarService.notifyWarning("Vui lòng nhập điểm bắt đầu!");
@@ -67,5 +72,7 @@ export class CreateRouteComponent{
           error: (response:any) => this.snackBarService.notifyError(response.error.message)
         })
     }
+
+
   }
 }

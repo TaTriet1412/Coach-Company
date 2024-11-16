@@ -1,0 +1,36 @@
+<div class="container">
+    <h4>Sửa xe</h4>
+    <form [formGroup]="busForm" (ngSubmit)="handleUpdateBus($event)">
+        <div class="form-group">
+            <label for="number_bus">Tên xe</label>
+            <input formControlName="number_bus" type="text" class="form-control" id="number_bus" placeholder="Nhập tên xe"  />
+        </div>
+
+        <div class="form-group">
+            <label for="routeId">Tuyến xe</label>
+            <input formControlName="routeId" type="text" class="form-control" id="routeId" readonly  />
+        </div>
+
+        <div class="form-group">
+            <label for="enable">Trạng thái</label>
+            <select formControlName="enable" class="form-control" id="enable" name="enable" required>
+                <option value="true">Đang hoạt động</option>
+                <option value="false">Không hoạt động</option>
+            </select>
+        </div>
+
+        <!-- Nút Lưu và Hủy -->
+        <button type="submit" class="btn btn-primary btn-icon-split mr-2" >
+            <span class="icon text-white-100">
+                <i class="fas fa-save" ></i>
+            </span>
+            <span class="text">Lưu</span>
+        </button>
+        <a (click)="backList()" class="btn btn-outline-secondary btn-icon-split" >
+            <span class="icon text-white-100">
+                <i class="fas fa-ban"></i>
+            </span>
+            <span class="text">Hủy</span>
+        </a>
+    </form>
+</div>

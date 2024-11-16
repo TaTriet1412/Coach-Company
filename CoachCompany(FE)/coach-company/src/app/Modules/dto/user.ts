@@ -8,6 +8,6 @@ export interface User {
     role: number;
     date_begin: string;
     gender: boolean;
-    image: string;
+    img: string;
     enable: boolean;
 }

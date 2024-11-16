@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class UserService implements OnDestroy{
   private apiUserUrl = "http://localhost:8080/api/users";
   private user: User | undefined;
+  // Hiển thị các nhân sự
   userStatusChanged: EventEmitter<User | undefined> = new EventEmitter();
   username = "triet"
   password = "123"
@@ -18,6 +19,8 @@ export class UserService implements OnDestroy{
   constructor(private http:HttpClient) {
     this.loadUserStatus();
   }
+
+  // -------------Tai Khoan va mat khau
 
   loginAccount(user: { email: string, password: string }){
     const headers = this.headers;
@@ -59,6 +62,7 @@ export class UserService implements OnDestroy{
   getEmailToVerifyCode(){
     return localStorage.getItem('emailToVerify');
   }
+
 
   // xóa dữ liệu user
   clearUser(){
@@ -105,7 +109,6 @@ export class UserService implements OnDestroy{
     return this.http.put(`${this.apiUserUrl}/reset-password`, 
       { email, password}, {headers});
   }
-
 
 
   ngOnDestroy(): void {

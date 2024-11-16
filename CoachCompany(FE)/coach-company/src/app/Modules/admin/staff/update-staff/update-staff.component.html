@@ -1,0 +1,59 @@
+<div class="container">
+    <h4>Sửa thông tin nhân viên bán vé</h4>
+    <form [formGroup]="staffForm" (ngSubmit)="handleUpdateStaff($event)">
+        <div class="form-group">
+            <label for="id">Mã tài xế</label>
+            <input formControlName="id" type="number" class="form-control" id="id" placeholder="Điểm bắt đầu" readonly/>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Họ tên</label>
+            <input formControlName="name" type="text" class="form-control" id="name" placeholder="Họ tên"  />
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input formControlName="email" type="email" class="form-control" id="email" placeholder="Nhập email"  />
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Số điện thoại</label>
+            <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại"  />
+        </div>
+
+        <div class="form-group">
+            <label for="birthday">Ngày sinh</label>
+            <input formControlName="birthday" id="birthday" type="date" class="form-control" [max]="today">
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Giới tính</label>
+            <select formControlName="gender" class="form-control" id="gender" name="gender" required>
+                <option value="true">Nam</option>
+                <option value="false">Nữ</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="enable">Trạng thái</label>
+            <select formControlName="enable" class="form-control" id="enable" name="enable" required>
+                <option value="true">Còn hợp đồng</option>
+                <option value="false">Hết hợp đồng</option>
+            </select>
+        </div>
+
+        <!-- Nút Lưu và Hủy -->
+        <button type="submit" class="btn btn-primary btn-icon-split mr-2" >
+            <span class="icon text-white-100">
+                <i class="fas fa-save" ></i>
+            </span>
+            <span class="text">Lưu</span>
+        </button>
+        <a (click)="backList()" class="btn btn-outline-secondary btn-icon-split" >
+            <span class="icon text-white-100">
+                <i class="fas fa-ban"></i>
+            </span>
+            <span class="text">Hủy</span>
+        </a>
+    </form>
+</div>

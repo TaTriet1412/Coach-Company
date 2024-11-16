@@ -15,10 +15,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class UpdateRouteComponent implements OnInit {
   constructor(private snackBarService: SnackBarService,private routeService:RouteService,private router:Router,private activeRoute: ActivatedRoute) {}
   routeId!: number;
-  route!: Route;
   
   routeForm= new FormGroup({
-    route_id: new FormControl(0),
+    id: new FormControl(0),
     start_point: new FormControl(''),
     rest_point: new FormControl(''),
     end_point: new FormControl(''),
@@ -43,6 +42,8 @@ export class UpdateRouteComponent implements OnInit {
   loadRoute(): void { 
     const route = this.routeService.getRouteById(this.routeId); 
     this.routeForm.patchValue(route!); 
+    this.routeForm.get("hours")?.setValue(Math.floor(route?.duration!/3600))
+    this.routeForm.get("minutes")?.setValue(Math.floor((route?.duration! - Math.floor(route?.duration!/3600)*3600)/60) )
   }
 
   

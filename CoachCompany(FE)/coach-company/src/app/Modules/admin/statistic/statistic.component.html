@@ -2,7 +2,7 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Thống kê</h1>
-    <button onclick="exportPDF()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+    <button (click)="exportChart()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
         <i class="fas fa-download fa-sm text-white-50"></i> Xuất báo cáo
     </button>
 </div>
@@ -18,7 +18,7 @@
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Thu nhập trung bình (Hàng tháng)
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{averageMonthLyTotalRevenue | formatNumberDot3}}VNĐ</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -37,7 +37,7 @@
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Thu nhập trung bình (Hàng năm)
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{averageYearLyTotalRevenue| formatNumberDot3}}VNĐ</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -66,6 +66,42 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-xl-4 col-md-6">
+        <mat-form-field appearance="fill" class="last-flex-item" [style.width.%]=100>
+            <mat-label>Kiểu thời gian</mat-label>
+            <mat-select formControlName="type_time" id="type_time" name="type_time" (selectionChange)="handleChangeTypeTime($event)">
+            <mat-option value="year">Năm</mat-option>
+            <mat-option value="quarter">Quý</mat-option>
+            <mat-option value="month">Tháng</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <mat-form-field appearance="fill" class="last-flex-item" [style.width.%]=100>
+            <mat-label>Năm cụ thể</mat-label>
+            <mat-select formControlName="detail_year" id="detail_year" name="detail_year" (selectionChange)="handleChangeYearDetail($event)" [disabled]="disableYearDetail">
+            <mat-option *ngFor="let year of yearList" value="{{year}}">{{year}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <mat-form-field appearance="fill" class="last-flex-item" [style.width.%]=100>
+            <mat-label>Loại đồ thị</mat-label>
+            <mat-select formControlName="type_chart" id="type_chart" name="type_chart" (selectionChange)="handleChangeTypeChart($event)">
+            <mat-option value="line">Đường</mat-option>
+            <mat-option value="doughnut">Tròn</mat-option>
+            <mat-option value="bar">Cột</mat-option>
+            <mat-option value="bubble">Điểm</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    
+    
+    
+</div>
+
 <!-- Content Row -->
 <div class="row">
     <!-- Area Chart -->
@@ -76,9 +112,8 @@
                 <h6 class="m-0 font-weight-bold text-primary">Tổng Doanh Thu</h6>
             </div>
 
-
             <!-- Card Body -->
-            <app-doughnut-chart></app-doughnut-chart>
+            <app-chart [typeChart]="typeChart" [typeTime]="typeTime" [yearDetail]="yearDetail"></app-chart>
         </div>
     </div>
 </div>

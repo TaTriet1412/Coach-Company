@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Ticket } from '../../dto/ticket';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -13,8 +13,11 @@ import { DataTablesModule} from "angular-datatables"
 import { News } from '../../dto/news';
 import { Route } from '../../dto/route';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { response } from 'express';
 import { RouteService } from '../../../core/services/route.service';
+import { User } from '../../dto/user';
+import { EmployeeService } from '../../../core/services/employee.service';
+import { Subject } from 'rxjs';
+import 'datatables.net' ;
 
 @Component({
   selector: 'app-layout-crud',
@@ -30,7 +33,7 @@ import { RouteService } from '../../../core/services/route.service';
   ],
   encapsulation: ViewEncapsulation.None,
 })
-export class LayoutCrudComponent implements AfterViewInit {
+export class LayoutCrudComponent implements AfterViewInit{
   @Input('createUrl') createUrl!: String;
   @Input('updateUrl') updateUrl!: String;
   @Input('deleteUrl') deleteUrl!: String;
@@ -39,39 +42,56 @@ export class LayoutCrudComponent implements AfterViewInit {
   @Input('ticketList') ticketList!: Ticket[];
   @Input('newsList') newsList!: News[];
   @Input('routeList') routeList!: Route[];
+  @Input('driverList') driverList!: User[];
   constructor(
     private router: Router,
     private http:HttpClient,
     private routeService:RouteService,
+    private employeeServie:EmployeeService,
     private cdr: ChangeDetectorRef
   ){}
   username = "triet"
   password = "123"
   headers = new HttpHeaders({ 'Authorization': 'Basic ' + btoa(`${this.username}:${this.password}`) });
   @ViewChild('closeModalButton') closeModalButton!: ElementRef;
+
+  dtTrigger: Subject<any> = new Subject<any>();
+
   
+  // Store the DataTable options in a variable
+  private dtOptions: any = {
+    pagingType: 'full_numbers',
+    pageLength: 5,
+    processing: true,
+    lengthMenu: [5, 10, 25, 50, 100],
+    searching: true,
+    language: {
+      search: "Tìm kiếm:",
+      searchPlaceholder: "Tìm kiếm",
+      lengthMenu: "Hiển thị _MENU_ mục",
+      info: "Hiển thị _START_ đến _END_ của _TOTAL_ mục",
+      infoEmpty: "Không có dữ liệu",
+      paginate: {
+        first: "Đầu",
+        last: "Cuối",
+        next: "Tiếp",
+        previous: "Trước"
+      },
+      emptyTable: "Không có dữ liệu trong bảng"
+    }
+  };
+
   ngAfterViewInit(): void {
+    this.initializeDataTable();
+  }
+
+  initializeDataTable(): void {
     $('#dataTable').DataTable({
-      pagingType: 'full_numbers',
-      pageLength: 5,
-      processing: true,
-      lengthMenu: [5,10,25,50,100],
-      searching: true,
-      language:  {
-        search: "Tìm kiếm:",
-        searchPlaceholder: "Tìm kiếm",
-        lengthMenu: "Hiển thị _MENU_ mục",
-        info: "Hiển thị _START_ đến _END_ của _TOTAL_ mục",
-        infoEmpty: "Không có dữ liệu",
-        paginate: {
-          first: "Đầu",
-          last: "Cuối",
-          next: "Tiếp",
-          previous: "Trước"
-        },
-        emptyTable: "Không có dữ liệu trong bảng"
-      }
-    })
+      ...this.dtOptions,
+      destroy: true 
+    });
+
+    this.dtTrigger.next(true);
   }
 
   createElement(){
@@ -93,6 +113,11 @@ export class LayoutCrudComponent implements AfterViewInit {
             this.routeService.setRoutes(routes);
             this.routeList = this.routeService.getRoutesCurrent();
             this.cdr.markForCheck();
+          }else if (this.pageType==="driver"){
+            const drivers = this.employeeServie.getDriverCurrent().filter(route => route.id !== id);
+            this.employeeServie.setUserList(drivers);
+            this.driverList = this.employeeServie.getDriverCurrent();
+            this.cdr.markForCheck();
           }
         },
         error: (response:any) =>{
@@ -105,6 +130,7 @@ export class LayoutCrudComponent implements AfterViewInit {
     return route.id
   }
 
-  
-
+  trackByIdDriver(id: number, driver: User): number{
+    return driver.id
+  }
 }

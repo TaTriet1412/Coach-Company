@@ -22,7 +22,7 @@ import { ChooseChairComponent } from './choose-chair/choose-chair.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { DefaultUserUiComponent } from './default-user-ui/default-user-ui.component';
-import { HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideClientHydration } from '@angular/platform-browser';
 import { ForgotPassswordComponent } from './login/forgot-passsword/forgot-passsword.component';
 import { VerificationCodeComponent } from './login/verification-code/verification-code.component';

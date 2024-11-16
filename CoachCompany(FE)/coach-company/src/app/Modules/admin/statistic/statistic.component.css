@@ -20,3 +20,20 @@
     height: calc(100vh-130px-80px);
     overflow-y: scroll;
 }
+
+/* Snack Bar notify */
+
+::ng-deep .snackbar-success {
+    border-radius: 6px;
+    box-shadow: 0 0 0 6px rgb(100, 160, 11);
+}
+
+::ng-deep .snackbar-warning {
+    border-radius: 6px;
+    box-shadow: 0 0 0 6px rgb(219, 219, 15);
+}
+
+::ng-deep .snackbar-error {
+    border-radius: 6px;
+    box-shadow: 0 0 0 6px rgb(255, 0, 0);
+}

@@ -2,6 +2,7 @@ package com.example.main.Service;
 
 import com.example.main.DTO.CreateRouteRequest;
 import com.example.main.DTO.UpdateRouteRequest;
+import com.example.main.Entity.Bus;
 import com.example.main.Entity.Route;
 import com.example.main.Repository.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class RouteService {
     public Route getRouteById(Long id){
         return this.routeRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
     }
+
 
     public Route addRoute(CreateRouteRequest request){
         Route route = new Route(
