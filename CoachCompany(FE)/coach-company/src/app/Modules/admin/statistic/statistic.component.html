@@ -18,7 +18,8 @@
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Thu nhập trung bình (Hàng tháng)
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{averageMonthLyTotalRevenue | formatNumberDot3}}VNĐ</div>
+                        <span *ngIf="isLoading"> <div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span> </div> </span>
+                        <div *ngIf="!isLoading" class="h5 mb-0 font-weight-bold text-gray-800">{{ averageMonthLyTotalRevenue ? (averageMonthLyTotalRevenue | formatNumberDot3) : "Loading..."  }}VNĐ</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -37,7 +38,8 @@
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Thu nhập trung bình (Hàng năm)
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{averageYearLyTotalRevenue| formatNumberDot3}}VNĐ</div>
+                        <span *ngIf="isLoading"> <div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span> </div> </span>
+                        <div *ngIf="!isLoading" class="h5 mb-0 font-weight-bold text-gray-800">{{averageYearLyTotalRevenue? (averageYearLyTotalRevenue | formatNumberDot3) : "Loading..."}}VNĐ</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>

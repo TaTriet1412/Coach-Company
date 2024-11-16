@@ -30,6 +30,7 @@ type TypeTime = 'year' | 'quarter' | 'month';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatisticComponent implements OnInit{
+  isLoading = true;
   ticketList!: Ticket[];
   companyCurr!: Company;
   averageMonthLyTotalRevenue!: number;
@@ -49,11 +50,16 @@ export class StatisticComponent implements OnInit{
   ){}
   
   async ngOnInit(): Promise<void> {
+    await this.fetchActualData();
+  }
+
+  async fetchActualData(): Promise<void>{
+    await setTimeout(async() =>{
       // Get tickets
       const ticketsResponse = await firstValueFrom(this.ticketService.getTickets());
       this.ticketService.setTicketList(ticketsResponse);
       this.ticketList = this.ticketService.getTicketList();
-  
+
       // Fetch prices for each ticket
       const priceObservables = this.ticketList.map(ticket =>
         this.ticketService.getPrice(ticket.id).pipe(
@@ -63,21 +69,20 @@ export class StatisticComponent implements OnInit{
           })
         )
       );
-  
+
       // Wait for all prices to be fetched
       await firstValueFrom(forkJoin(priceObservables));
-  
+
       // Get company details
       const companyResponse = await firstValueFrom(this.companyService.getCompany());
       this.companyService.setCompany(companyResponse);
       this.companyCurr = this.companyService.getCompanyCurr();
-  
+
       // Calculate average monthly total revenue
       this.averageMonthLyTotalRevenue = this.companyService.getAverageMonthlyTotalRevenue(this.ticketList, this.companyCurr);
       this.averageYearLyTotalRevenue = this.companyService.getAverageAnnualTotalRevenue(this.ticketList, this.companyCurr);
-      
-      // Trigger change detection to update the UI
-      this.cdr.detectChanges();
+
+
 
       // Update yearList
       const now = new Date();
@@ -88,6 +93,10 @@ export class StatisticComponent implements OnInit{
         if(countYear==4) break;
       }
       this.yearList.reverse();
+      this.isLoading = false;
+      // Trigger change detection to update the UI
+      this.cdr.detectChanges();
+    },2000)
   }
 
   handleChangeTypeTime(event: any) {
