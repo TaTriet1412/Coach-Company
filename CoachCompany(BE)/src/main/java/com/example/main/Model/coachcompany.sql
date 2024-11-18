@@ -27,7 +27,7 @@ CREATE TABLE user(
     role SMALLINT NOT NULL,
     date_begin DATETIME NOT NULL DEFAULT NOW(),
     gender BIT NOT NULL,
-    img LONGTEXT NOT NULL,
+    img LONGBLOB DEFAULT NULL,
     enable BIT NOT NULL DEFAULT 1
 );
 
@@ -38,6 +38,7 @@ CREATE TABLE route(
     end_point TEXT(400) NOT NULL,
     duration INT NOT NULL,
     distance INT NOT NULL,
+    img LONGBLOB DEFAULT NULL,
     enable BIT NOT NULL DEFAULT 1,
     price INT NOT NULL,
     date_begin DATETIME NOT NULL DEFAULT NOW()
@@ -92,27 +93,55 @@ CREATE TABLE ticket_seat(
     PRIMARY KEY (ticket_id,seat_id)
 );
 
+CREATE TABLE news(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    title TEXT(220) NOT NULL,
+    description TEXT(220) NOT NULL,
+    content LONGTEXT NOT NULL,
+    enable BIT NOT NULL DEFAULT 1,
+    date_begin DATETIME NOT NULL DEFAULT NOW(),
+    img LONGBLOB DEFAULT NULL,
+    user_id BIGINT,
+    CONSTRAINT fk_user_news FOREIGN KEY (user_id) REFERENCES user(id)
+);
+
+CREATE TABLE contact(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name_sender VARCHAR(100) NOT NULL,
+    phone_sender VARCHAR(100) NOT NULL,
+    email_sender VARCHAR(100) NOT NULL,
+    address_sender TEXT(220) NOT NULL,
+    message_sender LONGTEXT NOT NULL,
+    job_sender TEXT(220) NOT NULL,
+    date_begin DATETIME NOT NULL DEFAULT NOW(),
+
+    message_processor LONGTEXT DEFAULT NULL,
+    process_time DATETIME DEFAULT NULL,
+    processor_id BIGINT DEFAULT NULL,
+    CONSTRAINT fk_user_contact FOREIGN KEY (processor_id) REFERENCES user(id)
+);
+
 INSERT INTO company (name,email,address,map,phone,x,facebook,linkedin,youtube,open_date) VALUES
 ("Quốc Thịnh","tatriet16@gmail.com","19 Nguyễn Hữu Thọ, phường Tân Phong, quận 7, Thành phố Hồ Chí Minh",
 "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.334834489201!2d106.71588591434093!3d10.73939699236326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752e4b4f1d7d55%3A0x6a7b2ee8b69b2b5!2s19%20Nguy%E1%BB%87n%20H%E1%BB%AFu%20Th%E1%BB%8D%2C%20Ph%C6%B0%E1%BB%9Dng%20T%C3%A2n%20Phong%2C%20Qu%E1%BA%ADn%207%2C%20TP%20H%E1%BB%93%20Ch%C3%AD%20Minh%2C%20Vi%E1%BB%87t%20Nam!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd",
 "0832.446.546","https://x.com/","https://www.facebook.com/","https://www.linkedin.com/","https://www.youtube.com/",
 "2021-09-01");
 
-INSERT INTO `user` ( `name`, `email`, `password`, `phone`, `birthday`, `role`, `date_begin`, `gender`, `img`, `enable`) VALUES
-('Tạ Triết', 'tatriet16@gmail.com', '123', '0908828181', '2004-10-06', '1', current_timestamp(), b'1', 'assets/admin/img/undraw_profile.svg', b'1'),
-('Thân Quốc Thịnh', 'tqt@gmail.com', '234', '0908838281', '2004-07-28', '2', current_timestamp(), b'1', 'assets/admin/img/undraw_profile.svg', b'1'),
-('Châu Nguyễn Khánh Trình', 'kahntrinh@gmail.com', '234', '0907736251', '2004-11-01', '2', current_timestamp(), b'1', 'assets/admin/img/undraw_profile.svg', b'1'),
-('Đăng Văn Trọng', 'dvtrong@gmail.com', '234', '0908293821', '2004-10-04', '2', current_timestamp(), b'1', 'assets/admin/img/undraw_profile.svg', b'1'),
-('Huỳnh Trần Yến Thanh', 'ythanh@gmail.com', '234', '0908837281', '2003-11-14', '3', current_timestamp(), b'0', 'assets/driver/image2.jpg', b'1'),
-('Phạm Văn Hùng', 'vanhung@gmail.com', '234', '0987726351', '2004-09-04', '3', current_timestamp(), b'1', 'assets/driver/image1.jpg', b'1'),
-('Phan Văn Tí', 'vanTi@gmail.com', '234', '0978829312', '1999-12-23', '3', current_timestamp(), b'1', 'assets/driver/image3.jpg', b'1'),
-('Hồ Thành Nam', 'thanhnam@gmail.com', '234', '0907763521', '1999-11-15', '3', current_timestamp(), b'1', 'assets/driver/image4.jpg', b'1'),
-('Trần Văn Quý', 'vanquy@gmail.com', '234', '0896637251', '1999-09-25', '3', current_timestamp(), b'1', 'assets/driver/image5.jpg', b'1'),
-('Định Tiên Nhân', 'tiennhan@gmail.com', '234', '0897283942', '2002-03-14', '4', current_timestamp(), b'0', 'assets/driver/image2.jpg', b'1'),
-('Phạm Văn Dũng', 'vandung@gmail.com', '234', '0897463721', '1999-09-04', '4', current_timestamp(), b'1', 'assets/driver/image1.jpg', b'1'),
-('Phan Văn Tèo', 'vanTeo@gmail.com', '234', '0897746352', '1999-02-12', '4', current_timestamp(), b'1', 'assets/driver/image3.jpg', b'1'),
-('Hồ Thành Tùng', 'thanhtung@gmail.com', '234', '0890164281', '1999-01-15', '4', current_timestamp(), b'1', 'assets/driver/image4.jpg', b'1'),
-('Trần Văn Hai', 'vanhai@gmail.com', '234', '0907463829', '1999-02-25', '4', current_timestamp(), b'1', 'assets/driver/image5.jpg', b'1');
+INSERT INTO `user` ( `name`, `email`, `password`, `phone`, `birthday`, `role`, `date_begin`, `gender`) VALUES
+('Tạ Triết', 'tatriet16@gmail.com', '123', '0908828181', '2004-10-06', '1', current_timestamp(), b'1'),
+('Thân Quốc Thịnh', 'tqt@gmail.com', '234', '0908838281', '2004-07-28', '2', current_timestamp(), b'1'),
+('Châu Nguyễn Khánh Trình', 'kahntrinh@gmail.com', '234', '0907736251', '2004-11-01', '2', current_timestamp(), b'1'),
+('Đăng Văn Trọng', 'dvtrong@gmail.com', '234', '0908293821', '2004-10-04', '2', current_timestamp(), b'1'),
+('Huỳnh Trần Yến Thanh', 'ythanh@gmail.com', '234', '0908837281', '2003-11-14', '3', current_timestamp(), b'0'),
+('Phạm Văn Hùng', 'vanhung@gmail.com', '234', '0987726351', '2004-09-04', '3', current_timestamp(), b'1'),
+('Phan Văn Tí', 'vanTi@gmail.com', '234', '0978829312', '1999-12-23', '3', current_timestamp(), b'1'),
+('Hồ Thành Nam', 'thanhnam@gmail.com', '234', '0907763521', '1999-11-15', '3', current_timestamp(), b'1'),
+('Trần Văn Quý', 'vanquy@gmail.com', '234', '0896637251', '1999-09-25', '3', current_timestamp(), b'1'),
+('Định Tiên Nhân', 'tiennhan@gmail.com', '234', '0897283942', '2002-03-14', '4', current_timestamp(), b'0'),
+('Phạm Văn Dũng', 'vandung@gmail.com', '234', '0897463721', '1999-09-04', '4', current_timestamp(), b'1'),
+('Phan Văn Tèo', 'vanTeo@gmail.com', '234', '0897746352', '1999-02-12', '4', current_timestamp(), b'1'),
+('Hồ Thành Tùng', 'thanhtung@gmail.com', '234', '0890164281', '1999-01-15', '4', current_timestamp(), b'1'),
+('Trần Văn Hai', 'vanhai@gmail.com', '234', '0907463829', '1999-02-25', '4', current_timestamp(), b'1');
 
 
 INSERT INTO route (start_point, rest_point, end_point, duration, distance, price ) VALUES
@@ -295,3 +324,19 @@ INSERT INTO ticket_seat(ticket_id,seat_id) VALUES
 (30,3),
 (31,4),
 (32,5);
+
+INSERT INTO news (title,description,content) VALUES
+('Xe khách Quốc Thịnh mở chi nhánh tại thành phố HCM','chi nhánh mới ở Quận 11','Chi tiết tin tức mở chi nhánh TP.HCM'),
+('Xe khách Quốc Thịnh mở chi nhánh tại thành phố HCM','chi nhánh mới ở Quận 11','Chi tiết tin tức mở chi nhánh TP.HCM'),
+('Xe khách Quốc Thịnh mở chi nhánh tại thành phố HCM','chi nhánh mới ở Quận 11','Chi tiết tin tức mở chi nhánh TP.HCM'),
+('Xe khách Quốc Thịnh mở chi nhánh tại thành phố HCM','chi nhánh mới ở Quận 11','Chi tiết tin tức mở chi nhánh TP.HCM'),
+('Xe khách Quốc Thịnh mở chi nhánh tại thành phố HCM','chi nhánh mới ở Quận 11','Chi tiết tin tức mở chi nhánh TP.HCM'),
+('Xe khách Quốc Thịnh mở chi nhánh tại thành phố HCM','chi nhánh mới ở Quận 11','Chi tiết tin tức mở chi nhánh TP.HCM'),
+('Xe khách Quốc Thịnh mở chi nhánh tại thành phố HCM','chi nhánh mới ở Quận 11','Chi tiết tin tức mở chi nhánh TP.HCM'),
+('Xe khách Quốc Thịnh mở chi nhánh tại thành phố HCM','chi nhánh mới ở Quận 11','Chi tiết tin tức mở chi nhánh TP.HCM');
+
+INSERT INTO contact (name_sender,phone_sender,email_sender,address_sender,message_sender,job_sender) VALUES
+('Tạ Triết','0908871318','tatriet16@gmail.com','Quận 7','Dịch vụ rất okeela','code dạo'),
+('Châu Nguyễn Khánh Trình','0908871317','tatriet17@gmail.com','Quận 8','Ngủ êm, nhân viên mến khách','hacker lỏ'),
+('Thân Quốc Thịnh','0908871311','tatriet19@gmail.com','Quận 9','Xe rất êm','siêu nhân gao');
+

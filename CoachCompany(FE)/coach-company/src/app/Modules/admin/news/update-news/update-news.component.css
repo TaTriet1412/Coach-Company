@@ -1,0 +1,59 @@
+@import url("../../../../../../public/assets/admin/admin.css");
+@import 'ckeditor5/ckeditor5.css';
+/* @import 'ckeditor5-premium-features/ckeditor5-premium-features.css'; */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@media print {
+	body {
+		margin: 0 !important;
+	}
+}
+
+.main-container {
+	font-family: 'Lato';
+	width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ck-content {
+	font-family: 'Lato';
+	line-height: 1.6;
+	word-break: break-word;
+}
+
+.editor-container_classic-editor .editor-container__editor {
+	min-width: 795px;
+	max-width: 795px;
+}
+
+.editor-container_include-block-toolbar {
+	margin-left: 42px;
+}
+
+.editor-container,.editor-container__editor {
+	width: 100% !important;
+	min-width: none !important;
+	max-width: none !important;
+}
+
+.w-100 {
+	width: 100% !important;
+}
+
+/* Snack Bar notify */
+
+::ng-deep .snackbar-success {
+    border-radius: 6px;
+    box-shadow: 0 0 0 6px rgb(100, 160, 11);
+}
+
+::ng-deep .snackbar-warning {
+    border-radius: 6px;
+    box-shadow: 0 0 0 6px rgb(219, 219, 15);
+}
+
+::ng-deep .snackbar-error {
+    border-radius: 6px;
+    box-shadow: 0 0 0 6px rgb(255, 0, 0);
+}

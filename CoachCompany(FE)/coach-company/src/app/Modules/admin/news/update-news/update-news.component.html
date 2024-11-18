@@ -1,1 +1,58 @@
-<p>update-news works!</p>
+
+<div class="edit-news-container">
+    <h3>Sửa tin tức</h3>
+    <form [formGroup]="newsForm" (ngSubmit)="handleUpdateNews($event)">
+        <div class="form-group">
+            <label for="img">Hình ảnh</label>
+            <input (change)="onFileSelected($event)" type="file" class="form-control" id="img" placeholder="Điểm kết thúc"  />
+        </div>
+        
+        <div class="form-group">
+            <label for="title">Tiêu đề</label>
+            <input type="text" formControlName="title" class="form-control" id="title"/>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Mô tả</label>
+            <input type="text" formControlName="description" class="form-control" id="description"/>
+        </div>
+
+        <div class="form-group">
+            <label for="Content">Nội dung</label>
+            <div>
+                <div class="main-container m-0 w-100 ">
+                    <div class="editor-container editor-container_classic-editor editor-container_include-block-toolbar m-0" #editorContainerElement>
+                        <div class="editor-container__editor">
+                            <div #editorElement>
+                                <ckeditor #ckeditor [editor]="Editor" [config]="config" [data]="data" *ngIf="isLayoutReady"  (change)="onChange($event)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="enable">Trạng thái</label>
+            <select formControlName="enable" class="form-control" id="enable" name="enable" required>
+                <option value="true">Đang hiển thị</option>
+                <option value="false">Hết hiển thị</option>
+            </select>
+        </div>
+
+        <!-- Nút Lưu và Hủy -->
+        <button type="submit" class="btn btn-primary btn-icon-split mr-2" >
+            <span class="icon text-white-100">
+                <i class="fas fa-save" ></i>
+            </span>
+            <span class="text">Lưu</span>
+        </button>
+        <a (click)="backList()" class="btn btn-outline-secondary btn-icon-split" >
+            <span class="icon text-white-100">
+                <i class="fas fa-ban"></i>
+            </span>
+            <span class="text">Hủy</span>
+        </a>
+    </form>
+</div>
+

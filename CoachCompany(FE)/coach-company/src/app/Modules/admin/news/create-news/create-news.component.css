@@ -1,7 +1,7 @@
-@import url("../../../../../../public/assets/admin/admin.css");
 @import 'ckeditor5/ckeditor5.css';
-@import 'ckeditor5-premium-features/ckeditor5-premium-features.css';
+/* @import 'ckeditor5-premium-features/ckeditor5-premium-features.css'; */
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url("../../../../../../public/assets/admin/admin.css");
 
 @media print {
 	body {
@@ -29,4 +29,37 @@
 
 .editor-container_include-block-toolbar {
 	margin-left: 42px;
+}
+
+.editor-container,.editor-container__editor {
+	width: 100% !important;
+	min-width: none !important;
+	max-width: none !important;
+}
+
+.w-100 {
+	width: 100% !important;
+}
+
+.btn-success[_ngcontent-ng-c1368401793] {
+    color: #fff;
+    background-color: #1cc88a;
+    border-color: #1cc88a;
+}
+
+/* Snack Bar notify */
+
+::ng-deep .snackbar-success {
+    border-radius: 6px;
+    box-shadow: 0 0 0 6px rgb(100, 160, 11);
+}
+
+::ng-deep .snackbar-warning {
+    border-radius: 6px;
+    box-shadow: 0 0 0 6px rgb(219, 219, 15);
+}
+
+::ng-deep .snackbar-error {
+    border-radius: 6px;
+    box-shadow: 0 0 0 6px rgb(255, 0, 0);
 }

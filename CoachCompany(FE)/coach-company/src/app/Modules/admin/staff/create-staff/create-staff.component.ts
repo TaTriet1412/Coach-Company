@@ -15,6 +15,7 @@ import { User } from '../../../dto/user';
 })
 export class CreateStaffComponent implements OnInit{
   today!: string;
+  selectedFile!: File;
   
   constructor(
     private snackBarService: SnackBarService,
@@ -57,7 +58,7 @@ export class CreateStaffComponent implements OnInit{
 
     }else {
 
-      this.employeeService.addStaff(name,email,phone,birthday,gender)
+      this.employeeService.addStaff(name,email,phone,birthday,gender,this.selectedFile)
         .subscribe({
           next: (response: User) => {
             this.snackBarService.notifySuccess("Tạo mới thành công");
@@ -67,6 +68,11 @@ export class CreateStaffComponent implements OnInit{
         })
     }
   }
+
+  onFileSelected(event: any) { 
+    this.selectedFile = event.target.files[0]; 
+  }
+
 
   backList() {
     this.router.navigate(['admin/staff']);

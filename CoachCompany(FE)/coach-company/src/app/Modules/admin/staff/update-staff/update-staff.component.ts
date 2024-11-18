@@ -16,6 +16,7 @@ import { User } from '../../../dto/user';
 export class UpdateStaffComponent implements OnInit, AfterViewInit{
   employeeId!: number;
   today!: string;
+  selectedFile!:File;
 
   constructor(private snackBarService: SnackBarService,private employeeService:EmployeeService,private router:Router,private http:HttpClient,private activeRoute: ActivatedRoute) {}
   staffForm= new FormGroup({
@@ -56,7 +57,7 @@ export class UpdateStaffComponent implements OnInit, AfterViewInit{
 
     }else {
 
-      this.employeeService.updateStaff(this.employeeId,name,email,phone,birthday,gender,enable)
+      this.employeeService.updateStaff(this.employeeId,name,email,phone,birthday,gender,enable,this.selectedFile)
         .subscribe({
           next: (response: User) => {
             this.snackBarService.notifySuccess("Thay đổi thành công");
@@ -68,6 +69,11 @@ export class UpdateStaffComponent implements OnInit, AfterViewInit{
     }
 
   }
+
+  onFileSelected(event: any) { 
+    this.selectedFile = event.target.files[0]; 
+  }
+
 
   backList() {
     this.router.navigate(['admin/staff']);

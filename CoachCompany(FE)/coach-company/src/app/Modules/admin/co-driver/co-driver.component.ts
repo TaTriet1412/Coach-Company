@@ -41,7 +41,6 @@ export class CoDriverComponent implements OnInit{
     private http:HttpClient,
     private employeeService:EmployeeService,
     private cdr: ChangeDetectorRef
-  
   ){}  
 
   ngOnInit(): void {

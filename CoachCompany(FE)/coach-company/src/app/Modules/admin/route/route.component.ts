@@ -37,7 +37,7 @@ export class RouteComponent implements OnInit {
   updateUrl = '/admin/route/update-route';
   deleteUrl = 'routes';
   pageType = 'route';
-  headerList = ['Mã tuyến','Điểm bắt đầu','Các điểm dừng','Điểm kết thúc','Thời lượng','Khoảng cách','Trạng thái','Giá','Ngày Tạo'];
+  headerList = ['Mã tuyến','Điểm bắt đầu','Các điểm dừng','Điểm kết thúc','Thời lượng','Khoảng cách','Hình ảnh','Trạng thái','Giá','Ngày Tạo'];
   routeList!: Route[];
   constructor(
     private routeService:RouteService,
@@ -51,6 +51,8 @@ export class RouteComponent implements OnInit {
       {
         next: (response:Route[]) => {
           this.routeService.setRoutes(response)
+
+          console.log(this.routeList[this.routeList.length-2].img)
         },
         error: (response: any) => console.log(response.error)
       }

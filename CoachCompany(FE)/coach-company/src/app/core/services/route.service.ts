@@ -44,22 +44,43 @@ export class RouteService {
     this.userStatusChanged.emit(this.routes)
   }
 
-  addRoute(start_point:string,rest_point:string,end_point:string,hours:number,minutes:number,distance:number,price:number): Observable<Route>{
+  addRoute(start_point:string,rest_point:string,end_point:string,hours:number,minutes:number,distance:number,price:number,img: File): Observable<Route>{
+    const formData: FormData = new FormData(); 
+    formData.append('start_point', start_point); 
+    formData.append('rest_point', rest_point); 
+    formData.append('end_point', end_point); 
+    const duration = (hours * 60 * 60) + (minutes * 60); 
+    formData.append('duration', duration.toString()); 
+    formData.append('distance', distance.toString()); 
+    formData.append('price', price.toString()); 
+    if(img){
+      formData.append('img', img, img.name);
+    }
     const headers = this.headers;
-    const duration = hours*60*60 + minutes*60;
     return this.http.post<Route>(`${this.apiRouteUrl}`, 
-      { start_point,rest_point,end_point,duration,distance,price}, {headers});
+      formData, {headers});
   }
 
   getRouteById(id: number): Route | undefined{
     return this.getRoutesCurrent().find(route => route.id == id);
   }
 
-  updateRoute(id: number,start_point:string,rest_point:string,end_point:string,hours:number,minutes:number,distance:number,price:number,enable:boolean): Observable<Route>{
+  updateRoute(routeId:number,start_point:string,rest_point:string,end_point:string,hours:number,minutes:number,distance:number,price:number,img: File,enable: boolean): Observable<Route>{
+    const formData: FormData = new FormData(); 
+    formData.append('start_point', start_point); 
+    formData.append('rest_point', rest_point); 
+    formData.append('end_point', end_point); 
+    const duration = (hours * 60 * 60) + (minutes * 60); 
+    formData.append('duration', duration.toString()); 
+    formData.append('distance', distance.toString()); 
+    formData.append('price', price.toString()); 
+    if(img){
+      formData.append('img', img, img.name);
+    }
+    formData.append('enable', enable.toString());
     const headers = this.headers;
-    const duration = hours*60*60 + minutes*60;
-    return this.http.put<Route>(`${this.apiRouteUrl}/${id}`, 
-      { start_point,rest_point,end_point,duration,distance,price,enable}, {headers});
+    return this.http.put<Route>(`${this.apiRouteUrl}/${routeId}`, 
+      formData, {headers});
   }
 
 }

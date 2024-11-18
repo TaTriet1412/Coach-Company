@@ -29,7 +29,6 @@
                 </tfoot>
                 <tbody>
                     <!-- ROUTE -->
-                    <ng-container *ngIf="pageType=='route'">
                         <tr *ngFor="let route of routeList; trackBy: trackById">
                             <td>{{route.id}}</td>
                             <td>{{route.start_point}}</td>
@@ -37,6 +36,8 @@
                             <td>{{route.end_point}}</td>
                             <td>{{ (route.duration / (60*60)) | number:'1.1-1' }}h</td>
                             <td>{{route.distance}}km</td>
+                            <td *ngIf="route.img!=undefined" ><img [src]="'data:image/png;base64,'+route.img" style="width:100px" alt="Image"/></td>
+                            <td *ngIf="route.img==undefined" ><img src="assets/img/bus/bus_demo.jpg" style="width:100px" alt="Image"/></td>
                             <td [ngClass]="{'active': route.enable, 'inactive': !route.enable}">
                                 {{ route.enable ? 'Đang hoạt động' : 'Không hoạt động' }}
                             </td>
@@ -72,11 +73,7 @@
                                 </div>
                                 </div>
                             </div>
-
                         </tr>
-                    </ng-container>
-
-                  
                 </tbody>
             </table>
         </div>

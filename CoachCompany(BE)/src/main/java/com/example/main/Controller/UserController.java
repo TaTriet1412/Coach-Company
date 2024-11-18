@@ -9,7 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -82,14 +85,31 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> addRoute(@RequestBody CreateUserRequest request, @RequestHeader Map<String,String> header){
-        User user = userService.addUser(request);
+    public ResponseEntity<User> addUser(
+            @RequestParam String name,
+            @RequestParam String email,
+            @RequestParam String phone,
+            @RequestParam String birthday,
+            @RequestParam boolean gender,
+            @RequestParam Integer role,
+            @RequestPart(required = false) MultipartFile img,
+            @RequestHeader Map<String,String> header) throws IOException {
+        User user = userService.addUser(name,email,phone,birthday,gender,role,img);
         return new ResponseEntity<>(user,HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UpdateUserRequest request, @RequestHeader Map<String,String> header){
-        User user = userService.updateUser(id,request);
+    public ResponseEntity<User> updateUser(
+            @PathVariable Long id,
+            @RequestParam String name,
+            @RequestParam String email,
+            @RequestParam String phone,
+            @RequestParam String birthday,
+            @RequestParam boolean gender,
+            @RequestParam boolean enable,
+            @RequestPart(required = false) MultipartFile img,
+            @RequestHeader Map<String,String> header) throws IOException {
+        User user = userService.updateUser(id,name,email,phone,birthday,gender,enable,img);
         return new ResponseEntity<>(user,HttpStatus.ACCEPTED);
     }
 

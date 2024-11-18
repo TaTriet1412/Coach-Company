@@ -47,13 +47,18 @@ public class Route {
     @Column
     private LocalDateTime date_begin;
 
-    public Route(String start_point, String rest_point, String end_point, Integer duration, Integer distance, Integer price) {
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] img;
+
+    public Route(String start_point, String rest_point, String end_point, Integer duration, Integer distance, Integer price,byte[] img) {
         this.start_point = start_point;
         this.rest_point = rest_point;
         this.end_point = end_point;
         this.duration = duration;
         this.distance = distance;
         this.price = price;
+        this.img = img;
     }
 
     public Route(String start_point, String rest_point, String end_point, Integer duration, Integer distance, boolean enable, Integer price) {

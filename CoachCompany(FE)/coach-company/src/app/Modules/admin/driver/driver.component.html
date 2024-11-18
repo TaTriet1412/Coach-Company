@@ -38,7 +38,9 @@
                             {{ driver.role === 1 ? 'Quản lý' : (driver.role === 2 ? 'Nhân viên bán vé' : (driver.role === 3 ? 'Tài xế' : (driver.role === 4 ? 'Phụ lái' : 'Vai trò không xác định'))) }}
                         </td>                              
                         <td >{{ driver.gender ? 'Nam' : 'Nữ' }}</td>
-                        <td><img src={{driver.img}} style="width:100px" alt="Image"/></td>
+                        <td *ngIf="driver.img!=undefined" ><img [src]="'data:image/png;base64,'+driver.img" style="width:100px" alt="Image"/></td>
+                        <td *ngIf="driver.img==undefined" ><img src="assets/admin/img/undraw_profile_2.svg" style="width:100px" alt="Image"/></td>
+                           
                         <td [ngClass]="{'active': driver.enable, 'inactive': !driver.enable}">
                             {{ driver.enable ? 'Còn hợp đồng' : 'Hết hợp đồng' }}
                         </td>

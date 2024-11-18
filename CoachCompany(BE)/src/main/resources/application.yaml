@@ -26,4 +26,9 @@ spring:
       user:
         name: triet
         password: 123
+    servlet:
+      multipart:
+        enabled: true
+        max-file-size: 10MB
+        max-request-size: 10MB
 

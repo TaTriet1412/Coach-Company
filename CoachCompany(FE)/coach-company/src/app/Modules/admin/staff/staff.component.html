@@ -40,7 +40,8 @@
                                 {{ staff.role === 1 ? 'Quản lý' : (staff.role === 2 ? 'Nhân viên bán vé' : (staff.role === 3 ? 'Tài xế' : (staff.role === 4 ? 'Phụ lái' : 'Vai trò không xác định'))) }}
                             </td>                              
                             <td >{{ staff.gender ? 'Nam' : 'Nữ' }}</td>
-                            <td><img src={{staff.img}} style="width:100px" alt="Image"/></td>
+                            <td *ngIf="staff.img!=undefined" ><img [src]="'data:image/png;base64,'+staff.img" style="width:100px" alt="Image"/></td>
+                            <td *ngIf="staff.img==undefined" ><img src="assets/admin/img/undraw_profile_2.svg" style="width:100px" alt="Image"/></td>
                             <td [ngClass]="{'active': staff.enable, 'inactive': !staff.enable}">
                                 {{ staff.enable ? 'Còn hợp đồng' : 'Hết hợp đồng' }}
                             </td>

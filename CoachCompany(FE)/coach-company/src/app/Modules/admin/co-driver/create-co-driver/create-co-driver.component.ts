@@ -17,6 +17,8 @@ import { User } from '../../../dto/user';
 })
 export class CreateCoDriverComponent implements OnInit{
   today!: string;
+  selectedFile!: File;
+
   
   constructor(
     private snackBarService: SnackBarService,
@@ -31,6 +33,11 @@ export class CreateCoDriverComponent implements OnInit{
     birthday: new FormControl(''),
     gender: new FormControl(true),
   })
+
+  onFileSelected(event: any) { 
+    this.selectedFile = event.target.files[0]; 
+  }
+
 
 
   handleCreateCoDriver(event:Event){
@@ -60,7 +67,7 @@ export class CreateCoDriverComponent implements OnInit{
 
     }else {
 
-      this.employeeService.addCoDriver(name,email,phone,birthday,gender)
+      this.employeeService.addCoDriver(name,email,phone,birthday,gender,this.selectedFile)
         .subscribe({
           next: (response: User) => {
             this.snackBarService.notifySuccess("Tạo mới thành công");

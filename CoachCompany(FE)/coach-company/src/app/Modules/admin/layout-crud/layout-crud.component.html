@@ -30,26 +30,6 @@
                 <tbody>
                    
 
-                    <!-- NEWS -->
-                    <ng-container *ngIf="pageType=='news'">
-                        <tr *ngFor="let news of newsList">
-                            <td>{{news.id}}</td>
-                            <td>{{news.stt}}</td>
-                            <td>{{news.title}}</td>
-                            <td><img src={{news.img}} style="width:100px " alt="Image"/></td>
-                            <td>{{news.meta}}</td>
-                            <td>{{news.hide}}</td>
-                            <td>{{news.dateBegin | date:"'M/d/yy, h:mm a"}}</td>
-                            <td class="d-flex justify-content-around">
-                                <a  class="btn btn-outline-info">
-                                    <i class="fas fa-wrench"></i>
-                                </a>
-                                <button  class="btn btn-outline-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </ng-container>
 
                     <!-- ROUTE -->
                     <ng-container *ngIf="pageType=='route'">

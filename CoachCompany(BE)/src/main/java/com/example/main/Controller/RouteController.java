@@ -1,14 +1,14 @@
 package com.example.main.Controller;
 
-import com.example.main.DTO.CreateRouteRequest;
-import com.example.main.DTO.UpdateRouteRequest;
 import com.example.main.Entity.Route;
 import com.example.main.Service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -32,8 +32,16 @@ public class RouteController {
     }
 
     @PostMapping
-    public ResponseEntity<Route> addRoute(@RequestBody CreateRouteRequest request, @RequestHeader Map<String,String> header){
-        Route route = routeService.addRoute(request);
+    public ResponseEntity<Route> addRoute(
+            @RequestParam String start_point,
+            @RequestParam String rest_point,
+            @RequestParam String end_point,
+            @RequestParam Integer duration,
+            @RequestParam Integer distance,
+            @RequestParam Integer price,
+            @RequestPart(required = false) MultipartFile img,
+            @RequestHeader Map<String,String> header) throws IOException {
+        Route route = routeService.addRoute(start_point,rest_point,end_point,duration,distance,price,img);
         return new ResponseEntity<>(route,HttpStatus.CREATED);
     }
 
@@ -44,8 +52,18 @@ public class RouteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Route> updateRoute(@PathVariable Long id, @RequestBody UpdateRouteRequest request, @RequestHeader Map<String,String> header){
-        Route route = routeService.updateRoute(id,request);
+    public ResponseEntity<Route> updateRoute(
+            @PathVariable Long id,
+            @RequestParam String start_point,
+            @RequestParam String rest_point,
+            @RequestParam String end_point,
+            @RequestParam Integer duration,
+            @RequestParam Integer distance,
+            @RequestParam Integer price,
+            @RequestPart(required = false) MultipartFile img,
+            @RequestParam boolean enable,
+            @RequestHeader Map<String,String> header) throws IOException {
+        Route route = routeService.updateRoute(id,start_point,rest_point,end_point,duration,distance,price,img,enable);
         return new ResponseEntity<>(route,HttpStatus.ACCEPTED);
     }
 }

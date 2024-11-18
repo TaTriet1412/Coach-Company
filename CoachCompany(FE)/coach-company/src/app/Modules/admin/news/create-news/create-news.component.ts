@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { CKEditorModule} from '@ckeditor/ckeditor5-angular'
+import { ChangeEvent, CKEditorModule} from '@ckeditor/ckeditor5-angular'
 
 import {
 	ClassicEditor,
@@ -78,24 +78,51 @@ import {
 	TodoList,
 	Underline,
 	Undo,
-	type EditorConfig
+	type EditorConfig,
+	Base64UploadAdapter
 } from 'ckeditor5';
+import { SnackBarService } from '../../../../core/services/snack-bar.service';
+import { Router } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { NewsService } from '../../../../core/services/news.service';
+import { UserService } from '../../../../core/services/user.service';
+import { News } from '../../../dto/news';
 
 @Component({
-	selector: 'app-root',
+	selector: 'app-create-news',
 	standalone: true,
-	imports: [CommonModule, CKEditorModule],
+	imports: [CommonModule, CKEditorModule,ReactiveFormsModule],
 	templateUrl: './create-news.component.html',
 	styleUrls: ['./create-news.component.css'],
 	encapsulation: ViewEncapsulation.None
 })
-export class CreateNewsComponent {
-onReady($event: ClassicEditor) {
-throw new Error('Method not implemented.');
-}
+export class CreateNewsComponent implements AfterViewInit{
 	@ViewChild('editorMenuBarElement') private editorMenuBar!: ElementRef<HTMLDivElement>;
+	@ViewChild('ckeditor', { static: false }) ckeditor: any; 
+	data: any = `<p>Hello, world!</p>`;
+	retrievedata: string = this.data;
+	selectedFile!: File;
 
-	constructor(private changeDetector: ChangeDetectorRef) {}
+	newsForm = new FormGroup({
+		title: new FormControl(''),
+		description: new FormControl(''),
+	})
+	
+	constructor(
+		private userService: UserService,
+		private newsService: NewsService,
+		private changeDetector: ChangeDetectorRef,
+		private snackBarService: SnackBarService,
+		private router:Router,
+	) {}
+	
+	onReady($event: ClassicEditor) {
+		throw new Error('Method not implemented.');
+	}
+
+	onFileSelected(event: any) { 
+		this.selectedFile = event.target.files[0]; 
+	}
 
 	public isLayoutReady = false;
 	public Editor = ClassicEditor;
@@ -146,6 +173,7 @@ throw new Error('Method not implemented.');
 				AutoLink,
 				Autosave,
 				BalloonToolbar,
+				Base64UploadAdapter,
 				BlockQuote,
 				BlockToolbar,
 				Bold,
@@ -211,16 +239,8 @@ throw new Error('Method not implemented.');
 				TextTransformation,
 				TodoList,
 				Underline,
-				Undo
-			],
-			simpleUpload: { 
-				uploadUrl: 'http://localhost:8080/api/image/upload', 
-				withCredentials: true, 
-				headers: { 
-					'X-CSRF-TOKEN': 'CSRF-Token', 
-					Authorization: 'Bearer <JSON Web Token>' 
-				}
-			},
+				Undo,
+			],			
 			balloonToolbar: ['bold', 'italic', '|', 'link', 'insertImage', '|', 'bulletedList', 'numberedList'],
 			blockToolbar: [
 				'fontSize',
@@ -346,5 +366,38 @@ throw new Error('Method not implemented.');
 
 		this.isLayoutReady = true;
 		this.changeDetector.detectChanges();
+	}
+
+	public onChange({ editor }: ChangeEvent) {
+		const data = editor.getData();
+		this.retrievedata=data;
+	}
+
+	backList() {
+		this.router.navigate(['admin/news']);
+	}
+	
+	handleCreateRoute(event:Event){
+		event.preventDefault();
+		const title = this.newsForm.get("title")?.value?.trim()!;
+		const description = this.newsForm.get("description")?.value?.trim()!;
+		
+		// Thông báo warning
+		if(title==""){
+			this.snackBarService.notifyWarning("Vui lòng nhập tiêu đề!");
+		
+		}else if(description==""){
+			this.snackBarService.notifyWarning("Vui lòng nhập mô tả!");
+		
+		}else { // Thông bảo lỗi và thành công
+			this.newsService.addNews(Number(this.userService.getUser()?.id!),title,description,this.retrievedata,this.selectedFile)
+			.subscribe({
+				next: (response: News) => {
+				this.snackBarService.notifySuccess("Tạo mới thành công");
+				this.newsService.setnewsList([...this.newsService.getNewsList(),response]);
+				},
+				error: (response:any) => this.snackBarService.notifyError(response.error.message)
+			})
+		}
 	}
 }

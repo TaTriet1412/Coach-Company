@@ -60,7 +60,7 @@ export class CreateDriverComponent implements OnInit{
 
     }else {
 
-      this.employeeService.addDriver(name,email,phone,birthday,gender)
+      this.employeeService.addDriver(name,email,phone,birthday,gender,this.selectedFile)
         .subscribe({
           next: (response: User) => {
             this.snackBarService.notifySuccess("Tạo mới thành công");
@@ -70,6 +70,11 @@ export class CreateDriverComponent implements OnInit{
         })
     }
   }
+
+  onFileSelected(event: any) { 
+    this.selectedFile = event.target.files[0]; 
+  }
+
 
   backList() {
     this.router.navigate(['admin/driver']);

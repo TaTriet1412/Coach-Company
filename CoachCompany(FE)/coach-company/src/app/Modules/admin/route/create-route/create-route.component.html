@@ -1,6 +1,12 @@
 <div class="container">
     <h4>Thêm tuyến xe</h4>
     <form [formGroup]="routeForm" (ngSubmit)="handleCreateRoute($event)">
+
+        <div class="form-group">
+            <label for="img">Hình ảnh</label>
+            <input (change)="onFileSelected($event)" type="file" class="form-control" id="img" placeholder="Điểm kết thúc"  />
+        </div>
+
         <div class="form-group">
             <label for="start_point">Điểm bắt đầu</label>
             <input formControlName="start_point" type="text" class="form-control" id="start_point" placeholder="Điểm bắt đầu"  />

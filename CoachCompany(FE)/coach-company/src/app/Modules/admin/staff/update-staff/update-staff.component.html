@@ -2,8 +2,13 @@
     <h4>Sửa thông tin nhân viên bán vé</h4>
     <form [formGroup]="staffForm" (ngSubmit)="handleUpdateStaff($event)">
         <div class="form-group">
-            <label for="id">Mã tài xế</label>
+            <label for="id">Mã nhân viên</label>
             <input formControlName="id" type="number" class="form-control" id="id" placeholder="Điểm bắt đầu" readonly/>
+        </div>
+
+        <div class="form-group">
+            <label for="img">Hình ảnh</label>
+            <input (change)="onFileSelected($event)" type="file" class="form-control" id="img" placeholder="Điểm kết thúc"  />
         </div>
 
         <div class="form-group">

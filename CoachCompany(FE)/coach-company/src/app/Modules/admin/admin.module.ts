@@ -30,7 +30,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     HeaderAdminComponent,
     FooterAdminComponent,
     DefaultAdminUiComponent,
-    UpdateNewsComponent,
     DeleteNewsComponent,
 
   ],
@@ -51,6 +50,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatInputModule,
     MatFormFieldModule,
     MatNativeDateModule,
+    UpdateNewsComponent
 
     
 ],

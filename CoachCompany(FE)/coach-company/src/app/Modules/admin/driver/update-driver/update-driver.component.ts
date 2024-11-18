@@ -16,6 +16,7 @@ import { User } from '../../../dto/user';
 export class UpdateDriverComponent implements OnInit, AfterViewInit{
   employeeId!: number;
   today!: string;
+  selectedFile!: File;
 
   constructor(private snackBarService: SnackBarService,private employeeService:EmployeeService,private router:Router,private http:HttpClient,private activeRoute: ActivatedRoute) {}
   driverForm= new FormGroup({
@@ -55,8 +56,7 @@ export class UpdateDriverComponent implements OnInit, AfterViewInit{
       this.snackBarService.notifyWarning("Vui lòng nhập ngày sinh!");
 
     }else {
-
-      this.employeeService.updateDriver(this.employeeId,name,email,phone,birthday,gender,enable)
+      this.employeeService.updateCoDriver(this.employeeId,name,email,phone,birthday,gender,enable,this.selectedFile)
         .subscribe({
           next: (response: User) => {
             this.snackBarService.notifySuccess("Thay đổi thành công");
@@ -69,6 +69,11 @@ export class UpdateDriverComponent implements OnInit, AfterViewInit{
     }
 
   }
+
+  onFileSelected(event: any) { 
+    this.selectedFile = event.target.files[0]; 
+  }
+
 
   backList() {
     this.router.navigate(['admin/driver']);

@@ -19,6 +19,9 @@ export class CreateRouteComponent{
     private routeService:RouteService,
     private router:Router,
   ) {}
+
+  selectedFile!: File;
+
   routeForm= new FormGroup({
     start_point: new FormControl(''),
     rest_point: new FormControl(''),
@@ -28,6 +31,10 @@ export class CreateRouteComponent{
     distance: new FormControl(0),
     price: new FormControl(0),
   })
+
+  onFileSelected(event: any) { 
+    this.selectedFile = event.target.files[0]; 
+  }
 
 
   backList() {
@@ -62,8 +69,9 @@ export class CreateRouteComponent{
 
     }else if(price<0){
       this.snackBarService.notifyWarning("Giá trị tiền tệ không đúng thực tế!");
+    
     }else { // Thông bảo lỗi và thành công
-      this.routeService.addRoute(start_point,rest_point,end_point,hours,minutes,distance,price)
+      this.routeService.addRoute(start_point,rest_point,end_point,hours,minutes,distance,price,this.selectedFile)
         .subscribe({
           next: (response: Route) => {
             this.snackBarService.notifySuccess("Tạo mới thành công");
@@ -72,7 +80,5 @@ export class CreateRouteComponent{
           error: (response:any) => this.snackBarService.notifyError(response.error.message)
         })
     }
-
-
   }
 }

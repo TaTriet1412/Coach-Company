@@ -1,0 +1,70 @@
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableContact" width="100%" cellspacing="0">
+                <thead>
+                    <tr >
+                        <th *ngFor="let header of headerList">{{header}}</th>
+                        <th class="t-center">Hành động</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr >
+                        <th *ngFor="let header of headerList">{{header}}</th>
+                        <th class="t-center">Hành động</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                        <tr *ngFor="let contact of contactList; trackBy: trackById">
+                            <td>{{contact.id}}</td>
+                            <td>{{contact.name_sender}}</td>
+                            <td>{{contact.email_sender}}</td>
+                            <td>{{contact.phone_sender}}</td>
+                            <td>{{contact.address_sender}}</td>
+                            <td>{{contact.job_sender}}</td>
+                            <td [ngClass]="{'active': contact.processorId , 'inactive': !contact.processorId}">
+                                {{ contact.processorId==null ? 'Chưa có' : employeeService.getUserById(contact.processorId)?.name }}
+                            </td>
+                            <td [ngClass]="{'active': contact.process_time , 'inactive': !contact.process_time}">
+                                {{ contact.process_time==null ? 'Chưa có' : contact.process_time | date:"'M/d/yy, h:mm a"}}
+                            </td>
+                            <td>{{contact.date_begin | date:"'M/d/yy, h:mm a"}}</td>
+                            <td class="d-flex justify-content-around">
+                                <a (click)="updateElement(contact.id)" class="btn btn-outline-info">
+                                    <i class="fas fa-paper-plane"></i>
+                                </a>
+                                <!-- <button class="btn btn-outline-danger" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModal'+contact.id" >
+                                    <i class="fas fa-trash-alt"></i>
+                                </button> -->
+                            </td>
+
+                            <!-- Model Xoa -->
+
+                            <div class="modal fade" [id]="'exampleModal'+contact.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Xóa phụ lái có mã nhân sự = <span style="color: red;font-weight: 400;">{{contact.id}}</span>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-danger" (click)="deleteElement(contact.id)" data-bs-dismiss="modal">Xóa</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

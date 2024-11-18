@@ -1,10 +1,12 @@
 package com.example.main.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -43,8 +45,9 @@ public class User {
     @Column
     private boolean gender;
 
-    @Column
-    private String img;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] img;
 
     @Column
     private boolean enable;
@@ -64,4 +67,8 @@ public class User {
             date_begin = LocalDateTime.now();
         }
     }
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<News> newsList;
 }

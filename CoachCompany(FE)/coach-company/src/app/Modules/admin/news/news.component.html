@@ -1,8 +1,75 @@
-<app-layout-crud 
-    [createUrl]="createUrl"     
-    [updateUrl]="updateUrl"
-    [deleteUrl]="deleteUrl"
-    [pageType]="pageType"
-    [headerList]="headerList"
-    [newsList]="newsList">
-</app-layout-crud>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Dữ liệu</h6>
+            <a *ngIf="pageType!=='contact'"  (click)="createElement()" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-100">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Thêm</span>
+            </a>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableNews" width="100%" cellspacing="0">
+                <thead>
+                    <tr >
+                        <th *ngFor="let header of headerList">{{header}}</th>
+                        <th class="t-center">Hành động</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr >
+                        <th *ngFor="let header of headerList">{{header}}</th>
+                        <th class="t-center">Hành động</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                        <tr *ngFor="let news of newsList; trackBy: trackById">
+                            <td>{{news.id}}</td>
+                            <td>{{news.title}}</td>
+                            <td>{{news.description}}</td>
+                            <td *ngIf="news.img!=undefined" ><img [src]="'data:image/png;base64,'+news.img" style="width:100px" alt="Image"/></td>
+                            <td *ngIf="news.img==undefined" ><img src="https://image.made-in-china.com/202f0j00VRpGwuNhEqcm/2018-Sunlong-Brand-New-Bus-24-37-Seats-Commuter-Bus-Slk6803-.jpg" style="width:100px" alt="Image"/></td>
+                            <td [ngClass]="{'active': news.enable, 'inactive': !news.enable}">
+                                {{ news.enable ? 'Đang hiển thị' : 'Hết hiển thị' }}
+                            </td>
+                            <td>{{news.date_begin | date:"'M/d/yy, h:mm a"}}</td>
+                            <td class="d-flex justify-content-around">
+                                <a (click)="updateElement(news.id)" class="btn btn-outline-info">
+                                    <i class="fas fa-wrench"></i>
+                                </a>
+                                <button class="btn btn-outline-danger" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModal'+news.id" >
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+
+                            <!-- Model Xoa -->
+
+                            <div class="modal fade" [id]="'exampleModal'+news.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Xóa dữ liệu có mã tin tức = <span style="color: red;font-weight: 400;">{{news.id}}</span>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-danger" (click)="deleteElement(news.id)" data-bs-dismiss="modal">Xóa</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

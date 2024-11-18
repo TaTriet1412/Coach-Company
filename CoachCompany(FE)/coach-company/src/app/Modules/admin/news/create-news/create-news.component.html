@@ -1,50 +1,50 @@
 
-<div class="edit-news-container">
-    <h3>Thêm tin tức</h3>
-    <form asp-action="UpdateNews" method="post">
-        <input type="hidden" asp-for="Id" />
-
+<div class="container">
+    <h4>Thêm tin tức</h4>
+    <form [formGroup]="newsForm" (ngSubmit)="handleCreateRoute($event)">
         <div class="form-group">
-            <label for="Title">Tiêu đề</label>
-            <input type="text" asp-for="Title" class="form-control" id="Title" required />
+            <label for="img">Hình ảnh</label>
+            <input (change)="onFileSelected($event)" type="file" class="form-control" id="img" placeholder="Điểm kết thúc"  />
         </div>
-
-        <!-- Nút chọn tệp để thêm ảnh đại diện và ảnh xem trước -->
+        
         <div class="form-group">
-            <label>Ảnh đại diện: </label>
-            <button type="button" class="btn btn-outline-success" onclick="chooseImage()">Chọn ảnh</button>
-            <img id="previewImage" src="#" alt="Ảnh xem trước" style="display:none; margin-left: 10px; max-height: 100px;" />
+            <label for="title">Tiêu đề</label>
+            <input type="text" formControlName="title" class="form-control" id="title"/>
         </div>
 
         <div class="form-group">
-            <label for="Description">Mô tả</label>
-            <input type="text" asp-for="Description" class="form-control" id="Description" required />
+            <label for="description">Mô tả</label>
+            <input type="text" formControlName="description" class="form-control" id="description"/>
         </div>
 
         <div class="form-group">
             <label for="Content">Nội dung</label>
             <div>
-                <div class="main-container">
-                    <div class="editor-container editor-container_classic-editor editor-container_include-block-toolbar" #editorContainerElement>
+                <div class="main-container m-0 w-100 ">
+                    <div class="editor-container editor-container_classic-editor editor-container_include-block-toolbar m-0" #editorContainerElement>
                         <div class="editor-container__editor">
                             <div #editorElement>
-                                <ckeditor [editor]="Editor" [config]="config" *ngIf="isLayoutReady" />
+                                <ckeditor #ckeditor [editor]="Editor" [config]="config" [data]="data" *ngIf="isLayoutReady"  (change)="onChange($event)" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        Ẩn <input type="checkbox" id="hideCheckbox">
-        <div class="form-group">
-            <label for="PublishedDate">Ngày xuất bản</label>
-            <input type="datetime-local" asp-for="PublishedDate" class="form-control" id="PublishedDate" required />
-        </div>
 
-        <div class="d-grid gap-2 mt-3">
-            <button type="submit" class="btn btn-success">Lưu</button>
-            <a href="" class="btn btn-outline-warning">Hủy</a>
-        </div>
+        <!-- Nút Lưu và Hủy -->
+        <button type="submit" class="btn btn-success btn-icon-split mr-2" >
+            <span class="icon text-white-100">
+                <i class="fas fa-plus" ></i>
+            </span>
+            <span class="text">Tạo mới</span>
+        </button>
+        <a (click)="backList()" class="btn btn-outline-secondary btn-icon-split" >
+            <span class="icon text-white-100">
+                <i class="fas fa-ban"></i>
+            </span>
+            <span class="text">Hủy</span>
+        </a>
     </form>
 </div>
 

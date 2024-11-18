@@ -24,7 +24,7 @@ public class Company {
     private String email;
     @Column
     private String address;
-    @Column
+    @Column(columnDefinition = "LONGTEXT")
     private String map;
     @Column
     private String phone;

@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class UpdateRouteComponent implements OnInit {
   constructor(private snackBarService: SnackBarService,private routeService:RouteService,private router:Router,private activeRoute: ActivatedRoute) {}
   routeId!: number;
+  selectedFile!: File;
   
   routeForm= new FormGroup({
     id: new FormControl(0),
@@ -37,6 +38,10 @@ export class UpdateRouteComponent implements OnInit {
         this.routeId = +params['id'];
         this.loadRoute();
       })
+  }
+
+  onFileSelected(event: any) { 
+    this.selectedFile = event.target.files[0]; 
   }
 
   loadRoute(): void { 
@@ -76,7 +81,7 @@ export class UpdateRouteComponent implements OnInit {
     }else if(price<0){
       this.snackBarService.notifyWarning("Giá trị tiền tệ không đúng thực tế!");
     }else { // Thông bảo lỗi và thành công
-      this.routeService.updateRoute(this.routeId,start_point,rest_point,end_point,hours,minutes,distance,price,enable)
+      this.routeService.updateRoute(this.routeId,start_point,rest_point,end_point,hours,minutes,distance,price,this.selectedFile,enable)
         .subscribe({
           next: (response: Route) => {
             this.snackBarService.notifySuccess("Thay đổi thành công");

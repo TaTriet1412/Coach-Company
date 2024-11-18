@@ -5,6 +5,7 @@ export interface Route{
     end_point: string,
     duration: number,
     distance: number,
+    img: string,
     enable: boolean,
     price: number,
     date_begin: string,

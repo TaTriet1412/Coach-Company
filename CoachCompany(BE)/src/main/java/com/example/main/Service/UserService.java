@@ -6,15 +6,19 @@ import com.example.main.DTO.UpdateRouteRequest;
 import com.example.main.DTO.UpdateUserRequest;
 import com.example.main.Entity.Route;
 import com.example.main.Entity.User;
+import com.example.main.Exception.FileException;
 import com.example.main.Exception.UserException;
 import com.example.main.Exception.VerifyException;
+import com.example.main.FileHandle.FileChecker;
 import com.example.main.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,6 +35,10 @@ public class UserService {
     private JavaMailSender javaMailSender;
 //    Store Code after generate
     private final Map<String, String> verificationCodes = new HashMap<>();
+
+//    File checker
+    private final FileChecker fileChecker = new FileChecker();
+
 
 //    Đếm ngược thời gian
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -150,29 +158,43 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User addUser(CreateUserRequest request) {
+    public User addUser(
+            String name,
+            String email,
+            String phone,
+            String birthday,
+            boolean gender,
+            Integer role,
+            MultipartFile img
+    ) throws IOException {
         List<User> userList = getUsers();
         for(User user: userList){
-            if(user.getEmail().equals(request.getEmail())){
+            if(user.getEmail().equals(email)){
                 throw new UserException("Email đã được đăng kí trong hệ thống");
-            }else if(user.getPhone().equals(request.getPhone())){
+            }else if(user.getPhone().equals(phone)){
                 throw new UserException("Số điện thoại đã tồn tại trong hệ thống");
             }
         }
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse(request.getBirthday());
+        LocalDate date = LocalDate.parse(birthday);
         User user = new User(
-                request.getName(),
-                request.getEmail(),
-                request.getPhone(),
+                name,
+                email,
+                phone,
                 date,
-                request.getRole(),
-                request.isGender()
+                role,
+                gender
         );
         user.setPassword("123");
-        user.setImg("assets/driver/image6.jpg");
         encoder.encode(user.getPassword());
+        if (img != null) {
+            if(fileChecker.isImage(img)){
+                user.setImg(img.getBytes());
+            }else{
+                throw new FileException("File không phải hình ảnh hoặc quá tải");
+            }
+        }
         return userRepository.save(user);
     }
 
@@ -198,18 +220,34 @@ public class UserService {
         return email;
     }
 
-    public User updateUser(Long id, UpdateUserRequest request){
+    public User updateUser(
+            Long id,
+            String name,
+            String email,
+            String phone,
+            String birthday,
+            boolean gender,
+            boolean enable,
+            MultipartFile img
+            ) throws IOException {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse(request.getBirthday());
+        LocalDate date = LocalDate.parse(birthday);
 
         User user = getUserById(id);
         user.setBirthday(date);
-        user.setEnable(request.isEnable());
-        user.setName(request.getName());
-        user.setEnable(request.isEnable());
-        user.setPhone(updatePhoneUser(request.getPhone(), user));
-        user.setEmail(updateEmailUser(request.getEmail(), user));
+        user.setEnable(enable);
+        user.setName(name);
+        user.setPhone(updatePhoneUser(phone, user));
+        user.setEmail(updateEmailUser(email, user));
         user.setDate_begin(LocalDateTime.now());
+        user.setGender(gender);
+        if (img != null) {
+            if(fileChecker.isImage(img)){
+                user.setImg(img.getBytes());
+            }else{
+                throw new FileException("File không phải hình ảnh hoặc quá tải");
+            }
+        }
 
 
         return userRepository.save(user);

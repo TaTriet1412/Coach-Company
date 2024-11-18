@@ -29,6 +29,8 @@ import { UpdateBusComponent } from "./bus/update-bus/update-bus.component";
 import { TripComponent } from "./trip/trip.component";
 import { CreateTripComponent } from "./trip/create-trip/create-trip.component";
 import { UpdateTripComponent } from "./trip/update-trip/update-trip.component";
+import { ContactComponent } from "./contact/contact.component";
+import { ProcessContactComponent } from "./contact/process-contact/process-contact.component";
 
 const routes: Routes = [
   { path: "", 
@@ -102,6 +104,13 @@ const routes: Routes = [
             { path: "", component: TripComponent},
             { path: "create-trip", component: CreateTripComponent},
             { path: "update-trip/:id", component: UpdateTripComponent},
+          ]
+      },
+      { 
+        path: "contact",
+        children: [
+            { path: "", component: ContactComponent},
+            { path: "process-contact/:id", component: ProcessContactComponent},
           ]
       },
     ]
