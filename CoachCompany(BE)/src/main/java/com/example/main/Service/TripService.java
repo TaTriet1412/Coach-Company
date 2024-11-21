@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -22,6 +23,8 @@ public class TripService {
     private BusService busService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private RouteService routeService;
     @Autowired
     private TripRepository tripRepository;
 
@@ -151,6 +154,20 @@ public class TripService {
         LocalDateTime time_start = LocalDateTime.parse(request.getDate_time_start());
 //      Time end
         LocalDateTime time_end = calculateEndTime(time_start,request.getDuration());
+//      Driver
+        User driver = userService.getUserById(request.getDriver_id());
+//      CoDriver
+        User coDriver = userService.getUserById(request.getCodriver_id());
+//      Bus
+        Bus bus = busService.getBusById(request.getBus_id());
+//      Route
+        Route route = routeService.getRouteById(bus.getRouteId());
+
+
+//      Exception
+        if(!bus.isEnable()) throw new TripException("Xe đã ngừng hoạt động");
+        if(!driver.isEnable()) throw new TripException("Tài xế đã hết hợp đồng");
+        if(!coDriver.isEnable()) throw new TripException("Phụ lái đã hết hợp đồng");
 
         Trip trip = new Trip();
         trip.setTime_start(time_start);
@@ -163,11 +180,25 @@ public class TripService {
 
     public Trip updateTrip(Long id, UpdateTripRequest request) throws TripException {
         Trip trip = getTripById(id);
-
         //      Time start
         LocalDateTime time_start = LocalDateTime.parse(request.getDate_time_start());
 //      Time end
         LocalDateTime time_end = calculateEndTime(time_start,request.getDuration());
+//      Driver
+        User driver = userService.getUserById(request.getDriver_id());
+//      CoDriver
+        User coDriver = userService.getUserById(request.getCodriver_id());
+//      Bus
+        Bus bus = busService.getBusById(request.getBus_id());
+//      Route
+        Route route = routeService.getRouteById(bus.getRouteId());
+
+
+//      Exception
+        if(!bus.isEnable()) throw new TripException("Xe đã ngừng hoạt động");
+        if(!driver.isEnable()) throw new TripException("Tài xế đã hết hợp đồng");
+        if(!coDriver.isEnable()) throw new TripException("Phụ lái đã hết hợp đồng");
+
 
         trip.setTime_start(time_start);
         trip.setTime_end(time_end);
@@ -176,5 +207,21 @@ public class TripService {
         trip.setBus(FreeBus(request.getBus_id(),time_start,time_end,id));
         trip.setEnable(request.isEnable());
         return tripRepository.save(trip);
+    }
+
+    public List<Seat> getSeatsIsOccupiedOfByTripId(Long tripId) {
+        Trip trip = getTripById(tripId);
+        List<Ticket> ticketList = trip.getTicketList();
+        List<Seat> seatList = new ArrayList<>();
+        for(Ticket ticket:ticketList){
+            seatList.addAll(ticket.getSeats());
+        }
+        return seatList;
+    }
+
+    public List<Seat> getSeatsOfByTripId(Long tripId){
+        Trip trip = getTripById(tripId);
+        Bus bus = trip.getBus();
+        return bus.getSeatList();
     }
 }

@@ -54,29 +54,21 @@ export class ContactService {
     return this.http.get<Contact>(`${this.apiContactsUrl}/${id}`, {headers});
   }
 
-  // addContacts(user_id: number,title: string,description: string,content: string,img: File): Observable<Contact>{
-  //   const formData: FormData = new FormData(); 
-  //   formData.append('title', title); 
-  //   formData.append('description', description); 
-  //   formData.append('content', content); 
-  //   formData.append('user_id', user_id.toString()); 
-  //   if(img){
-  //     formData.append('img', img, img.name);
-  //   };
-  //   const headers = this.headers;
-  //   return this.http.post<Contact>(`${this.apiContactsUrl}`, 
-  //     formData, {headers});
-  // }
-  // processContact(contact_id: number,processor_id: number,name_sender: string,phone_sender: string,email_sender: string,address_sender: string,message_sender: string,job_sender: string, message_processor: string): Observable<Contact>{
-
+  createContact(name: string, email: string, phone: string, address: string,job: string,message: string){
+    const formData: FormData = new FormData(); 
+    formData.append('name', name); 
+    formData.append('phone', phone); 
+    formData.append('address', address); 
+    formData.append('message', message); 
+    formData.append('job', job); 
+    formData.append('email', email); 
+    const headers = this.headers;
+    return this.http.post<Contact>(`${this.apiContactsUrl}`, 
+      formData, {headers});
+  }
 
   processContact(contact_id: number,processor_id: number, message_processor: string,email_sender: string): Observable<Contact>{
     const formData: FormData = new FormData(); 
-    // formData.append('name_sender', name_sender); 
-    // formData.append('phone_sender', phone_sender); 
-    // formData.append('address_sender', address_sender); 
-    // formData.append('message_sender', message_sender); 
-    // formData.append('job_sender', job_sender); 
     formData.append('email_sender', email_sender); 
     formData.append('message_processor', message_processor); 
     formData.append('processor_id', processor_id.toString()); 

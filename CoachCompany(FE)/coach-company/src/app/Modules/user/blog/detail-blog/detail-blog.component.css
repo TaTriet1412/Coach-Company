@@ -1,0 +1,24 @@
+.content-container {
+    max-width: 100%;
+    overflow-x: hidden; 
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.content-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.content-container p {
+    word-wrap: break-word;
+    line-height: 1.6;
+}
+
+
+img {
+    width: 100% !important;
+    object-fit: cover !important;
+}

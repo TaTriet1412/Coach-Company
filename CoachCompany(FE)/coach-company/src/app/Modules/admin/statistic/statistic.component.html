@@ -56,9 +56,10 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Yêu cầu chưa xử lý
+                            Liên hệ chưa xử lí
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                        <span *ngIf="isLoading"> <div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span> </div> </span>
+                        <div *ngIf="!isLoading" class="h5 mb-0 font-weight-bold text-gray-800">{{inProcessContactLength ? inProcessContactLength : "Loading..." }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-comments fa-2x text-gray-300"></i>

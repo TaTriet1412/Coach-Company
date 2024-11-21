@@ -1,0 +1,3 @@
+<h2 *ngIf="newsCurr && newsCurr.title">{{newsCurr.title}}</h2>
+<p *ngIf="newsCurr && newsCurr.description">{{newsCurr.description}}</p>
+<div *ngIf="newsCurr && newsCurr.content" class="content-container" [innerHTML]="newsCurr.content"></div>

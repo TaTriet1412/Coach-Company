@@ -7,3 +7,6 @@
 @import url("../../../../../../public/assets/lib/owlcarousel/assets/owl.carousel.min.css");
 @import url("../../../../../../public/assets/css/style.css");
 
+.btn-success {
+    color: #fff;
+}

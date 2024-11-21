@@ -40,10 +40,21 @@ public class ContactService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("tatriet_tony@1zulieu.com");
         message.setTo(email);
-        message.setSubject("Phản hồi liên hệ");
+        message.setSubject("Phản hồi liên hệ của bạn từ nhà xe Quốc Thịnh");
         message.setText(message_processor);
         javaMailSender.send(message);
 
+        return contactRepository.save(contact);
+    }
+
+    public  Contact createContact(String name,String email, String phone, String address, String job, String message){
+        Contact contact = new Contact();
+        contact.setName_sender(name);
+        contact.setPhone_sender(phone);
+        contact.setEmail_sender(email);
+        contact.setJob_sender(job);
+        contact.setMessage_sender(message);
+        contact.setAddress_sender(address);
         return contactRepository.save(contact);
     }
 

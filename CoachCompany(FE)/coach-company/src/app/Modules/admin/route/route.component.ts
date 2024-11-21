@@ -51,8 +51,6 @@ export class RouteComponent implements OnInit {
       {
         next: (response:Route[]) => {
           this.routeService.setRoutes(response)
-
-          console.log(this.routeList[this.routeList.length-2].img)
         },
         error: (response: any) => console.log(response.error)
       }

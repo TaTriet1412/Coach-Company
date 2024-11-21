@@ -1,189 +1,57 @@
 <div class="container fw-semibold mt-4">
     <div class="row">
         <div class="col-md-8 info-box mb-3 shadow">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-evenly align-items-center mb-3">
                 <span class="fs-3 fw-bold fs-5" style="color: #00b98e;">Chọn ghế</span>
                 <a href="#" class="text-primary" style="padding-right: 375px;">Thông tin xe</a>
             </div>
-            <div class="justify-content-between">
+            <div class="justify-content-evenly">
                 <div class="row">
-                    <div class="col-md-3">
-                        <h5 class="text-center">Tầng dưới</h5>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="pt-3 pe-3 ps-2 bd-highlight seat-container" >
-                                <i class="fs-3 fa-solid fa-couch available seat ">
-                                    <p class="seat-label">A01</p>
+                    <div class="col-md-6">
+                        <h5 class="text-center no-select" style="padding-left: 30px;">Tầng trên</h5>
+                        <ng-container *ngFor="let chunk of seatChunks;let i=index">
+                            <div *ngIf="i<5" class="d-flex justify-content-evenly mb-3">
+                            <div *ngFor="let seat of chunk" class="pt-3 ps-2 pe-3 bd-highlight seat-container">
+                                <i 
+                                class="fs-3 fa-solid fa-couch seat" 
+                                [ngClass]="{ 'available': !isOccupiedSeat(seat.id) && seatStatuses[seat.id] === 'available', 
+                                            'selected': !isOccupiedSeat(seat.id) && seatStatuses[seat.id] === 'active',
+                                            'sold': isOccupiedSeat(seat.id) }"
+                                (click)="toggleSeatStatus(seat.id)"
+                                            >
+                                <span 
+                                class="seat-label no-select" 
+                                style="font-size: 16px;"
+                                >{{ seat.name }}</span>
                                 </i>
                             </div>
-                            <div class="px-3 pt-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat ">
-                                    <span class="seat-label">A01</span>
-                                </i>
                             </div>
-                            <div class="px-3 pt-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="pe-3 ps-2 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch icon available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch icon available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="pe-3 ps-2 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="pe-3 ps-2 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="pe-3 ps-2 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                        </div>
+                        </ng-container>
                     </div>
-                    <div class="col-md-4">
-                        <h5 class="text-center" style="padding-left: 30px;">Tầng trên</h5>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="pt-3 ps-5 pe-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
+                    <div class="col-md-6">
+                        <h5 class="text-center no-select" style="padding-left: 30px;">Tầng dưới</h5>
+                        <ng-container *ngFor="let chunk of seatChunks;let i=index">
+                            <div *ngIf="i>4" class="d-flex justify-content-evenly mb-3">
+                            <div *ngFor="let seat of chunk" class="pt-3 ps-2 pe-3 bd-highlight seat-container">
+                                <i 
+                                class="fs-3 fa-solid fa-couch seat" 
+                                [ngClass]="{ 'available': !isOccupiedSeat(seat.id) && seatStatuses[seat.id] === 'available', 
+                                            'selected': !isOccupiedSeat(seat.id) && seatStatuses[seat.id] === 'active',
+                                            'sold': isOccupiedSeat(seat.id) }"
+                                (click)="toggleSeatStatus(seat.id)"
+                                            >
+                                <span 
+                                class="seat-label no-select" 
+                                style="font-size: 16px;"
+                                >{{ seat.name }}</span>
                                 </i>
                             </div>
-                            <div class="px-3 pt-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
                             </div>
-                            <div class="px-3 pt-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="ps-5 pe-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="ps-5 pe-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="ps-5 pe-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-start mb-3">
-                            <div class="ps-5 pe-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                            <div class="px-3 bd-highlight seat-container">
-                                <i class="fs-3 fa-solid fa-couch available seat">
-                                    <span class="seat-label">A01</span>
-                                </i>
-                            </div>
-                        </div>
+                        </ng-container>
                     </div>
-                    <div class="col-md-3 pt-5">
+                      
+                     
+                    <div class="col-12 pt-5">
                         <div class="d-flex flex-column-reverse bd-highlight">
                             <div class="p-2 bd-highlight"><i class="fa-solid fa-square" style="color: #d84315;"></i> Đang chọn</div>
                             <div class="p-2 bd-highlight"><i class="fa-solid fa-square" style="color: #ade6f6;"></i> Còn trống</div>
@@ -196,23 +64,24 @@
         </div>
 
         <!-- Thông tin lượt đi và chi tiết giá -->
-        <div class="col-md-4">
+        <div *ngIf="route && tripCurr" class="col-md-4">
             <div class="info-box mb-3 shadow">
                 <i class="fa-solid fa-circle-info" style="color: #00b98e;"></i>
                 <span class="fs-5" style="color: #00b98e;">Thông tin lượt đi</span>
-                <p class="mb-1">Tuyến xe: An Nhơn - Miền Đông Mới</p>
-                <p class="mb-1">Thời gian xuất bến: <span class="text-success">18:45 28/10/2024</span></p>
-                <p class="mb-1">Số lượng ghế: 0 Ghế</p>
-                <p class="mb-1">Số ghế: </p>
-                <p class="mb-1">Điểm trả khách: </p>
-                <p class="total-price">Tổng tiền lượt đi: 0đ</p>
-            </div>
-            <div class="info-box shadow">
-                <i class="fa-solid fa-money-check" style="color: #00b98e;"></i>
-                <span class="fs-5" style="color: #00b98e;">Chi tiết giá</span>
-                <p class="mb-1">Giá vé lượt đi: 0đ</p>
-                <p class="mb-1">Phí thanh toán: 0đ</p>
-                <p class="total-price">Tổng tiền: 0đ</p>
+                <p class="mb-1">Tuyến xe: 
+                    {{route.start_point}}
+                    - 
+                    {{route.end_point}}
+                </p>
+                <p class="mb-1">Thời gian xuất bến: <span class="text-success">{{tripCurr.time_start | date: "d/'M/yyyy, h:mm a"}}</span></p>
+                <p class="mb-1">Số lượng ghế: {{getActiveSeatKeys().length}} Ghế</p>
+                <p class="mb-1">Giá mỗi ghế: {{route.price | formatNumberDot3}}</p>
+                <p *ngIf="seatNameList" class="mb-1">Số ghế: {{seatNameList.join(', ')}}</p>
+                <p class="mb-1">Điểm đón khách: Bến ở {{route.start_point}}</p>
+                <p class="mb-1">Điểm trả khách: Bến ở {{route.end_point}}</p>
+                <p class="total-price">Tổng tiền: 
+                    {{route.price * getActiveSeatKeys().length |formatNumberDot3}}
+                     vnđ</p>
             </div>
         </div>
     </div>
@@ -225,20 +94,20 @@
                     <div class="col-md-6">
                         <i class="fa-solid fa-user" style="color: #00b98e;"></i>
                         <span style="color: #00b98e;font-size: 1.4rem;">Thông tin khách hàng</span>
-                        <form id="bookingForm">
+                        <form [formGroup]="tripForm" (ngSubmit)="handleBookTicket($event)" id="bookingForm">
                             <div class="mb-3">
-                                <label for="fullName" class="form-label">Họ và tên <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="fullName" required>
+                                <label for="name" class="form-label">Họ và tên <span class="text-danger">*</span></label>
+                                <input formControlName="name" type="text" class="form-control" id="name" required>
                             </div>
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Số điện thoại <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="phone" required>
+                                <input formControlName="phone" type="text" class="form-control" id="phone" required>
                             </div>
                             <div class="mb-3">
-                                <label for="phone" class="form-label">Email <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="email" required>
+                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input formControlName="email" type="text" class="form-control" id="email" required>
                             </div>
-                            <button type="submit" class="btn text-light" style="background-color: #00b98e;">Đặt vé</button>
+                            <button type="submit" class="btn text-light" style="background-color: #00b98e;" >Đặt vé</button>
                         </form>
                     </div>
                     <div class="col-md-6">

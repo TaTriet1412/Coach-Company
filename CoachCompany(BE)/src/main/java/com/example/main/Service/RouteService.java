@@ -4,7 +4,9 @@ import com.example.main.DTO.CreateRouteRequest;
 import com.example.main.DTO.UpdateRouteRequest;
 import com.example.main.Entity.Bus;
 import com.example.main.Entity.Route;
+import com.example.main.Entity.Trip;
 import com.example.main.Exception.FileException;
+import com.example.main.Exception.RouteException;
 import com.example.main.FileHandle.FileChecker;
 import com.example.main.Repository.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,7 @@ public class RouteService {
 
     public Route updateRoute(Long id,String startPoint, String restPoint, String endPoint, Integer duration, Integer distance, Integer price, MultipartFile img, boolean enable) throws IOException {
         Route route = getRouteById(id);
+        checkStartPoint_EndPoint(startPoint,endPoint,id);
         route.setStart_point(startPoint);
 //        Process file is img or not
         if (img != null) {
@@ -51,13 +54,29 @@ public class RouteService {
         route.setDistance(distance);
         route.setDuration(duration);
         route.setPrice(price);
-        route.setEnable(enable);
         route.setDate_begin(LocalDateTime.now());
+        route.setEnable(enable);
+        if(enable){
+            for(Bus bus:route.getBusList()){
+                bus.setEnable(true);
+                for(Trip trip: bus.getTripList()){
+                    trip.setEnable(true);
+                }
+            }
+        }else {
+            for(Bus bus:route.getBusList()){
+                bus.setEnable(false);
+                for (Trip trip:bus.getTripList()){
+                    trip.setEnable(false);
+                }
+            }
+        }
         return routeRepository.save(route);
     }
 
     public Route addRoute(String startPoint, String restPoint, String endPoint, Integer duration, Integer distance, Integer price, MultipartFile img) throws IOException {
         Route route = new Route();
+        checkStartPoint_EndPoint(startPoint,endPoint);
         route.setStart_point(startPoint);
         if (img != null) {
             if(fileChecker.isImage(img)){
@@ -72,5 +91,29 @@ public class RouteService {
         route.setDuration(duration);
         route.setPrice(price);
         return routeRepository.save(route);
+    }
+
+    public void checkStartPoint_EndPoint(String startPoint, String endPoint){
+        List<Route> routeList = getRoutes();
+        for(Route route:routeList) {
+            if(route.getStart_point().toLowerCase().trim().equals(startPoint.toLowerCase().trim())
+         &&        route.getEnd_point().toLowerCase().trim().equals(endPoint.toLowerCase().trim())
+            ) {
+                throw new RouteException("Tên tuyến này đã tồn tại");
+            }
+        }
+    }
+
+    public void checkStartPoint_EndPoint(String startPoint, String endPoint,Long id){
+        List<Route> routeList = getRoutes();
+        for(Route route:routeList) {
+            if(route.getId()!=id) {
+                if(route.getStart_point().toLowerCase().trim().equals(startPoint.toLowerCase().trim())
+                        &&        route.getEnd_point().toLowerCase().trim().equals(endPoint.toLowerCase().trim())
+                ) {
+                    throw new RouteException("Tên tuyến này đã tồn tại");
+                }
+            }
+        }
     }
 }

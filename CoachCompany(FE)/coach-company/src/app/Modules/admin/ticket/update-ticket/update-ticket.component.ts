@@ -62,23 +62,6 @@ export class UpdateTicketComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    // this.ticketService.getTicketByIdAPI(id)
-    //   .subscribe({
-    //     next: (response:Ticket) => {
-    //       this.ticketCurr = response;
-    //       console.log(this.ticketCurr);
-    //       this.ticketForm.patchValue(this.ticketCurr!)
-    //       this.ticketForm.get("trip_id")?.setValue(String(this.ticketCurr.tripId)); 
-    //       this.ticketCurr.seats.forEach(seat => {
-    //         this.inputsSeats.push(seat.id);
-    //       })
-    //       this.ticketForm.get("seat_list")?.setValue(this.inputsSeats)          
-    //     },
-    //     error:(response:any) => this.snackBarService.notifyError(response.error.message)
-    //   })
-
-      
- 
     // Load trip
     this.tripService.getTrips().subscribe(
       {

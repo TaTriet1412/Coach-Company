@@ -1,3 +1,4 @@
+
 .schedule-item .btn-book {
     background-color: #00b98e;
     color: #fff;
@@ -56,3 +57,6 @@ a{
     position: relative; /* Needed for pseudo-elements */
   }
   
+.w-30 {
+    width: 30%;
+}

@@ -1,23 +1,21 @@
 import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import { CarourselHomeUserComponent } from './caroursel-home-user/caroursel-home-user.component';
-import { ScheduleComponent } from '../schedule/schedule.component';
 import { NgwWowService } from "ngx-wow"
 import { SearchScheduleComponent } from "../search-schedule/search-schedule.component";
-import { AboutComponent } from "../about/about.component";
 import { ContactComponent } from '../contact/contact.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   standalone: true,
-  imports: [CarourselHomeUserComponent, ScheduleComponent, SearchScheduleComponent,ContactComponent]
+  imports: [ SearchScheduleComponent,ContactComponent]
 })
 export class HomeUserComponent implements  OnInit {
   @ViewChild('spinner') spinnerElement!: ElementRef;
 
 
-  constructor(private wowService: NgwWowService){}
+  constructor(private wowService: NgwWowService,private router:Router){}
 
   ngOnInit(): void {
     // Time for spinner appear
@@ -33,6 +31,10 @@ export class HomeUserComponent implements  OnInit {
 
   onItemChange($event: any): void {
     console.log('Carousel onItemChange', $event);
+  }
+
+  goToSchedule() {
+    this.router.navigate(["/schedule"])
   }
   
 }

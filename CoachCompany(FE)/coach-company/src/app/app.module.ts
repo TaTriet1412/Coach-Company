@@ -8,26 +8,24 @@ import { AdminModule } from './Modules/admin/admin.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { UserRoutingModule } from './Modules/user/user-routing.module';
 import { AdminRoutingModule } from './Modules/admin/admin-routing.module';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StaffModule } from './Modules/staff/staff.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FormatNumberDot3Pipe } from './core/pipes/format-number-dot-3.pipe'
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     UserModule,
     AdminModule,
     StaffModule,
-    UserRoutingModule,
-    AdminRoutingModule,
     CKEditorModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,

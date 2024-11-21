@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ChartComponent } from "../chart/chart.component";
 import { Ticket } from '../../dto/ticket';
 import { TicketService } from '../../../core/services/ticket.service';
@@ -13,6 +13,10 @@ import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/cor
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
+import { Contact } from '../../dto/contact';
+import { ContactService } from '../../../core/services/contact.service';
+import { response } from 'express';
+import { After } from 'v8';
 
 type TypeTime = 'year' | 'quarter' | 'month';
 
@@ -32,9 +36,11 @@ type TypeTime = 'year' | 'quarter' | 'month';
 export class StatisticComponent implements OnInit{
   isLoading = true;
   ticketList!: Ticket[];
+  contactList!: Contact[];
   companyCurr!: Company;
   averageMonthLyTotalRevenue!: number;
   averageYearLyTotalRevenue!: number;
+  inProcessContactLength!: number;
   yearList: number[] = [];
   disableYearDetail: boolean = true;
   @ViewChild(ChartComponent) chartComponent!: ChartComponent;
@@ -45,6 +51,7 @@ export class StatisticComponent implements OnInit{
   constructor(
     private ticketService:TicketService,
     private snackBarService:SnackBarService,
+    private contactService:ContactService,
     private companyService: CompanyService,
     private cdr:ChangeDetectorRef
   ){}
@@ -82,7 +89,17 @@ export class StatisticComponent implements OnInit{
       this.averageMonthLyTotalRevenue = this.companyService.getAverageMonthlyTotalRevenue(this.ticketList, this.companyCurr);
       this.averageYearLyTotalRevenue = this.companyService.getAverageAnnualTotalRevenue(this.ticketList, this.companyCurr);
 
-
+      // Load contact list
+      this.contactService.getContacts()
+        .subscribe({
+          next: (response: Contact[]) => {
+            this.contactService.setContactList(response);
+            this.contactList = response;
+            const inProcessContact = this.contactList.filter(contact => contact.process_time==null);
+            this.inProcessContactLength = inProcessContact.length;
+            this.cdr.detectChanges();
+          }
+        })
 
       // Update yearList
       const now = new Date();

@@ -14,6 +14,7 @@ import 'datatables.net' ;
 import { TicketService } from '../../../core/services/ticket.service';
 import { Bus } from '../../dto/bus';
 import { ShareModule } from '../../share/share.module';
+import { SnackBarService } from '../../../core/services/snack-bar.service';
 
 @Component({
   selector: 'app-ticket',
@@ -22,7 +23,7 @@ import { ShareModule } from '../../share/share.module';
   templateUrl: './ticket.component.html',
   styleUrl: './ticket.component.css'
 })
-export class TicketComponent implements OnInit {
+export class TicketComponent implements OnInit,AfterViewInit {
   createUrl = '/admin/ticket/create-ticket';
   updateUrl = '/admin/ticket/update-ticket';
   deleteUrl = '/admin/ticket/delete-ticket';
@@ -45,7 +46,8 @@ export class TicketComponent implements OnInit {
     public ticketService:TicketService,
     public router: Router,
     public http:HttpClient,
-    public cdr: ChangeDetectorRef
+    public cdr: ChangeDetectorRef,
+    private snackBarService: SnackBarService,
   ){}
   
   ngOnInit(): void {
@@ -151,6 +153,24 @@ export class TicketComponent implements OnInit {
 
   trackById(id: number, ticket: Ticket): number{
     return ticket.id
+  }
+
+  deleteElement(id: number){
+    const headers = this.headers;
+    this.ticketService.deleteTicket(id)
+      .subscribe({
+        next: (response: any) => {
+            const newses = this.ticketService.getTicketList().filter(news => news.id !== id);
+            this.ticketService.setTicketList(newses);
+            this.ticketList = this.ticketService.getTicketList();
+            this.snackBarService.notifySuccess("Xoá thành công");
+            this.cdr.markForCheck();
+        },
+        error: (response:any) =>{
+          this.snackBarService.notifyError(response.error.message);
+        }
+      })
+
   }
 
 }

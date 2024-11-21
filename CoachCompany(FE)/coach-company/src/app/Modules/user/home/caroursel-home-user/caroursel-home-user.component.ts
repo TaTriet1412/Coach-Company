@@ -6,7 +6,7 @@ import { CarouselComponent, CarouselModule } from '@coreui/angular';
   templateUrl: './caroursel-home-user.component.html',
   styleUrl: './caroursel-home-user.component.css',
   standalone: true,
-  imports: [CommonModule,CarouselComponent,CarouselModule]
+  imports: [CommonModule,CarouselModule]
 })
 export class CarourselHomeUserComponent implements OnInit{
   slides: any[] =  []

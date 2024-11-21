@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { SidebarAdminComponent } from './sidebar/sidebar.component';
 import { HeaderAdminComponent } from './header/header.component';
 import { FooterAdminComponent } from './footer/footer.component';
@@ -21,6 +21,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
+import { provideClientHydration } from '@angular/platform-browser';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 
 
@@ -36,20 +38,21 @@ import { MatNativeDateModule } from '@angular/material/core';
   imports: [
     CommonModule,
     AdminRoutingModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    CKEditorModule,
+
     StatisticComponent,
     HomeAdminComponent,
     ChartComponent,
     LayoutCrudComponent,
     NewsComponent,
     CreateNewsComponent,
-    CKEditorModule,
     CreateRouteComponent,
     DeleteRouteComponent,
     UpdateRouteComponent,
-    MatDatepickerModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatNativeDateModule,
     UpdateNewsComponent
 
     
@@ -61,6 +64,11 @@ import { MatNativeDateModule } from '@angular/material/core';
     HomeAdminComponent,
     DefaultAdminUiComponent,
 
+  ],
+  providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    provideClientHydration(),
+    provideHttpClient(withFetch()),
   ]
 })
 export class AdminModule { }

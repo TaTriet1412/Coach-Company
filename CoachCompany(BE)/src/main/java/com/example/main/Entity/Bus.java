@@ -39,6 +39,11 @@ public class Bus {
     @JsonIgnore
     private List<Seat> seatList;
 
+    @OneToMany(mappedBy = "bus", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Trip> tripList;
+
+
     @PrePersist protected void onCreate() {
         enable = true;
         if (date_begin == null) {

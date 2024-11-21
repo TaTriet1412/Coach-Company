@@ -65,6 +65,11 @@ export class RouteService {
     return this.getRoutesCurrent().find(route => route.id == id);
   }
 
+  getRouteByIdAPI(id: number): Observable<Route>{
+    const headers = this.headers;
+    return this.http.get<Route>(`${this.apiRouteUrl}/${id}`, {headers});
+  }
+  
   updateRoute(routeId:number,start_point:string,rest_point:string,end_point:string,hours:number,minutes:number,distance:number,price:number,img: File,enable: boolean): Observable<Route>{
     const formData: FormData = new FormData(); 
     formData.append('start_point', start_point); 

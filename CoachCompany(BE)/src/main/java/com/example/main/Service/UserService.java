@@ -108,7 +108,7 @@ public class UserService {
 
     public User updatePassword(String email,String password){
         User user = getUserByEmail(email);
-        user.setPassword(password);
+        user.setPassword(encoder.encode(password));
         return userRepository.save(user);
     }
 

@@ -48,4 +48,10 @@ public class TicketController {
         return new ResponseEntity<>(ticket,HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteTicket(@PathVariable Long id,@RequestHeader Map<String,String> header){
+        ticketService.deleteTicket(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
 }

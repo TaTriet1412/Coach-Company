@@ -34,10 +34,10 @@ export class UpdateRouteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.activeRoute.params.subscribe(params => {
-        this.routeId = +params['id'];
-        this.loadRoute();
-      })
+    this.activeRoute.params.subscribe(params => {
+      this.routeId = +params['id'];
+      this.loadRoute();
+    })
   }
 
   onFileSelected(event: any) { 

@@ -12,10 +12,8 @@ import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/cor
 import { MatPaginatorModule  } from '@angular/material/paginator';
 import { DataTablesModule} from "angular-datatables"
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User } from '../../dto/user';
-import { Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 import 'datatables.net' ;
-import { UserService } from '../../../core/services/user.service';
 import { BusService } from '../../../core/services/bus.service';
 import { Trip } from '../../dto/trip';
 import { TripService } from '../../../core/services/trip.service';
@@ -32,7 +30,7 @@ export class TripComponent implements OnInit,AfterViewInit{
   updateUrl = '/admin/trip/update-trip';
   deleteUrl = 'trips';
   pageType = 'trip';
-  headerList = ['Mã chuyến','Tài xế','Phụ lái','Số Xe'
+  headerList = ['Mã chuyến','Mã tuyến','Tài xế','Phụ lái','Số Xe'
     ,'Ngày đi','Thời gian bắt đầu','Thời gian kết thúc'
     ,'Trạng thái','Ngày cập nhật'];
   tripList!: Trip[];
@@ -46,17 +44,14 @@ export class TripComponent implements OnInit,AfterViewInit{
     public cdr: ChangeDetectorRef
   ){}  
   
-  ngOnInit(): void {
-    this.tripService.getTrips().subscribe(
-      {
-        next: (response:Trip[]) => {
-          this.tripService.setTripList(response)
-        },
-        error: (response: any) => console.log(response.error)
-      }
-    );
+  async ngOnInit(): Promise<void> {
+    const tripList = await firstValueFrom(this.tripService.getTrips());
+    this.tripService.setTripList(tripList)
     this.tripList = this.tripService.getTripList();
+    this.cdr.detectChanges
   }
+
+  
 
   username = "triet"
   password = "123"
@@ -89,7 +84,8 @@ export class TripComponent implements OnInit,AfterViewInit{
     }
   };
 
-  ngAfterViewInit(): void {
+  async ngAfterViewInit(): Promise<void> {
+    await (this.ngOnInit())
     this.initializeDataTable();
   }
 

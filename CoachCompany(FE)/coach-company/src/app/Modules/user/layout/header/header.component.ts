@@ -26,9 +26,4 @@ export class HeaderUserComponent {
       this.navbarCollapse.nativeElement.classList.add("show")
     }
   }
-
-
-
-
-  
 }

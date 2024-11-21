@@ -2,8 +2,11 @@ package com.example.main.Controller;
 
 import com.example.main.DTO.CreateTripRequest;
 import com.example.main.DTO.UpdateTripRequest;
+import com.example.main.Entity.Seat;
+import com.example.main.Entity.Ticket;
 import com.example.main.Entity.Trip;
 import com.example.main.Service.TripService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +46,18 @@ public class TripController {
     public ResponseEntity<Trip> updateTrip(@PathVariable Long id, @RequestBody UpdateTripRequest request, @RequestHeader Map<String,String> header){
         Trip Trip = tripService.updateTrip(id,request);
         return new ResponseEntity<>(Trip,HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/seats/occupied/{tripId}")
+    public ResponseEntity<List<Seat>> getSeatsIsOccupiedByTripId(@PathVariable Long tripId, @RequestHeader Map<String,String> header) {
+        List<Seat> seatList = tripService.getSeatsIsOccupiedOfByTripId(tripId);
+        return new ResponseEntity<>(seatList,HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/seats/{tripId}")
+    public ResponseEntity<List<Seat>> getSeatListByTripId(@PathVariable Long tripId, @RequestHeader Map<String,String> header) {
+        List<Seat> seatList = tripService.getSeatsOfByTripId(tripId);
+        return new ResponseEntity<>(seatList,HttpStatus.ACCEPTED);
     }
 
 }

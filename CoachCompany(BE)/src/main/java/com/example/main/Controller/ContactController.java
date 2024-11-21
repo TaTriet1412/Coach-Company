@@ -26,6 +26,19 @@ public class ContactController {
         return new ResponseEntity<>(contacts, HttpStatus.ACCEPTED);
     }
 
+    @PostMapping
+    public ResponseEntity<Contact> createContact(
+            @RequestParam String name,
+            @RequestParam String email,
+            @RequestParam String phone,
+            @RequestParam String address,
+            @RequestParam String job,
+            @RequestParam String message
+    ){
+        Contact contact = contactService.createContact(name,email,phone,address,job,message);
+        return new ResponseEntity<>(contact,HttpStatus.ACCEPTED);
+    }
+
     @PutMapping("{contactId}")
     public ResponseEntity<Contact> processContact(
             @PathVariable Long contactId,
@@ -38,9 +51,3 @@ public class ContactController {
     }
 }
 
-//@RequestParam String name_sender,
-//@RequestParam String phone_sender,
-//@RequestParam String email_sender,
-//@RequestParam String address_sender,
-//@RequestParam String message_sender,
-//@RequestParam String job_sender,

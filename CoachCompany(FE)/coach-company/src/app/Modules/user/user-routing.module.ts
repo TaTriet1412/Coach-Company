@@ -13,6 +13,8 @@ import { DefaultUserUiComponent } from "./default-user-ui/default-user-ui.compon
 import { ForgotPassswordComponent } from "./login/forgot-passsword/forgot-passsword.component";
 import { VerificationCodeComponent } from "./login/verification-code/verification-code.component";
 import { ResetPasswordComponent } from "./login/reset-password/reset-password.component";
+import { DetailBlogComponent } from "./blog/detail-blog/detail-blog.component";
+import { DetailTicketComponent } from "./search-ticket/detail-ticket/detail-ticket.component";
 
 const routes: Routes = [
     { path: "", 
@@ -21,9 +23,19 @@ const routes: Routes = [
         {path: "", component: HomeUserComponent},
         { path: "home", component: HomeUserComponent},
         { path: "schedule", component: ScheduleComponent},
-        { path: "ticket", component: SearchTicketComponent},
+        { path: "ticket", 
+          children: [
+            {path: "", component: SearchTicketComponent},
+            {path: "detail-ticket/:id", component: DetailTicketComponent},
+          ]
+        },
         { path: "about-us", component: AboutComponent},
-        { path: "blog", component: BlogComponent},
+        { path: "blog", 
+          children: [
+            {path: "", component: BlogComponent},
+            {path: "detail-blog/:id", component: DetailBlogComponent},
+          ]
+        },
         { path: "contact-us", component: ContactComponent},
         { path: "register", component: RegisterComponent},
         { path: "login", 
@@ -34,7 +46,7 @@ const routes: Routes = [
             { path: "reset-password",component: ResetPasswordComponent},
           ]
         },
-        { path: "choose-chair", component: ChooseChairComponent},
+        { path: "choose-chair/:id", component: ChooseChairComponent},
       ]
     },
     

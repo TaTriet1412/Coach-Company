@@ -1,34 +1,69 @@
 <div class="container-fluid bg-success mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 24px;">
     <div class="container">
-        <!-- Hàng ngang chứa các ô nhập liệu -->
-        <div class="row g-2 justify-content-center">
-            <div class="col-lg-4">
-                <input type="text" class="form-control border-2 py-3" placeholder="Điểm đi">
+        <form [formGroup]="tripForm" (ngSubmit)="handleSearchTrip($event)">
+            <!-- Hàng ngang chứa các ô nhập liệu -->
+            <div class="row g-2 justify-content-center">
+                <div class="col-lg-5">
+                    <div class="form-group mr-24 parent-flex">
+                        <!-- Search Input Field -->
+                        <mat-form-field appearance="fill" class="br-black">
+                            <mat-label>Điểm đi</mat-label>
+                            <input matInput placeholder="Điểm đi" (input)="onStartRouteSearch($event)">
+                        </mat-form-field>
+
+                        <!-- Select Input Field -->
+                        <mat-form-field appearance="fill" class="last-flex-item">
+                            <mat-label>Chọn điểm bắt đầu</mat-label>
+                            <mat-select formControlName="start_point" id="start_point" #startSelect required>
+                                <mat-option *ngFor="let start_point of uniqueStartPoints" [value]="start_point">
+                                    {{ start_point }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-1 d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn border-0">
+                        <i class="bi bi-arrow-left-right fa-2x text-white"></i>
+                    </button>
+                </div> -->
+
+                <div class="col-lg-5">
+                    <div class="form-group mr-24 parent-flex">
+                        <!-- Search Input Field -->
+                        <mat-form-field appearance="fill" class="br-black">
+                            <mat-label>Điểm đến</mat-label>
+                            <input matInput placeholder="Điểm đến" (input)="onEndRouteSearch($event)">
+                        </mat-form-field>
+
+                        <!-- Select Input Field -->
+                        <mat-form-field appearance="fill" class="last-flex-item">
+                            <mat-label>Chọn điểm kết thúc</mat-label>
+                            <mat-select formControlName="end_point" id="end_point" #endSelect required>
+                                <mat-option *ngFor="let end_point of uniqueEndPoints" [value]="end_point">
+                                    {{ end_point }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <mat-form-field appearance="fill" class="w-100 mt-3">
+                        <mat-label>Chọn ngày</mat-label>
+                        <input formControlName="date_choose" matInput [matDatepicker]="dp3" [min]="today">
+                        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                        <mat-datepicker #dp3></mat-datepicker>
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="col-lg-1 d-flex justify-content-center align-items-center">
-                <button class="btn border-0">
-                    <i class="bi bi-arrow-left-right fa-2x text-white"></i> 
-                </button>  
+
+            <!-- Nút Search nằm ở giữa phía dưới -->
+            <div class="row mt-3 justify-content-center">
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-dark border-0 w-100 py-3">Tìm kiếm</button>
+                </div>
             </div>
-            <div class="col-lg-4">
-                <input type="text" class="form-control border-2 py-3" placeholder="Điểm đến">
-            </div>
-            <div class="col-lg-4">
-                <!-- <input #datePicker id="datePicker"  placeholder="Chọn ngày đi" [(ngModel)]="selectedDate" type="date" class="form-control border-2 py-3 " /> -->
-                <mat-form-field class="form-control mt-3">
-                    <mat-label>Chọn ngày</mat-label>
-                    <input matInput [matDatepicker]="dp3" disabled>
-                    <mat-datepicker-toggle matIconSuffix [for]="dp3"></mat-datepicker-toggle>
-                    <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-        
-        <!-- Nút Search nằm ở giữa phía dưới -->
-        <div class="row mt-3 justify-content-center">
-            <div class="col-md-2">
-                <button class="btn btn-dark border-0 w-100 py-3">Tìm kiếm </button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>

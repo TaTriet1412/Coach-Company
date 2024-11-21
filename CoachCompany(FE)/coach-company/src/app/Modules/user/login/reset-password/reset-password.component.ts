@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AlertModule } from '@coreui/angular';
 import { UserService } from '../../../../core/services/user.service';
 import { Router } from '@angular/router';
+import { SnackBarService } from '../../../../core/services/snack-bar.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -20,7 +21,7 @@ export class ResetPasswordComponent {
     confirmPassword: new FormControl(''),
   })
 
-  constructor(private userService:UserService, private router:Router){}
+  constructor(private userService:UserService, private router:Router,private snackBarService:SnackBarService){}
 
   handleResetPassword(event: Event){
     event.preventDefault();
@@ -43,6 +44,7 @@ export class ResetPasswordComponent {
       this.userService.resetPassword(oldEmail,passwordInput)
       .subscribe({
         next: (response:any) => {
+          this.snackBarService.notifySuccessUser("Đặt lại mật khẩu thành công")
           this.router.navigate(["login"]);
         },
         error: (response:any) => console.log(response.error)

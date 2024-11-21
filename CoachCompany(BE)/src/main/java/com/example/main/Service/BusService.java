@@ -5,6 +5,7 @@ import com.example.main.DTO.UpdateBusRequest;
 import com.example.main.Entity.Bus;
 import com.example.main.Entity.Seat;
 import com.example.main.Entity.Route;
+import com.example.main.Entity.Trip;
 import com.example.main.Exception.BusException;
 import com.example.main.Repository.BusRepository;
 import com.example.main.Repository.SeatRepository;
@@ -35,6 +36,11 @@ public class BusService {
     public Bus addBus(CreateBusRequest request){
         Bus bus = new Bus();
         Route currRoute = routeService.getRouteById(request.getRoute_id());
+
+        if(!currRoute.isEnable()){
+            throw new BusException("Tuyến đã ngừng hoạt động");
+        }
+
         if(!hasBusNumber(request.getNumber_bus(), currRoute)){
             bus.setNumber_bus(request.getNumber_bus());
             bus.setRoute(currRoute);
@@ -90,6 +96,18 @@ public class BusService {
 
     public Bus updateBus(Long id, UpdateBusRequest request) throws BusException {
         Bus bus = getBusById(id);
+        if(!bus.getRoute().isEnable()){
+            throw new BusException("Tuyến đã ngừng hoạt động");
+        }
+        if(request.isEnable()){
+            for(Trip trip:bus.getTripList()){
+                trip.setEnable(true);
+            }
+        }else {
+            for(Trip trip:bus.getTripList()){
+                trip.setEnable(false);
+            }
+        }
         bus.setNumber_bus(updateBusNumber(request.getNumber_bus(),bus.getRoute(),bus));
         bus.setEnable(request.isEnable());
         bus.setDate_begin(LocalDateTime.now());

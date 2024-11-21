@@ -1,10 +1,8 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { SnackBarService } from '../../../../core/services/snack-bar.service';
-import { EmployeeService } from '../../../../core/services/employee.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { User } from '../../../dto/user';
 import { ContactService } from '../../../../core/services/contact.service';
 import { UserService } from '../../../../core/services/user.service';
 import { Contact } from '../../../dto/contact';
@@ -22,7 +20,6 @@ export class ProcessContactComponent implements OnInit, AfterViewInit{
 
   constructor(
     private snackBarService: SnackBarService,
-    private employeeService:EmployeeService,
     private userService:UserService,
     private contactService:ContactService,
     private router:Router,private http:HttpClient,
@@ -40,17 +37,14 @@ export class ProcessContactComponent implements OnInit, AfterViewInit{
 
   handleProcessContact(event:Event){
     event.preventDefault();
-    // const name_sender = this.contactForm.get("name_sender")?.value?.trim()!;
-    // const phone_sender = this.contactForm.get("phone_sender")?.value?.trim()!;
-    // const address_sender = this.contactForm.get("address_sender")?.value?.trim()!;
-    // const job_sender = this.contactForm.get("job_sender")?.value?.trim()!;
-    // const message_sender = this.contactForm.get("message_sender")?.value?.trim()!;
+
     const email_sender = this.contactForm.get("email_sender")?.value?.trim()!;
     const message_processor = this.contactForm.get("message_processor")?.value?.trim()!;
 
      // Thông báo warning
      if(message_processor==""){
       this.snackBarService.notifyWarning("Vui lòng nhập phản hồi!");
+    
     }else {
       const processor = this.userService.getUser();
       const processor_id = processor?.id;

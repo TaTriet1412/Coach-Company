@@ -1,0 +1,60 @@
+<h2 class="my_ticket">Vé của tôi</h2>
+<div class="vecuatoi">
+    <div class="content_area container">
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+          <div class="ticket_details container">
+            <div class="row ticket_container_row ">
+              <div class="col-12 col-md-12 col-lg-12">
+                <div class="ticket_info container ">
+                    <div class="ticket_content row m-3 py-3">
+                        <div class="col-12 col-md-12 col-lg-4 my-3" style="text-align: center;">
+                            <div class="img_bus">
+                                <img class="picturebus_icon" alt="" src="assets/img/bus/bus_demo.jpg"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-5 my-3">
+                            <div *ngIf="tripCurr && route && seatNameList" class="ticket_details">
+                                <div class="fz-24">Tuyến xe {{route.start_point}}-{{route.end_point}}</div>
+                                <div class="fz-24">Thời gian xuất bến: {{tripCurr.time_start | date: "d/'M/yyyy, h:mm a"}}</div>
+                                <div class="fz-24">Điểm đón khách: Bến ở {{route.start_point}}</div>
+                                <div class="fz-24">Điểm trả khách: Bến ở {{route.end_point}}</div>
+                                <div class="fz-24">Số lượng ghế: {{seatNameList.length}}</div>
+                                <div class="fz-24">Số ghế: {{seatNameList.join(', ')}}</div>
+                                <div class="fz-24">Giá mỗi ghế: {{route.price | formatNumberDot3}} VNĐ</div>
+                                <div class="total fz-30">Tổng thanh toán: {{route.price*seatNameList.length| formatNumberDot3}}VNĐ</div>
+                                <div *ngIf="ticketCurr" class="statePayment fz-24">
+                                    Trạng thái:  {{ticketCurr.payment_status == false? 
+                                        'Chưa thanh toán':'Đã thanh toán'}}
+                                </div>
+                                <div class="countdownPayment" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-3 my-3">
+                        <div class="payment">
+                            <div class="payment_header">
+                                <h3>Hình thức thanh toán</h3>
+                            </div>
+                            <div class="payment_item_container">
+                                <div class="payment_logo">
+                                    <img src="/assets/img/payment/vnpay-logo.jpg" alt="vnpay" class="img_logo">
+                                </div>
+                                <div class="payment_form">
+                                    <form *ngIf="ticketCurr">
+                                        <button  [disabled]="ticketCurr.payment_status"  name="redirect" class="vnpay" (click)="GoToPay($event)">
+                                            VNPAY
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

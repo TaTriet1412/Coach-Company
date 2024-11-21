@@ -25,7 +25,7 @@
                 <mat-label>Chọn Ghế</mat-label>
                 <mat-select formControlName="seat_list" multiple>
                 <mat-option *ngFor="let seat of seatList" [value]="seat.id" [disabled]>
-                    {{ seat.id }} 
+                    {{ seat.name }} 
                 </mat-option>
                 </mat-select>
             </mat-form-field>

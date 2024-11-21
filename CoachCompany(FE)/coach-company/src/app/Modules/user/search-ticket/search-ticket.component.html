@@ -1,13 +1,13 @@
 <div class="container">
     <h1>TRA CỨU THÔNG TIN ĐẶT VÉ</h1>
-    <input type="text" class="form-input" placeholder="Vui lòng nhập số điện thoại">
-    <input type="text" class="form-input" placeholder="Vui lòng nhập mã vé">
-    <form [formGroup]="aFormGroup">
-        <ngx-recaptcha2 #captchaElem
-          [siteKey]="siteKey"
-          (success)="handleSuccess()"
-          formControlName="recaptcha">
-        </ngx-recaptcha2>
-      </form>
-    <button class="btn-submit" [disabled]="disabled">Tra cứu</button>
+    <form [formGroup]="ticketFormGroup" (ngSubmit)="handleGoToTicket($event)">
+      <input formControlName="phone" type="text" class="form-input" placeholder="Vui lòng nhập số điện thoại">
+      <input formControlName="ticketId" type="text" class="form-input" placeholder="Vui lòng nhập mã vé">
+      <ngx-recaptcha2 #captchaElem
+        [siteKey]="siteKey"
+        (success)="handleSuccess()"
+        formControlName="recaptcha">
+      </ngx-recaptcha2>
+      <button class="btn-submit" [disabled]="disabled">Tra cứu</button>
+    </form>
 </div>

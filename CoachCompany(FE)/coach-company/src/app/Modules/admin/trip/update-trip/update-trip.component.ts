@@ -119,7 +119,7 @@ export class UpdateTripComponent implements OnInit{
         }
       );
       this.busList = this.busService.getBusListFromRouteId(Number(value));
-      this.filteredBusList = this.busList;
+      this.filteredBusList = this.busList.filter(bus=>bus.enable==true);
     })
 
     // Load tai xe
@@ -132,7 +132,7 @@ export class UpdateTripComponent implements OnInit{
     }
     );
     this.driverList = this.employeeService.getDriverCurrent();
-    this.filteredDriverList = this.driverList;
+    this.filteredDriverList = this.driverList.filter(driver=>driver.enable==true);
     //Load phu lai
     this.employeeService.getUsers().subscribe(
     {
@@ -143,7 +143,7 @@ export class UpdateTripComponent implements OnInit{
     }
     );
     this.coDriverList = this.employeeService.getCoDriverCurrent();
-    this.filteredCoDriverList = this.coDriverList;
+    this.filteredCoDriverList = this.coDriverList.filter(coDriver=>coDriver.enable==true);
 
 
 
@@ -243,7 +243,7 @@ export class UpdateTripComponent implements OnInit{
     const normalizeText = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     const filterValue = normalizeText(value.toLowerCase()); 
     this.filteredBusList = this.busList.filter(bus => 
-      normalizeText(bus.number_bus.toLowerCase()).includes(filterValue)
+      normalizeText(bus.number_bus.toLowerCase()).includes(filterValue) && bus.enable==true
     );
     this.cdr.detectChanges();
 
@@ -268,7 +268,7 @@ export class UpdateTripComponent implements OnInit{
     const normalizeText = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     const filterValue = normalizeText(value.toLowerCase()); 
     this.filteredDriverList = this.driverList.filter(driver => 
-      normalizeText(driver.name.toLowerCase()).includes(filterValue)
+      normalizeText(driver.name.toLowerCase()).includes(filterValue) && driver.enable==true
     );
     this.cdr.detectChanges();
 
@@ -293,7 +293,7 @@ export class UpdateTripComponent implements OnInit{
     const normalizeText = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     const filterValue = normalizeText(value.toLowerCase()); 
     this.filteredCoDriverList = this.coDriverList.filter(coDriver => 
-      normalizeText(coDriver.name.toLowerCase()).includes(filterValue) 
+      normalizeText(coDriver.name.toLowerCase()).includes(filterValue) && coDriver.enable==true
     );
     this.cdr.detectChanges();
 

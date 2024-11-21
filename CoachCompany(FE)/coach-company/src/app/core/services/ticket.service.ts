@@ -70,4 +70,10 @@ export class TicketService {
     return this.http.post<Ticket>(`${this.apiTicketUrl}/${ticket_id}`, 
       { trip_id,name_customer,phone_customer,email_customer,seat_list,payment_status}, {headers});
   }
+
+  deleteTicket(id: number): Observable<void>{
+    const headers = this.headers;
+    return this.http.delete<void>(`${this.apiTicketUrl}/${id}`, {headers});
+  }
+
 }

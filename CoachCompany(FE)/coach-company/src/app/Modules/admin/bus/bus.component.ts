@@ -1,4 +1,4 @@
-import { ElementRef, ViewChild, ViewEncapsulation ,ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ElementRef, ViewChild, ViewEncapsulation ,ChangeDetectorRef, Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {ChangeDetectionStrategy} from '@angular/core';
@@ -11,7 +11,7 @@ import { MatPaginatorModule  } from '@angular/material/paginator';
 import { DataTablesModule} from "angular-datatables"
 import { Bus } from '../../dto/bus';
 import { HttpHeaders } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { firstValueFrom, forkJoin, Subject } from 'rxjs';
 import 'datatables.net' ;
 import { BusService } from '../../../core/services/bus.service';
 import { RouteService } from '../../../core/services/route.service';
@@ -30,31 +30,13 @@ import { RouteService } from '../../../core/services/route.service';
   ],
   encapsulation: ViewEncapsulation.None,
 })
-export class BusComponent {
+export class BusComponent implements OnInit,AfterViewInit{
   createUrl = '/admin/bus/create-bus';
   updateUrl = '/admin/bus/update-bus';
   deleteUrl = 'buses';
   pageType = 'bus';
   headerList = ['Mã xe','Tuyến xe','Số xe','Trạng thái','Ngày tạo'];
   busList!: Bus[];
-  constructor(
-    private router: Router,
-    private busService:BusService,
-    public routeService:RouteService,
-  ){}  
-
-  ngOnInit(): void {
-    this.busService.getBuses().subscribe(
-      {
-        next: (response:Bus[]) => {
-          this.busService.setBusList(response)
-        },
-        error: (response: any) => console.log(response.error)
-      }
-    );
-    this.busList = this.busService.getBusList();
-  }
-
   username = "triet"
   password = "123"
   headers = new HttpHeaders({ 'Authorization': 'Basic ' + btoa(`${this.username}:${this.password}`) });
@@ -85,8 +67,26 @@ export class BusComponent {
       emptyTable: "Không có dữ liệu trong bảng"
     }
   };
+  constructor(
+    private router: Router,
+    private busService:BusService,
+    public routeService:RouteService,
+    private cdf:ChangeDetectorRef,
+  ){}  
 
-  ngAfterViewInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.fetchActualData();
+  }
+
+  async fetchActualData(): Promise<void>{
+    const busList = await firstValueFrom(this.busService.getBuses())
+    this.busService.setBusList(busList);
+    this.busList = this.busService.getBusList();
+    this.cdf.detectChanges();
+  }
+
+  async ngAfterViewInit(): Promise<void> {
+    await this.ngOnInit();
     this.initializeDataTable();
   }
 

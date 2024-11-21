@@ -1,5 +1,4 @@
 @import url("../../../../../public/assets/css/bootstrap.min.css");
-@import url("../../../../../public/assets/admin/admin.css");
 .w-7rem{
     width: 7rem;
 }
@@ -41,3 +40,60 @@
 .inactive {
     background-color: gray !important;
 }
+
+@import url("../../../../../public/assets/css/bootstrap.min.css");
+
+.active {
+    background-color: green !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.inactive {
+    background-color: gray !important;
+}
+
+.btn-secondary {
+    background-color: gray;
+    color: white;
+}
+
+.text-primary {
+    color: #4e73df !important;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #4e73df;
+    border-color: #4e73df;
+}
+
+.btn-icon-split .icon {
+    background: rgba(0, 0, 0, .15);
+    display: inline-block;
+    padding: .375rem .75rem;
+}
+
+.btn-icon-split .text {
+    display: inline-block;
+    padding: .375rem .75rem;
+}
+
+.btn-icon-split {
+    padding: 0;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: stretch;
+    justify-content: center;
+}
+
+h6 {
+    font: 400 1.5rem / 2rem Roboto, sans-serif !important;
+    letter-spacing: 0;
+    margin: 0 0 .5em;
+}
+
+.font-weight-bold {
+    font-weight: 700 !important;
+}
+

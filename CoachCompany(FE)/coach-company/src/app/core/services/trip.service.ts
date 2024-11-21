@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Trip } from '../../Modules/dto/trip';
+import { Seat } from '../../Modules/dto/seat';
 
 @Injectable({
   providedIn: 'root'
@@ -68,6 +69,13 @@ export class TripService {
       { bus_id,driver_id,codriver_id,date_time_start,duration,enable}, {headers});
   }
 
-  
+  getSeatsIsOccupiedByTripId(id: number): Observable<Seat[]>{
+    const headers = this.headers;
+    return this.http.get<Seat[]>(`${this.apiTripUrl}/seats/occupied/${id}`, {headers});
+  }
 
+  getSeatsByTripId(id: number): Observable<Seat[]>{
+    const headers = this.headers;
+    return this.http.get<Seat[]>(`${this.apiTripUrl}/seats/${id}`, {headers});
+  }
 }

@@ -77,13 +77,14 @@ export class CreateTripComponent implements OnInit{
     this.routeService.getRoutes().subscribe(
       {
         next: (response:Route[]) => {
+          // const routeActiveList = response.filter(route => route.enable==true);
           this.routeService.setRoutes(response)
         },
         error: (response: any) => console.log(response.error)
       }
     );
     this.routeList = this.routeService.getRoutesCurrent();
-    this.filteredRoutesList = this.routeList;
+    this.filteredRoutesList = this.routeList.filter(route =>route.enable==true);
 
     // Load busList khi da chon tuyen
     this.tripForm.get('route_id')?.valueChanges
@@ -91,37 +92,40 @@ export class CreateTripComponent implements OnInit{
         this.busService.getBuses().subscribe(
           {
             next: (response:Bus[]) => {
+              // const busActiveList = response.filter(bus => bus.enable == true)
               this.busService.setBusList(response)
             },
             error: (response: any) => console.log(response.error)
           }
         );
         this.busList = this.busService.getBusListFromRouteId(Number(value));
-        this.filteredBusList = this.busList;
+        this.filteredBusList = this.busList.filter(bus => bus.enable == true);
       })
 
     // Load tai xe
     this.employeeService.getUsers().subscribe(
       {
         next: (response:User[]) => {
+          // const employeeActiveList = response.filter(employee=>employee.enable==true)
           this.employeeService.setUserList(response)
         },
         error: (response: any) => console.log(response.error)
       }
     );
     this.driverList = this.employeeService.getDriverCurrent();
-    this.filteredDriverList = this.driverList;
+    this.filteredDriverList = this.driverList.filter(employee=>employee.enable==true);
     //Load phu lai
     this.employeeService.getUsers().subscribe(
       {
         next: (response:User[]) => {
+          // const employeeActiveList = response.filter(employee=>employee.enable==true)
           this.employeeService.setUserList(response)
         },
         error: (response: any) => console.log(response.error)
       }
     );
     this.coDriverList = this.employeeService.getCoDriverCurrent();
-    this.filteredCoDriverList = this.coDriverList;
+    this.filteredCoDriverList = this.coDriverList.filter(employee=>employee.enable==true);
 
 
     
@@ -221,8 +225,8 @@ export class CreateTripComponent implements OnInit{
     const normalizeText = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     const filterValue = normalizeText(value.toLowerCase()); 
     this.filteredRoutesList = this.routeList.filter(route => 
-      normalizeText(route.start_point.toLowerCase()).includes(filterValue) || 
-      normalizeText(route.end_point.toLowerCase()).includes(filterValue) 
+      (normalizeText(route.start_point.toLowerCase()).includes(filterValue) || 
+      normalizeText(route.end_point.toLowerCase()).includes(filterValue) ) && route.enable == true
     );
     this.cdr.detectChanges();
 
@@ -252,7 +256,7 @@ export class CreateTripComponent implements OnInit{
     const normalizeText = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     const filterValue = normalizeText(value.toLowerCase()); 
     this.filteredBusList = this.busList.filter(bus => 
-      normalizeText(bus.number_bus.toLowerCase()).includes(filterValue)
+      normalizeText(bus.number_bus.toLowerCase()).includes(filterValue) && bus.enable==true
     );
     this.cdr.detectChanges();
 
@@ -277,7 +281,7 @@ export class CreateTripComponent implements OnInit{
     const normalizeText = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     const filterValue = normalizeText(value.toLowerCase()); 
     this.filteredDriverList = this.driverList.filter(driver => 
-      normalizeText(driver.name.toLowerCase()).includes(filterValue)
+      normalizeText(driver.name.toLowerCase()).includes(filterValue) && driver.enable==true
     );
     this.cdr.detectChanges();
 
@@ -302,7 +306,7 @@ export class CreateTripComponent implements OnInit{
     const normalizeText = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     const filterValue = normalizeText(value.toLowerCase()); 
     this.filteredCoDriverList = this.coDriverList.filter(coDriver => 
-      normalizeText(coDriver.name.toLowerCase()).includes(filterValue) 
+      normalizeText(coDriver.name.toLowerCase()).includes(filterValue) && coDriver.enable==true
     );
     this.cdr.detectChanges();
 

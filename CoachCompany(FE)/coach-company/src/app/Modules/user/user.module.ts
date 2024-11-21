@@ -27,27 +27,20 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { ForgotPassswordComponent } from './login/forgot-passsword/forgot-passsword.component';
 import { VerificationCodeComponent } from './login/verification-code/verification-code.component';
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
+import { SearchScheduleComponent } from './search-schedule/search-schedule.component';
 
 @NgModule({
   declarations: [
-    AboutComponent,
-    SearchTicketComponent,
-    BlogComponent,
     RegisterComponent,
     HeaderUserComponent,
     FooterUserComponent,
-    ChooseChairComponent,
     DefaultUserUiComponent,
+    
   ],
   imports: [
-    LoginComponent,
     UserRoutingModule,
-    HomeUserComponent,
-    ContactComponent,
     CommonModule,
-    CarourselHomeUserComponent,
     DropdownModule,
-    ScheduleComponent,
     MatDatepickerModule,
     MatInputModule,
     MatFormFieldModule,
@@ -56,11 +49,24 @@ import { ResetPasswordComponent } from './login/reset-password/reset-password.co
     NgxCaptchaModule,
     AlertModule,
     ReactiveFormsModule,
+    
+    SearchTicketComponent,
+    LoginComponent,
+    ChooseChairComponent,
+    HomeUserComponent,
+    ContactComponent,
+    CarourselHomeUserComponent,
+    ScheduleComponent,
+    AboutComponent,
+    BlogComponent,
     ForgotPassswordComponent,
     VerificationCodeComponent,
     ResetPasswordComponent,
+    SearchScheduleComponent,
   ],
   exports: [
+    SearchScheduleComponent,
+    BlogComponent,
     HomeUserComponent,
     HeaderUserComponent,
     FooterUserComponent,
