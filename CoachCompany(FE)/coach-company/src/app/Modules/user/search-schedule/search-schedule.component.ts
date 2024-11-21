@@ -105,7 +105,7 @@ export class SearchScheduleComponent implements OnInit{
       
       // Router schedule page 
       if(this.currPage!='schedule') {
-        this.router.navigate(['schedule']);
+        this.router.navigate(['user/schedule']);
       }
 
       // store input

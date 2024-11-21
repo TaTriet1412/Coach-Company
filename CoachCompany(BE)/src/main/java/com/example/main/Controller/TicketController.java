@@ -54,4 +54,16 @@ public class TicketController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/pay/{ticketId}")
+    public ResponseEntity<Ticket> updatePaymentTicket(@PathVariable Long ticketId,@RequestHeader Map<String,String> header){
+        Ticket ticket =  ticketService.updatePayment(ticketId);
+        return new ResponseEntity<>(ticket,HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/cancle-auto-remove/{ticketId}")
+    public ResponseEntity<Ticket> cancleAutoRemove(@PathVariable Long ticketId,@RequestHeader Map<String,String> header){
+        Ticket ticket =  ticketService.cancleAutoRemove(ticketId);
+        return new ResponseEntity<>(ticket,HttpStatus.ACCEPTED);
+    }
+
 }

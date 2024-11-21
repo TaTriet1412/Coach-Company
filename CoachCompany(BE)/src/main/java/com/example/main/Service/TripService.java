@@ -198,6 +198,7 @@ public class TripService {
         if(!bus.isEnable()) throw new TripException("Xe đã ngừng hoạt động");
         if(!driver.isEnable()) throw new TripException("Tài xế đã hết hợp đồng");
         if(!coDriver.isEnable()) throw new TripException("Phụ lái đã hết hợp đồng");
+        if(trip.getTime_end().isBefore(LocalDateTime.now())) throw new TripException("Chuyến đã hoàn thành");
 
 
         trip.setTime_start(time_start);

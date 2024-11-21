@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("")
+@RequestMapping("/payments")
 @Controller
 public class VnPayController {
     @Autowired
@@ -26,7 +26,7 @@ public class VnPayController {
     }
 
 
-    @PostMapping("/payments/vnpay")
+    @PostMapping("/vnpay")
     public ResponseEntity<Map<String, String>> submidOrder(
             @RequestParam("amount") int orderTotal,
             @RequestParam("orderInfo") String orderInfo,
@@ -42,8 +42,8 @@ public class VnPayController {
     }
 
 
-    @GetMapping("/home")
-    public String GetMapping(HttpServletRequest request, Model model){
+    @GetMapping("/afterPayed")
+    public ResponseEntity<Object> GetMapping(HttpServletRequest request, Model model){
         int paymentStatus =vnPayService.orderReturn(request);
 
         String orderInfo = request.getParameter("vnp_OrderInfo");
@@ -56,6 +56,7 @@ public class VnPayController {
         model.addAttribute("paymentTime", paymentTime);
         model.addAttribute("transactionId", transactionId);
 
-        return paymentStatus == 1 ? "ordersuccess" : "orderfail";
+//        return paymentStatus == 1 ? "ordersuccess" : "orderfail";
+        return ResponseEntity.ok(paymentStatus);
     }
 }

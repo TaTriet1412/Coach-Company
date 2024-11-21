@@ -1,0 +1,64 @@
+<div class="container">
+    <h4>Thêm vé xe</h4>
+    <form [formGroup]="ticketForm" (ngSubmit)="handleCreateTicket($event)">
+
+        <div class="form-group mr-24 parent-flex" >
+            <!-- Search Input Field -->
+            <mat-form-field appearance="fill" class="br-black" >
+                <mat-label>Tìm kiếm chuyến</mat-label>
+                <input matInput placeholder="Tìm kiếm chuyến" (input)="onTripSearch($event)">
+            </mat-form-field>
+            
+            <!-- Select Input Field -->
+            <mat-form-field appearance="fill" class="last-flex-item">
+                <mat-label >Chọn chuyến</mat-label>
+                <mat-select formControlName="trip_id" id="trip_id" name="trip_id" (selectionChange)="removeSeatsId()" #tripSelect required >
+                <mat-option *ngFor="let trip of filteredTripList" value="{{trip.id}}">
+                    {{ trip.id }} 
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Chọn Ghế</mat-label>
+                <mat-select formControlName="seat_list" multiple>
+                <mat-option *ngFor="let seat of seatList" [value]="seat.id" [disabled]>
+                    {{ seat.name }} 
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+          
+
+        <div class="form-group">
+            <label for="name_customer">Tên khách hàng</label>
+            <input formControlName="name_customer" id="name_customer" type="text" class="form-control" placeholder="Nhập tên khách hàng">
+        </div>
+
+        <div class="form-group">
+            <label for="phone_customer">Số điện thoại</label>
+            <input formControlName="phone_customer" type="text" class="form-control" id="phone_customer" placeholder="Nhập số điện thoại"/>
+        </div>
+
+        <div class="form-group">
+            <label for="email_customer">Email</label>
+            <input formControlName="email_customer" type="email" class="form-control" id="email_customer" placeholder="Nhập email"/>
+        </div>
+
+        <!-- Nút Lưu và Hủy -->
+        <button type="submit" class="btn btn-success btn-icon-split mr-2" >
+            <span class="icon text-white-100">
+                <i class="fas fa-plus" ></i>
+            </span>
+            <span class="text">Tạo mới</span>
+        </button>
+        <a (click)="backList()" class="btn btn-outline-secondary btn-icon-split" >
+            <span class="icon text-white-100">
+                <i class="fas fa-ban"></i>
+            </span>
+            <span class="text">Hủy</span>
+        </a>
+    </form>
+</div>

@@ -1,0 +1,79 @@
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Dữ liệu</h6>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableTripStaff" width="100%" cellspacing="0">
+                <thead>
+                    <tr >
+                        <th *ngFor="let header of headerList">{{header}}</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr >
+                        <th *ngFor="let header of headerList">{{header}}</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr *ngFor="let trip of tripList; trackBy: trackById">
+                        <td>{{trip.id}}</td>
+                        <td>{{
+                            routeService.getRouteById(busService.getBusById(trip.busId)?.routeId!)?.start_point
+                            }}
+                            -
+                            {{
+                            routeService.getRouteById(busService.getBusById(trip.busId)?.routeId!)?.end_point
+                            }}    
+                        </td>
+                        <td>{{employeeService.getDriverById(trip.driverId)?.name}}</td>
+                        <td>{{employeeService.getCoDriverById(trip.coDriverId)?.name}}</td>
+                        <td>{{busService.getBusById(trip.busId)?.number_bus}}</td>
+                        <td>{{trip.time_start | date: "d/'M/yy"}}</td>
+                        <td>{{trip.time_start | date: "h:mm a"}}</td>
+                        <td>{{trip.time_end | date: "h:mm a"}}</td>
+                        <td [ngClass]="getTripStatusClass(trip)"> {{ getTripStatus(trip) }} </td>
+                        <td [ngClass]="{'active': trip.enable, 'inactive': !trip.enable}">
+                            {{ trip.enable ? 'Hoạt động bình thường' : 'Không hoạt động' }}
+                        </td>
+                        <td>{{trip.date_begin | date: "d/'M/yy, h:mm a"}}</td>
+                        <!-- <td class="d-flex justify-content-around">
+                            <a (click)="updateElement(trip.id)" class="btn btn-outline-info">
+                                <i class="fas fa-wrench"></i>
+                            </a> -->
+                            <!-- <button class="btn btn-outline-danger" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModal'+trip.id" >
+                                <i class="fas fa-trash-alt"></i>
+                            </button> -->
+                        <!-- </td> -->
+
+                        <!-- Model Xoa -->
+
+                        <div class="modal fade" [id]="'exampleModal'+trip.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                Xóa dữ liệu có mã  = <span style="color: red;font-weight: 400;">{{trip.id}}</span>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Xóa</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

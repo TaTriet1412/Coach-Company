@@ -3,7 +3,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/co
 import { News } from '../../dto/news';
 import { NewsService } from '../../../core/services/news.service';
 import { ShareModule } from '../../share/share.module';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -19,7 +19,7 @@ export class BlogComponent implements OnInit,AfterViewInit {
   constructor(
     private newsService: NewsService,
     private cdr:ChangeDetectorRef,
-    private router:Router
+    private router:Router,
   ){}
 
 
@@ -59,6 +59,6 @@ export class BlogComponent implements OnInit,AfterViewInit {
   }
 
   goToDetailPage(id:number){
-    this.router.navigate([`blog/detail-blog/${id}`]);
+    this.router.navigate([`user/blog/detail-blog/${id}`]);
   }
 }

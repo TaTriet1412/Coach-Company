@@ -32,7 +32,7 @@ export class TripComponent implements OnInit,AfterViewInit{
   pageType = 'trip';
   headerList = ['Mã chuyến','Mã tuyến','Tài xế','Phụ lái','Số Xe'
     ,'Ngày đi','Thời gian bắt đầu','Thời gian kết thúc'
-    ,'Trạng thái','Ngày cập nhật'];
+    ,'TT chạy','TT hoạt động','Ngày cập nhật'];
   tripList!: Trip[];
   constructor(
     public routeService:RouteService,
@@ -109,4 +109,32 @@ export class TripComponent implements OnInit,AfterViewInit{
   trackById(id: number, trip: Trip): number{
     return trip.id
   }
+
+  getTripStatus(trip: any): string { 
+    const now = new Date(); const timeStart = new Date(trip.time_start); 
+    const timeEnd = new Date(trip.time_end); 
+    if (now < timeStart) { 
+      return 'Chưa chạy'; 
+    } 
+    else if (now >= timeStart && now <= timeEnd) { 
+      return 'Đang chạy'; 
+    } else { 
+      return 'Đã chạy'; 
+    } 
+  }
+
+  getTripStatusClass(trip: any): string {
+    const now = new Date();
+    const timeStart = new Date(trip.time_start);
+    const timeEnd = new Date(trip.time_end);
+  
+    if (now < timeStart) {
+      return 'not-started';
+    } else if (now >= timeStart && now <= timeEnd) {
+      return 'running';
+    } else {
+      return 'ended';
+    }
+  }
+  
 }

@@ -44,8 +44,9 @@
                         <td>{{trip.time_start | date: "d/'M/yy"}}</td>
                         <td>{{trip.time_start | date: "h:mm a"}}</td>
                         <td>{{trip.time_end | date: "h:mm a"}}</td>
+                        <td [ngClass]="getTripStatusClass(trip)"> {{ getTripStatus(trip) }} </td>
                         <td [ngClass]="{'active': trip.enable, 'inactive': !trip.enable}">
-                            {{ trip.enable ? 'Đang hoạt động' : 'Không hoạt động' }}
+                            {{ trip.enable ? 'Hoạt động bình thường' : 'Không hoạt động' }}
                         </td>
                         <td>{{trip.date_begin | date: "d/'M/yy, h:mm a"}}</td>
                         <td class="d-flex justify-content-around">

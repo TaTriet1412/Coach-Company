@@ -3,7 +3,7 @@
 <div class="container mt-4">
     <div class="row">
         <!-- Bộ lọc tìm kiếm -->
-        <div class="fw-semibold col-lg-3">
+        <!-- <div class="fw-semibold col-lg-3">
             <div class="filter-section p-3 bg-white shadow rounded s">
                 <h4 style="color: #00b98e;">BỘ LỌC TÌM KIẾM</h4>
                 <hr>
@@ -17,7 +17,6 @@
                         <input class="form-check-input" type="checkbox" id="time2">
                         <label class="form-check-label" for="time2">Buổi sáng 06:00 - 12:00</label>
                     </div>
-                    <!-- Các tùy chọn khác -->
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="time3">
                         <label class="form-check-label" for="time3">Buổi chiều 12:00 - 18:00</label>
@@ -29,10 +28,10 @@
                 </form>
 
             </div>
-        </div>
+        </div> -->
 
         <!-- Danh sách lịch trình -->   
-        <div class="fw-semibold col-lg-9">
+        <div class="fw-semibold col-lg-">
             <div *ngIf="tripList" class="schedule-section p-3 bg-white shadow rounded">
                 <h4 style="color: #00b98e;" class="mb-4">{{startPoint}} - {{endPoint}}</h4>
                 <div *ngFor="let trip of tripList" class="schedule-item shadow">
@@ -79,8 +78,7 @@
                                 (this.busService.getBusById(trip.busId)?.routeId!)?.start_point
                             }}</p>
                         </div>
-                        <div class="col-md-2">
-                        </div>
+
                         <div class="col-md-4">
                             <p class="fs-6 mb-0 trinh">{{
                                 this.routeService.getRouteById

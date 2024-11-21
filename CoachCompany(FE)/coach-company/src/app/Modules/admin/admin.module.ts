@@ -66,7 +66,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 
   ],
   providers: [
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    // {provide: LocationStrategy, useClass: HashLocationStrategy},
     provideClientHydration(),
     provideHttpClient(withFetch()),
   ]

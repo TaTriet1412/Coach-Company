@@ -1,0 +1,47 @@
+@import url("../../../../../../public/assets/admin/admin.css");
+.input-time{
+    border-radius: 10px;
+    margin-left: 22px;
+    margin-right: 22px;
+}
+
+/* Snack Bar notify */
+
+::ng-deep .snackbar-success {
+    border-radius: 6px;
+    box-shadow: 0 0 0 6px rgb(100, 160, 11);
+}
+
+::ng-deep .snackbar-warning {
+    border-radius: 6px;
+    box-shadow: 0 0 0 6px rgb(219, 219, 15);
+}
+
+::ng-deep .snackbar-error {
+    border-radius: 6px;
+    box-shadow: 0 0 0 6px rgb(255, 0, 0);
+}
+
+::ng-deep .mat-mdc-text-field-wrapper{
+    background-color: white !important;
+}
+
+.parent-flex {
+    display: flex !important;
+  }
+  
+.child {
+    flex: 1;
+}
+
+.last-flex-item {
+    flex: 1 1 auto !important; /* or flex-grow: 1; */
+}
+
+.br-black{
+    border-right: 1px solid;
+}
+  
+.mr-24{
+    margin: 24px 0;
+}

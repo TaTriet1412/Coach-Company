@@ -6,6 +6,8 @@ import com.example.main.Entity.*;
 import com.example.main.Exception.TicketException;
 import com.example.main.Repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,6 +33,9 @@ public class TicketService {
 
     @Autowired
     private RouteService routeService;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private final ConcurrentHashMap<Long, ScheduledFuture<?>> scheduledTasks = new ConcurrentHashMap<>();
@@ -91,6 +96,11 @@ public class TicketService {
         ticket.setEmail_customer(request.getEmail_customer());
         ticket.setName_customer(request.getName_customer());
         ticket.setPhone_customer(request.getPhone_customer());
+        Trip currTrip = tripService.getTripById(request.getTrip_id());
+        if(currTrip.getTime_start().isBefore(LocalDateTime.now())){
+            throw new TicketException("Chuyến đã khởi hành!");
+        }
+
         ticket.setTrip(tripService.getTripById(request.getTrip_id()));
         List<Seat> seatChoosenList = new LinkedList<>();
         for(Long id:request.getSeat_list()){
@@ -99,16 +109,29 @@ public class TicketService {
         }
         ticket.setSeats(seatChoosenList);
 
+
+
 //       10 minutes to delete
         Ticket savedTicket = ticketRepository.save(ticket);
 //        scheduleTicketDeletion(savedTicket.getId(), 1, TimeUnit.MINUTES);
         scheduleTicketDeletion(savedTicket.getId(), 10, TimeUnit.MINUTES);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("tatriet_tony@1zulieu.com");
+        message.setTo(request.getEmail_customer());
+        message.setSubject("Thông tin vé của quý khách " + request.getName_customer());
+        message.setText("Mã vé của quý khách là: "+ ticket.getId() + "\nSố điện thoại là : " + request.getPhone_customer());
+        javaMailSender.send(message);
 
         return ticketRepository.save(ticket);
     }
 
     public Ticket updateTicket(UpdateTicketRequest request, Long ticketId) {
         Ticket ticket = getTicketById(ticketId);
+        if(ticket.isPayment_status()){
+            throw new TicketException("Vé đã thanh toán rồi");
+        }
+
         ticket.setPayment_status(request.isPayment_status());
         ticket.setEmail_customer(request.getEmail_customer());
         ticket.setName_customer(request.getName_customer());
@@ -136,15 +159,29 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-    public void updatePayment(Long id) {
+    public Ticket updatePayment(Long id) {
         Ticket ticket = getTicketById(id);
         ticket.setPayment_status(true);
+        ticket.setPayment_time(LocalDateTime.now());
         // Cancel the scheduled deletion task if the payment is updated
         ScheduledFuture<?> scheduledTask = scheduledTasks.get(id); if (scheduledTask != null) {
             scheduledTask.cancel(false);
             scheduledTasks.remove(id);
         }
+        return ticketRepository.save(ticket);
     }
+
+    public Ticket cancleAutoRemove(Long id) {
+        Ticket ticket = getTicketById(id);
+        // Cancel the scheduled deletion task if the payment is updated
+        ScheduledFuture<?> scheduledTask = scheduledTasks.get(id); if (scheduledTask != null) {
+            scheduledTask.cancel(false);
+            scheduledTasks.remove(id);
+        }
+        return ticketRepository.save(ticket);
+    }
+
+
 
     private void scheduleTicketDeletion(Long ticketId, long delay, TimeUnit unit) {
         ScheduledFuture<?> scheduledTask = scheduler.schedule(() -> deleteTicket(ticketId), delay, unit);

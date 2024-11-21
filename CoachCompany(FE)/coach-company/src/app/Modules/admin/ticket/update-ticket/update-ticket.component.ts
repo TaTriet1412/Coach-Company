@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { SnackBarService } from '../../../../core/services/snack-bar.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -89,6 +89,7 @@ export class UpdateTicketComponent implements OnInit {
 
   }
 
+
   refreshSeatLists(trip_id: number) {
     // All seats of this trip
     this.seatService.getSeatListByTripId(trip_id).subscribe(
@@ -158,9 +159,11 @@ export class UpdateTicketComponent implements OnInit {
             const updatedTickets = this.ticketService.getTicketList().map(ticket => ticket.id === response.id ? response : ticket );
             this.ticketService.setTicketList(updatedTickets);
             this.inputsSeats = seat_list!
-
+            
             // Refresh seat lists and trigger change detection 
             this.refreshSeatLists(Number(trip_id));
+            this.ticketCurr = this.ticketService.getTicketById(this.ticketCurr.id)!;
+            this.cdr.detectChanges();
           },
           error: (response:any) => this.snackBarService.notifyError(response.error.message)
         })
@@ -199,5 +202,15 @@ export class UpdateTicketComponent implements OnInit {
 
   removeSeatsId(){
     this.ticketForm.get('seat_list')?.setValue([]);
+  }
+
+  
+  cancleRemoveTicket(){
+    this.ticketService.cancleRemoveTicket(this.ticketCurr.id)
+    .subscribe({
+      next: (response: any) => {
+        this.snackBarService.notifySuccess("Hủy tự động thành công");
+      }
+    }) 
   }
 }

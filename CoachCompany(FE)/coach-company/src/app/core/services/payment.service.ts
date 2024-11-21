@@ -22,4 +22,9 @@ export class PaymentService {
     return this.http.post<{ redirectUrl: string}>(`${this.apiPaymentUrl}/vnpay`,
       formData, {headers});
   }
+
+  processAfterPayed(): Observable<any>{
+    const headers = this.headers;
+    return this.http.get<any>(`${this.apiPaymentUrl}/afterPayed`, {headers});
+  } 
 }

@@ -68,6 +68,8 @@ export class CreateTicketComponent implements OnInit{
       }
     );
     this.tripList = this.tripService.getTripList();
+    this.tripList =  this.tripList.filter(trip => new Date(trip.time_start) > new Date())
+
     this.filteredTripList = this.tripList;
 
     // Load busList after choosing trip
@@ -181,6 +183,7 @@ export class CreateTicketComponent implements OnInit{
   backList() {
     this.router.navigate(['admin/ticket']);
   }
+
 
   removeSeatsId(){
     this.ticketForm.get('seat_list')?.setValue([]);

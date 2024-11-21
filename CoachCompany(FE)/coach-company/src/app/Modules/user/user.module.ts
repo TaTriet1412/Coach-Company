@@ -73,6 +73,7 @@ import { SearchScheduleComponent } from './search-schedule/search-schedule.compo
     ScheduleComponent,
     ContactComponent,
     DefaultUserUiComponent,
+    AboutComponent,
     ForgotPassswordComponent,
     VerificationCodeComponent,
     ResetPasswordComponent,

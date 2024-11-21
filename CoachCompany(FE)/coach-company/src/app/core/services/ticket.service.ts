@@ -76,4 +76,14 @@ export class TicketService {
     return this.http.delete<void>(`${this.apiTicketUrl}/${id}`, {headers});
   }
 
+  updatePay(ticketId: number): Observable<Ticket>{
+    const headers = this.headers;
+    return this.http.get<Ticket>(`${this.apiTicketUrl}/pay/${ticketId}`, {headers});
+  }
+
+  cancleRemoveTicket(ticketId: number): Observable<Ticket>{
+    const headers = this.headers;
+    return this.http.get<Ticket>(`${this.apiTicketUrl}/cancle-auto-remove/${ticketId}`, {headers});
+  }
+
 }

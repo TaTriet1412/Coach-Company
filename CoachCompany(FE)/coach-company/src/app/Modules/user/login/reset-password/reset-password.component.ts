@@ -45,7 +45,7 @@ export class ResetPasswordComponent {
       .subscribe({
         next: (response:any) => {
           this.snackBarService.notifySuccessUser("Đặt lại mật khẩu thành công")
-          this.router.navigate(["login"]);
+          this.router.navigate(["user/login"]);
         },
         error: (response:any) => console.log(response.error)
       });

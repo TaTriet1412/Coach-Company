@@ -41,8 +41,8 @@
                                     <img src="/assets/img/payment/vnpay-logo.jpg" alt="vnpay" class="img_logo">
                                 </div>
                                 <div class="payment_form">
-                                    <form *ngIf="ticketCurr">
-                                        <button  [disabled]="ticketCurr.payment_status"  name="redirect" class="vnpay" (click)="GoToPay($event)">
+                                    <form [formGroup]="payGroup" (ngSubmit)="GoToPay($event)" *ngIf="ticketCurr">
+                                        <button  [disabled]="ticketCurr.payment_status" type="submit"  name="redirect" class="vnpay">
                                             VNPAY
                                         </button>
                                     </form>

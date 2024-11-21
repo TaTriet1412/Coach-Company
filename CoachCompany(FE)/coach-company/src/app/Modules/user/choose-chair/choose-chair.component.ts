@@ -13,6 +13,7 @@ import { TicketService } from '../../../core/services/ticket.service';
 import { Ticket } from '../../dto/ticket';
 import { RouteService } from '../../../core/services/route.service';
 import { ShareModule } from '../../share/share.module';
+import { BusService } from '../../../core/services/bus.service';
 
 @Component({
   selector: 'app-choose-chair',
@@ -42,6 +43,7 @@ export class ChooseChairComponent implements OnInit,AfterViewInit {
     private tripService:TripService,
     public routeService: RouteService,
     private seatService: SeatService,
+    private busService: BusService,
     private ticketService: TicketService,
     private snackBarService: SnackBarService,
     private activeRoute: ActivatedRoute,
@@ -53,7 +55,6 @@ export class ChooseChairComponent implements OnInit,AfterViewInit {
     (this.activeRoute.params.subscribe(params => {
       this.tripId = +params['id'];
     }))
-    this.loadRouteByTripId(this.tripId);
     const seatListCurr = await firstValueFrom( this.tripService.getSeatsByTripId(this.tripId))
     this.seatService.setSeatList(seatListCurr)
     this.seatList = this.seatService.getSeatList()
@@ -66,10 +67,11 @@ export class ChooseChairComponent implements OnInit,AfterViewInit {
     // list status of seats
     this.seatList.forEach(seat => { this.seatStatuses[seat.id] = this.isOccupiedSeat(seat.id) ? 'sold' : 'available'; });
     
-
-
+    
+    
     const tripCurrAPI = await firstValueFrom( this.tripService.getTripByIdAPI(this.tripId))
     this.tripCurr = tripCurrAPI;
+    this.loadRouteByTripId(this.tripId);
     this.cdr.detectChanges();
   }
 
@@ -161,7 +163,7 @@ export class ChooseChairComponent implements OnInit,AfterViewInit {
         .subscribe({
           next: (response: Ticket) => {
             this.snackBarService.notifySuccessUser("Đặt vé thành công")
-            this.router.navigate([`ticket/detail-ticket/${response.id}`])
+            this.router.navigate([`user/ticket/detail-ticket/${response.id}`])
           }
         })
       
@@ -171,7 +173,9 @@ export class ChooseChairComponent implements OnInit,AfterViewInit {
   async loadRouteByTripId(tripId: number): Promise<void> { this.route = await this.getRouteByTripId(tripId); }
 
   async getRouteByTripId(tripId: number): Promise<Route> {
-    const routeResult = await firstValueFrom(this.routeService.getRouteByIdAPI(tripId))
+    const busId = this.tripCurr.busId
+    const busResult = await firstValueFrom(this.busService.getBusByIdAPI(busId))
+    const routeResult = await firstValueFrom(this.routeService.getRouteByIdAPI(busResult.routeId))
     return routeResult!;
   }
 

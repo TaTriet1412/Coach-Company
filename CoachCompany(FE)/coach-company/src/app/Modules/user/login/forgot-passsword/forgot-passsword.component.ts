@@ -42,7 +42,7 @@ export class ForgotPassswordComponent {
         next: (response:any) => {},
         error: (response:any) => {}
       });
-      this.router.navigate(["/login/verification-code"])
+      this.router.navigate(["/user/login/verification-code"])
     }
   }
 }

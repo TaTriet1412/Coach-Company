@@ -35,7 +35,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
   ],
   bootstrap: [AppComponent]
 })

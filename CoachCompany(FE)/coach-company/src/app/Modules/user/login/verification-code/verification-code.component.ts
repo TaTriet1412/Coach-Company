@@ -42,7 +42,7 @@ export class VerificationCodeComponent {
       this.userService.verifyCode(oldEmail,codeInput)
       .subscribe({
         next: (response:any) => {
-          this.router.navigate(['/login/reset-password'])
+          this.router.navigate(['/user/login/reset-password'])
         },
         error: (response:any) => {
           this.errorMessage = response.error.message;

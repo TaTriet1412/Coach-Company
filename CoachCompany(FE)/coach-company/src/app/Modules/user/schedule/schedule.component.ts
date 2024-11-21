@@ -53,7 +53,7 @@ export class ScheduleComponent  implements OnInit, AfterViewInit{
   ){}
 
   goToChooseChair(tripId: number){
-    this.router.navigate([`/choose-chair/${tripId}`])
+    this.router.navigate([`/user/choose-chair/${tripId}`])
   }
 
   async ngOnInit(): Promise<void> {

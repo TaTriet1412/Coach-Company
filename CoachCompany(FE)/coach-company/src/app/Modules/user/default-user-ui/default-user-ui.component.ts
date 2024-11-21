@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-default-user-ui',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './default-user-ui.component.css'
 })
 export class DefaultUserUiComponent {
+
+    
 
 }

@@ -17,40 +17,32 @@ import { DetailBlogComponent } from "./blog/detail-blog/detail-blog.component";
 import { DetailTicketComponent } from "./search-ticket/detail-ticket/detail-ticket.component";
 
 const routes: Routes = [
-    { path: "", 
-      component: DefaultUserUiComponent,
-      children: [
-        {path: "", component: HomeUserComponent},
-        { path: "home", component: HomeUserComponent},
-        { path: "schedule", component: ScheduleComponent},
-        { path: "ticket", 
-          children: [
-            {path: "", component: SearchTicketComponent},
-            {path: "detail-ticket/:id", component: DetailTicketComponent},
-          ]
-        },
+    { path: "", component: DefaultUserUiComponent,children: [
+      { path: "", redirectTo: "home", pathMatch: "full" },
+      { path: "home", component: HomeUserComponent},
+      { path: "schedule", component: ScheduleComponent},
+      { path: "ticket", children: [
+        {path: "", component: SearchTicketComponent},
+        {path: "detail-ticket/:id", component: DetailTicketComponent},]},
         { path: "about-us", component: AboutComponent},
-        { path: "blog", 
-          children: [
-            {path: "", component: BlogComponent},
-            {path: "detail-blog/:id", component: DetailBlogComponent},
-          ]
-        },
+        { path: "blog", children: [
+          {path: "", component: BlogComponent},
+        {path: "detail-blog/:id", component: DetailBlogComponent},]},
         { path: "contact-us", component: ContactComponent},
         { path: "register", component: RegisterComponent},
-        { path: "login", 
-          children: [
-            { path: "",component: LoginComponent},
-            { path: "forgot-password",component: ForgotPassswordComponent},
-            { path: "verification-code",component: VerificationCodeComponent},
-            { path: "reset-password",component: ResetPasswordComponent},
-          ]
-        },
+        { path: "login", children: [
+          { path: "",component: LoginComponent},
+          { path: "forgot-password",component: ForgotPassswordComponent},
+          { path: "verification-code",component: VerificationCodeComponent},
+        { path: "reset-password",component: ResetPasswordComponent},]},
         { path: "choose-chair/:id", component: ChooseChairComponent},
-      ]
+    ]
     },
+
     
   ];
+
+  
   
 @NgModule({
     imports: [RouterModule.forChild(routes)],
