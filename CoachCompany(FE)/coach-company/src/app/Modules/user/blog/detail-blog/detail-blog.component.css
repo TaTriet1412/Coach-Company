@@ -1,3 +1,4 @@
+@import url("../../../../../../node_modules/ckeditor5/dist/ckeditor5.css");
 .content-container {
     max-width: 100%;
     overflow-x: hidden; 
@@ -22,3 +23,23 @@ img {
     width: 100% !important;
     object-fit: cover !important;
 }
+
+.ck-content {
+    iframe {
+      width: 100%;
+      max-width: 560px;
+      height: 315px;
+      margin: 1rem auto;
+      display: block;
+    }
+  
+    figure.media {
+      display: block;
+      margin: 1rem 0;
+  
+      oembed {
+        display: none; 
+      }
+    }
+  }
+  

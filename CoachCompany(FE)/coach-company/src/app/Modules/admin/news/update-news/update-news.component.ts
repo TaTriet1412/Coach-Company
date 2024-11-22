@@ -101,11 +101,11 @@ import { News } from '../../../dto/news';
 export class UpdateNewsComponent implements AfterViewInit,OnInit{
 	@ViewChild('editorMenuBarElement') private editorMenuBar!: ElementRef<HTMLDivElement>;
 	@ViewChild('ckeditor', { static: false }) ckeditor: any; 
-	data: any = `<p>Hello, world!</p>`;
+	data: any = `<p>Tin Tức mới hôm nay!</p>`;
 	retrievedata: string = this.data;
 	selectedFile!: File;
-  newsCurr!: News;
-  newsId!: number;
+	newsCurr!: News;
+	newsId!: number;
 
 	newsForm = new FormGroup({
 		title: new FormControl(''),
@@ -133,6 +133,8 @@ export class UpdateNewsComponent implements AfterViewInit,OnInit{
     const news = this.newsService.getNewsById(this.newsId); 
     this.newsForm.patchValue(news!); 
 	this.data = news!.content;
+	this.retrievedata = this.data;
+	this.changeDetector.detectChanges();
   }
 	
 	onReady($event: ClassicEditor) {
@@ -390,6 +392,7 @@ export class UpdateNewsComponent implements AfterViewInit,OnInit{
 	public onChange({ editor }: ChangeEvent) {
 		const data = editor.getData();
 		this.retrievedata=data;
+		this.changeDetector.detectChanges();
 	}
 
 	backList() {

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ChangeEvent, CKEditorModule} from '@ckeditor/ckeditor5-angular'
+import { ChangeEvent, CKEditorComponent, CKEditorModule} from '@ckeditor/ckeditor5-angular'
 
 import {
 	ClassicEditor,
@@ -87,6 +87,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NewsService } from '../../../../core/services/news.service';
 import { UserService } from '../../../../core/services/user.service';
 import { News } from '../../../dto/news';
+import coreTranslations from 'ckeditor5/translations/en.js';
 
 @Component({
 	selector: 'app-create-news',
@@ -98,8 +99,8 @@ import { News } from '../../../dto/news';
 })
 export class CreateNewsComponent implements AfterViewInit{
 	@ViewChild('editorMenuBarElement') private editorMenuBar!: ElementRef<HTMLDivElement>;
-	@ViewChild('ckeditor', { static: false }) ckeditor: any; 
-	data: any = `<p>Hello, world!</p>`;
+	@ViewChild('ckeditor') ckeditor!: CKEditorComponent;
+	data: any = `<p>Tin tức mới hôm nay!</p>`;
 	retrievedata: string = this.data;
 	selectedFile!: File;
 
@@ -129,6 +130,8 @@ export class CreateNewsComponent implements AfterViewInit{
 	public config: EditorConfig = {}; // CKEditor needs the DOM tree before calculating the configuration.
 	public ngAfterViewInit(): void {
 		this.config = {
+			
+			translations: [ coreTranslations],
 			toolbar: {
 				items: [
 					'undo',
@@ -369,8 +372,12 @@ export class CreateNewsComponent implements AfterViewInit{
 	}
 
 	public onChange({ editor }: ChangeEvent) {
-		const data = editor.getData();
-		this.retrievedata=data;
+		const editorInstance = this.ckeditor.editorInstance;
+		if (editorInstance) {
+			const editorData = editorInstance.getData();
+			this.retrievedata=editorData;
+			console.log(this.retrievedata)
+		}
 	}
 
 	backList() {
