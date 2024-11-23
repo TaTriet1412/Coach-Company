@@ -2,11 +2,11 @@
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-5 col-md-6 mb-4 " >
-        <div class="card border-left-primary shadow h-100 py-2 hover-card">
+        <div class="card border-left-primary shadow h-100 py-2 hover-card" (click)="goToRoute()">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">     
-                        <div class="h4 mb-0 font-weight-bold text-primary text-uppercase">Quản lý tuyến xe</div>
+                        <div class="h4 mb-0 font-weight-bold text-primary text-uppercase">Tìm kiếm tuyến xe</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-calendar fa-2x text-gray-500"></i>
@@ -18,11 +18,11 @@
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-5 col-md-6 mb-4 " >
-        <div class="card border-left-success shadow h-100 py-2 hover-card">
+        <div class="card border-left-success shadow h-100 py-2 hover-card" (click)="goToTrip()">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="h4 mb-0 font-weight-bold text-primary text-uppercase">Quản lý chuyến xe</div>
+                        <div class="h4 mb-0 font-weight-bold text-primary text-uppercase">Tìm kiếm chuyến xe</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-dollar-sign fa-2x text-gray-500"></i>
@@ -34,7 +34,7 @@
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-5 col-md-6 mb-4 ">
-        <div class="card border-left-info shadow h-100 py-2 hover-card">
+        <div class="card border-left-info shadow h-100 py-2 hover-card" (click)="goToTicket()">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -48,24 +48,8 @@
         </div>
     </div>
 
-    <!-- Pending Requests Card Example -->
     <div class="col-xl-5 col-md-6 mb-4" >
-        <div class="card border-left-warning shadow h-100 py-2 hover-card">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="h4 mb-0 font-weight-bold text-primary text-uppercase">Quản lý tin tức</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-comments fa-2x text-gray-500"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-5 col-md-6 mb-4" >
-        <div class="card border-left-warning shadow h-100 py-2 hover-card">
+        <div class="card border-left-warning shadow h-100 py-2 hover-card" (click)="goToContact()">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">

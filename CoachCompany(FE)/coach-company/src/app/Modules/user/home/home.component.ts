@@ -52,6 +52,7 @@ export class HomeUserComponent implements  OnInit ,AfterViewInit{
     const routeListCurr = await firstValueFrom(this.routeService.getRoutes());
     this.routeService.setRoutes(routeListCurr);
     this.routeList = this.routeService.getRoutesCurrent().filter(route => route.enable);
+    await this.updateRoutesWithImages();
     this.top6Routes = this.getTopRoutes(this.routeList, 6);
     this.new6Routes = this.getLastRoutes(this.routeList, 6);
     this.cdr.detectChanges();
@@ -93,5 +94,13 @@ export class HomeUserComponent implements  OnInit ,AfterViewInit{
     localStorage.setItem('date_choose',JSON.stringify(new Date()));
     this.router.navigate(["/user/schedule"])
   }
-  
+
+  async updateRoutesWithImages(): Promise<void> { 
+    const updatedRoutes = await Promise.all(this.routeList.map(async route => { 
+      const currImg = await firstValueFrom(this.routeService.getRouteByIdAPI(route.id)); 
+      return { ...route, img: currImg.img // Assuming `img` is the property that needs to be updated 
+        };
+      })); 
+      this.routeList = updatedRoutes; 
+    }
 }

@@ -4,13 +4,13 @@
 
         <div class="form-group mr-24 parent-flex" >
             <!-- Search Input Field -->
-            <mat-form-field appearance="fill" class="br-black" >
+            <mat-form-field *ngIf="ticketCurr" appearance="fill" class="br-black" >
                 <mat-label>Tìm kiếm chuyến</mat-label>
-                <input matInput placeholder="Tìm kiếm chuyến" (input)="onTripSearch($event)">
+                <input  [disabled]="ticketCurr.payment_status" matInput placeholder="Tìm kiếm chuyến" (input)="onTripSearch($event)">
             </mat-form-field>
             
             <!-- Select Input Field -->
-            <mat-form-field appearance="fill" class="last-flex-item">
+            <mat-form-field  *ngIf="ticketCurr" appearance="fill" class="last-flex-item">
                 <mat-label >Chọn chuyến</mat-label>
                 <mat-select formControlName="trip_id" id="trip_id" name="trip_id" (selectionChange)="removeSeatsId()" #tripSelect required >
                 <mat-option *ngFor="let trip of filteredTripList" value="{{trip.id}}">
@@ -49,9 +49,9 @@
 
         <div class="form-group">
             <label for="state">Trạng thái</label>
-            <select formControlName="payment_status" class="form-control" id="payment_status" name="payment_status" required>
-                <option value="true">Đã thanh toán</option>
-                <option value="false">Chưa thanh toán</option>
+            <select *ngIf="ticketCurr" formControlName="payment_status" class="form-control" id="payment_status" name="payment_status" required>
+                <option  [disabled]="ticketCurr.payment_status" value="true">Đã thanh toán</option>
+                <option  [disabled]="ticketCurr.payment_status" value="false">Chưa thanh toán</option>
             </select>
         </div>
 

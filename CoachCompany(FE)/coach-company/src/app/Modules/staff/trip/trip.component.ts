@@ -30,7 +30,7 @@ export class TripComponent implements OnInit,AfterViewInit{
   updateUrl = '/admin/trip/update-trip';
   deleteUrl = 'trips';
   pageType = 'trip';
-  headerList = ['Mã chuyến','Mã tuyến','Tài xế','Phụ lái','Số Xe'
+  headerList = ['Mã chuyến','Tên tuyến','Tài xế','Phụ lái','Số Xe'
     ,'Ngày đi','Thời gian bắt đầu','Thời gian kết thúc'
     ,'TT chạy','TT hoạt động','Ngày cập nhật'];
   tripList!: Trip[];

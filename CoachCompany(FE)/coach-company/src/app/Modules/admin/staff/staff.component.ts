@@ -35,7 +35,7 @@ export class StaffComponent implements OnInit {
   updateUrl = '/admin/staff/update-staff';
   deleteUrl = 'users';
   pageType = 'staff';
-  headerList = ['Mã nhân viên','Họ tên','Email','Số điện thoại','Ngày sinh','Vai trò','Giới tính','Hình ảnh','Trạng thái','Ngày tạo'];
+  headerList = ['Mã nhân viên','Họ tên','Email','Số điện thoại','Ngày sinh','Vai trò','Giới tính','Hình ảnh','Trạng thái','Ngày cập nhật'];
   staffList!: User[];
   constructor(
     private router: Router,

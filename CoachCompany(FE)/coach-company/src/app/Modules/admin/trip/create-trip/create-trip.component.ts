@@ -166,6 +166,8 @@ export class CreateTripComponent implements OnInit{
     // Kiểm tra thời gian bắt đầu
     const now = new Date(); 
     const selectedDate = new Date(dateStart+"T"+time_start); 
+    const nowTime = now.getHours() * 60 + now.getMinutes(); 
+    const selectedDateTime = selectedDate.getHours() * 60 + selectedDate.getMinutes();
     // Thông báo warning
     if(route_id==""){
       this.snackBarService.notifyWarning("Vui lòng chọn tuyến!");
@@ -185,19 +187,15 @@ export class CreateTripComponent implements OnInit{
     }else if(time_start==""){
       this.snackBarService.notifyWarning("Vui lòng chọn giờ bắt đầu!");
     
-    }else if (selectedDate.toDateString() === now.toDateString()){  
-      const nowTime = now.getHours() * 60 + now.getMinutes(); 
-      const selectedDateTime = selectedDate.getHours() * 60 + selectedDate.getMinutes();
-      if(selectedDateTime<nowTime){
+    }else if (selectedDate.toDateString() === now.toDateString() && selectedDateTime<nowTime){  
         this.snackBarService.notifyWarning("Giờ bắt đầu không hợp lệ!");
-      }
+
     }else if(time_end==""){
       this.snackBarService.notifyWarning("Vui lòng nhập giờ bắt đầu và tuyến (để HT tự tạo giờ)!");
   
     }
     else { // Thông bảo lỗi và thành công
       const duration = this.routeService.getRouteById(Number(route_id))!?.duration;
-      console.log(bus_id,driver_id,co_driver_id,dateStart,time_start,duration)
       this.tripService.addTrip(Number(bus_id),Number(driver_id),Number(co_driver_id),dateStart,time_start,duration)
         .subscribe({
           next: (response: Trip) => {

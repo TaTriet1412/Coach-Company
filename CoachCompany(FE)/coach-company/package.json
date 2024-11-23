@@ -32,6 +32,7 @@
     "angular-datatables": "^18.0.0",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.6",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "ckeditor5": "^43.3.0",
     "ckeditor5-premium-features": "^43.3.0",
     "coach-company": "file:",

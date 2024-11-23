@@ -128,15 +128,28 @@ public class TicketService {
 
     public Ticket updateTicket(UpdateTicketRequest request, Long ticketId) {
         Ticket ticket = getTicketById(ticketId);
-        if(ticket.isPayment_status()){
-            throw new TicketException("Vé đã thanh toán rồi");
+        Trip trip = ticket.getTrip();
+        if(trip.getTime_start().isBefore(LocalDateTime.now())){
+            throw new TicketException("Chuyến đã khởi hành");
         }
 
+//        Cập nhật vé sau khi thanh toán
+        if(ticket.isPayment_status()){
+            if(request.getTrip_id()!=ticket.getTripId()) {
+                throw new TicketException("Không được thay đổi tuyến sau khi thanh toán");
+            }else
+            if(request.getSeat_list().length != ticket.getSeats().size()){
+                throw new TicketException("Số lượng ghế không được khác sau khi thanh toán");
+            }else if(!request.isPayment_status()){
+                throw new TicketException("Vé đã thanh toán rồi");
+            }
+        }
+
+//        Cap nhat ve
         ticket.setPayment_status(request.isPayment_status());
         ticket.setEmail_customer(request.getEmail_customer());
         ticket.setName_customer(request.getName_customer());
         ticket.setPhone_customer(request.getPhone_customer());
-
         ticket.setTrip(tripService.getTripById(request.getTrip_id()));
         List<Seat> seatChoosenList = new LinkedList<>();
         for(Long id:request.getSeat_list()){
@@ -145,7 +158,9 @@ public class TicketService {
         }
         ticket.setSeats(seatChoosenList);
         ticket.setDate_begin(LocalDateTime.now());
-        if(request.isPayment_status()){
+
+//        Cập nhật vé khi thanh toán thành công
+        if(request.isPayment_status() && !ticket.isPayment_status()){
             ticket.setPayment_time(LocalDateTime.now());
             // Cancel the scheduled deletion task if the payment is updated
             ScheduledFuture<?> scheduledTask = scheduledTasks.get(ticketId);
@@ -153,9 +168,8 @@ public class TicketService {
                 scheduledTask.cancel(false);
                 scheduledTasks.remove(ticketId);
             }
-        }else{
-            ticket.setPayment_time(null);
         }
+
         return ticketRepository.save(ticket);
     }
 
@@ -163,6 +177,16 @@ public class TicketService {
         Ticket ticket = getTicketById(id);
         ticket.setPayment_status(true);
         ticket.setPayment_time(LocalDateTime.now());
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("tatriet_tony@1zulieu.com");
+        message.setTo(ticket.getEmail_customer());
+        message.setSubject("Thanh toán vé xe khách Quốc Thịnh thành công " );
+        message.setText("Mã vé của quý khách là: "+ ticket.getId() +
+                "\nHọ tên: " + ticket.getName_customer() +
+                "\nEmail: " + ticket.getEmail_customer() +
+                "\nSố điện thoại là : " + ticket.getPhone_customer());
+        javaMailSender.send(message);
         // Cancel the scheduled deletion task if the payment is updated
         ScheduledFuture<?> scheduledTask = scheduledTasks.get(id); if (scheduledTask != null) {
             scheduledTask.cancel(false);

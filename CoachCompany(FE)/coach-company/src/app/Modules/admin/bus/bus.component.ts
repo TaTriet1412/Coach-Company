@@ -35,7 +35,7 @@ export class BusComponent implements OnInit,AfterViewInit{
   updateUrl = '/admin/bus/update-bus';
   deleteUrl = 'buses';
   pageType = 'bus';
-  headerList = ['Mã xe','Tuyến xe','Số xe','Trạng thái','Ngày tạo'];
+  headerList = ['Mã xe','Tuyến xe','Số xe','Trạng thái','Ngày cập nhật'];
   busList!: Bus[];
   username = "triet"
   password = "123"

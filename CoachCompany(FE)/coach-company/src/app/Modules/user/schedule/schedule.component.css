@@ -60,3 +60,7 @@ a{
 .w-30 {
     width: 30%;
 }
+
+.p-title {
+    padding: 22px 50px;
+}

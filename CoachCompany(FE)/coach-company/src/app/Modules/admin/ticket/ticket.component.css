@@ -1,5 +1,9 @@
 @import url("../../../../../public/assets/css/bootstrap.min.css");
 
+.text-gray-800 {
+    color: #5a5c69 !important;
+}
+
 .w-7rem{
     width: 7rem;
 }

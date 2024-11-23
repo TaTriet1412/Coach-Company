@@ -22,7 +22,7 @@ public class News {
     @Column
     private String title;
 
-    @Column
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
 
     @Column(columnDefinition = "LONGTEXT")

@@ -1,3 +1,9 @@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h5 class="h3 mb-0 text-gray-800">Quản lí tuyến xe</h5>
+</div>
+
+
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     
@@ -36,8 +42,8 @@
                             <td>{{route.end_point}}</td>
                             <td>{{ (route.duration / (60*60)) | number:'1.1-1' }}h</td>
                             <td>{{route.distance}}km</td>
-                            <td *ngIf="route.img!=undefined" ><img [src]="'data:image/png;base64,'+route.img" style="width:100px" alt="Image"/></td>
-                            <td *ngIf="route.img==undefined" ><img src="assets/img/bus/bus_demo.jpg" style="width:100px" alt="Image"/></td>
+                            <td *ngIf="route.img" ><img [src]="'data:image/png;base64,'+route.img" style="width:100px" alt="Image"/></td>
+                            <td *ngIf="!route.img" ><img src="assets/img/bus/bus_demo.jpg" style="width:100px" alt="Image"/></td>
                             <td [ngClass]="{'active': route.enable, 'inactive': !route.enable}">
                                 {{ route.enable ? 'Đang hoạt động' : 'Không hoạt động' }}
                             </td>

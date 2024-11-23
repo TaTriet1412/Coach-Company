@@ -20,7 +20,7 @@ export class NewsComponent {
   updateUrl = '/admin/news/update-news';
   deleteUrl = '/admin/news/delete-news';
   pageType = 'news';
-  headerList = ["Mã tin tức", "Tiêu đề", "Mô tả","Hình", "Hiển thị", "Ngày cập nhật"];
+  headerList = ["Mã tin tức", "Tiêu đề", "Mô tả","Hình ảnh", "Trạng thái", "Ngày cập nhật"];
   newsList!: News[];
   constructor(
     private newService: NewsService,

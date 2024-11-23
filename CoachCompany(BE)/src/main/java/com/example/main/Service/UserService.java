@@ -186,8 +186,7 @@ public class UserService {
                 role,
                 gender
         );
-        user.setPassword("123");
-        encoder.encode(user.getPassword());
+        user.setPassword(encoder.encode("123"));
         if (img != null) {
             if(fileChecker.isImage(img)){
                 user.setImg(img.getBytes());

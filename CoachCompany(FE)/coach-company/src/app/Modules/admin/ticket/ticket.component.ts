@@ -29,7 +29,7 @@ export class TicketComponent implements OnInit,AfterViewInit {
   deleteUrl = '/admin/ticket/delete-ticket';
   pageType = 'ticket';
   headerList = ['Mã vé','Mã chuyến','Tên khách','Số điện thoại',
-    'Email','Giá vé','Trạng thái','Ngày tạo'];
+    'Email','Giá vé','Trạng thái','Ngày cập nhật'];
   ticketList!: Ticket[];
   routeList!: Route[];
   tripList!: Trip[];

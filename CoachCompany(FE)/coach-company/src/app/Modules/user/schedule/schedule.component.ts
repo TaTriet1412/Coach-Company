@@ -88,11 +88,15 @@ export class ScheduleComponent  implements OnInit, AfterViewInit{
       
       const tripListCurr = await firstValueFrom(this.tripService.getTrips());
       this.tripService.setTripList(tripListCurr);
+      
+      // filter trip list
       this.tripList = this.tripService.getTripList().filter(trip => 
         (trip.enable) 
         && this.busService.getBusById(trip.busId)?.routeId == this.routeCurr?.id
         && dayString == trip.time_start.substring(0,10)
+        && new Date() < new Date(trip.time_start)
       );
+
 
       for (const trip of this.tripList) {
          this.occupiedSeats[trip.id] = await this.numberOfSeatsOccupiedOfTripId(trip.id);

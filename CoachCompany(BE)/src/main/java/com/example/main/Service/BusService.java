@@ -41,7 +41,7 @@ public class BusService {
             throw new BusException("Tuyến đã ngừng hoạt động");
         }
 
-        if(!hasBusNumber(request.getNumber_bus(), currRoute)){
+        if(!hasBusNumber(request.getNumber_bus())){
             bus.setNumber_bus(request.getNumber_bus());
             bus.setRoute(currRoute);
         }
@@ -73,22 +73,22 @@ public class BusService {
         return busRepository.save(bus);
     }
 
-    public boolean hasBusNumber(String number_bus, Route route) {
+    public boolean hasBusNumber(String number_bus) {
         List<Bus> busList = getBuses();
         for(Bus bus:busList){
-            if(bus.getRoute()==route && bus.getNumber_bus().equals(number_bus)){
-                throw new BusException("Tên xe đã tồn tại trong tuyến!");
+            if(bus.getNumber_bus().equals(number_bus)){
+                throw new BusException("Tên xe đã tồn tại !");
             }
         }
         return false;
     }
 
-    public String updateBusNumber(String number_bus, Route route,Bus busCurr){
+    public String updateBusNumber(String number_bus,Bus busCurr){
         List<Bus> busList = getBuses();
         busList.remove(busCurr);
         for(Bus bus:busList){
-            if(bus.getRoute()==route && bus.getNumber_bus().equals(number_bus)){
-                throw new BusException("Tên xe đã tồn tại trong tuyến!");
+            if(bus.getNumber_bus().equals(number_bus)){
+                throw new BusException("Tên xe đã tồn tại !");
             }
         }
         return number_bus;
@@ -108,7 +108,7 @@ public class BusService {
                 trip.setEnable(false);
             }
         }
-        bus.setNumber_bus(updateBusNumber(request.getNumber_bus(),bus.getRoute(),bus));
+        bus.setNumber_bus(updateBusNumber(request.getNumber_bus(),bus));
         bus.setEnable(request.isEnable());
         bus.setDate_begin(LocalDateTime.now());
         return busRepository.save(bus);

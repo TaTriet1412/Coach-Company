@@ -38,8 +38,7 @@ const routes: Routes = [
         { path: "choose-chair/:id", component: ChooseChairComponent},
     ]
     },
-
-    
+    { path: "**", redirectTo: "", pathMatch: "full"}
   ];
 
   

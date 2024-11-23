@@ -1,5 +1,6 @@
-<h2 *ngIf="newsCurr && newsCurr.title">{{newsCurr.title}}</h2>
-<p *ngIf="newsCurr && newsCurr.description">{{newsCurr.description}}</p>
-<div *ngIf="safeContent" class="ck-content content-container" [innerHTML]="safeContent"></div>
+<h2 class="p-24" *ngIf="newsCurr && newsCurr.title">{{newsCurr.title}}</h2>
+<p class="p-24" *ngIf="newsCurr && newsCurr.date_begin">Ngày công khai: {{newsCurr.date_begin | date: "d/'M/yy, h:mm a"}}</p>
+<p class="p-24" *ngIf="newsCurr && newsCurr.description">{{newsCurr.description}}</p>
+<div *ngIf="safeContent" class="p-24 ck-content content-container" [innerHTML]="safeContent"></div>
 
 

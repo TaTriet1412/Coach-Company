@@ -30,7 +30,7 @@ export class BlogComponent implements OnInit,AfterViewInit {
   async loadNewsList(): Promise<void>{
     const newsListAPI = await firstValueFrom( this.newsService.getNewses())
     this.newsService.setnewsList(newsListAPI)
-    this.newsList = this.newsService.getNewsList();
+    this.newsList = this.newsService.getNewsList().filter(news => news.enable);
   }
 
   async ngAfterViewInit(): Promise<void> {

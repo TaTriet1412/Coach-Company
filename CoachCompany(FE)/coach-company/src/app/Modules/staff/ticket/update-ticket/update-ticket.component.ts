@@ -151,7 +151,6 @@ export class UpdateTicketComponent implements OnInit {
     
     }
     else { // Thông bảo lỗi hoac thành công
-      console.log(this.ticketCurr.id,Number(trip_id),name_customer,phone_customer,email_customer,seat_list!,payment_status);
       this.ticketService.updateTicket(this.ticketCurr.id,Number(trip_id),name_customer,phone_customer,email_customer,seat_list!,payment_status)
         .subscribe({
           next: (response: Ticket) => {

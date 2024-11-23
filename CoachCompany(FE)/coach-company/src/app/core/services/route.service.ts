@@ -34,7 +34,11 @@ export class RouteService {
   }
 
   private saveRouteStatus() {
-    localStorage.setItem('routes', JSON.stringify(this.routes));
+    const routeListCurr  = this.routes.map(route => ({
+      ...route,
+      img: ''
+    }));
+    localStorage.setItem('routes', JSON.stringify(routeListCurr));
   }
 
   // Set dữ liệu routes sao khi truy xuất

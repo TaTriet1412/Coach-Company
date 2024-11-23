@@ -88,6 +88,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NewsService } from '../../../../core/services/news.service';
 import { UserService } from '../../../../core/services/user.service';
 import { News } from '../../../dto/news';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-update-news',
@@ -122,15 +123,17 @@ export class UpdateNewsComponent implements AfterViewInit,OnInit{
     private activeRoute: ActivatedRoute,
 	) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.activeRoute.params.subscribe(params => {
       this.newsId = +params['id'];
-      this.loadNews();
+		this.loadNews();
     })
   }
 
-  loadNews(): void { 
-    const news = this.newsService.getNewsById(this.newsId); 
+
+
+  async loadNews(): Promise<void> { 
+    const news = await firstValueFrom (this.newsService.getNewsByIdAPI(this.newsId)); 
     this.newsForm.patchValue(news!); 
 	this.data = news!.content;
 	this.retrievedata = this.data;
@@ -148,7 +151,8 @@ export class UpdateNewsComponent implements AfterViewInit,OnInit{
 	public isLayoutReady = false;
 	public Editor = ClassicEditor;
 	public config: EditorConfig = {}; // CKEditor needs the DOM tree before calculating the configuration.
-	public ngAfterViewInit(): void {
+	async ngAfterViewInit(): Promise<void> {
+		await (this.ngOnInit());
 		this.config = {
 			toolbar: {
 				items: [

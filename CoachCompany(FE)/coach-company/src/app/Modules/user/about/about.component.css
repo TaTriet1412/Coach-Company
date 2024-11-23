@@ -9,3 +9,8 @@
     object-fit: cover !important;
     width: 100% !important;
 }
+
+
+.p-title {
+    padding: 22px 50px;
+}

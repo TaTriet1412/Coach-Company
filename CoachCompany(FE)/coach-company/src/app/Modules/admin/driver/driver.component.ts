@@ -36,7 +36,7 @@ export class DriverComponent implements OnInit {
   updateUrl = '/admin/driver/update-driver';
   deleteUrl = 'users';
   pageType = 'driver';
-  headerList = ['Mã nhân viên','Họ tên','Email','Số điện thoại','Ngày sinh','Vai trò','Giới tính','Hình ảnh','Trạng thái','Ngày tạo'];
+  headerList = ['Mã nhân viên','Họ tên','Email','Số điện thoại','Ngày sinh','Vai trò','Giới tính','Hình ảnh','Trạng thái','Ngày cập nhật'];
   driverList!: User[];
   constructor(
     private router: Router,

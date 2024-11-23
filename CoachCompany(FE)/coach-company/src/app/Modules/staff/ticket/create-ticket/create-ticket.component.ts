@@ -74,8 +74,7 @@ export class CreateTicketComponent implements OnInit{
 
     // Load busList after choosing trip
     this.ticketForm.get('trip_id')?.valueChanges
-    .subscribe(trip_id => 
-      this.refreshSeatLists(Number(trip_id!))  );
+    .subscribe(trip_id => this.refreshSeatLists(Number(trip_id!)));
   }
 
   refreshSeatLists(trip_id: number) {

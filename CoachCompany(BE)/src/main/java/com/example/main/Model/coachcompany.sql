@@ -90,13 +90,15 @@ CREATE TABLE ticket(
 CREATE TABLE ticket_seat(
     ticket_id BIGINT NOT NULL,
     seat_id BIGINT NOT NULL,
-    PRIMARY KEY (ticket_id,seat_id)
+    PRIMARY KEY (ticket_id,seat_id),
+    CONSTRAINT fk_ticket_id_ticket_seat FOREIGN KEY (ticket_id) REFERENCES ticket(id),
+    CONSTRAINT fk_seat_id_ticket_seat FOREIGN KEY (seat_id) REFERENCES seat(id)
 );
 
 CREATE TABLE news(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     title TEXT(220) NOT NULL,
-    description TEXT(220) NOT NULL,
+    description LONGTEXT NOT NULL,
     content LONGTEXT NOT NULL,
     enable BIT NOT NULL DEFAULT 1,
     date_begin DATETIME NOT NULL DEFAULT NOW(),

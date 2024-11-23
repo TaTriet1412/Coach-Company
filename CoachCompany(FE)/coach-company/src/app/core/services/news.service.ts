@@ -29,7 +29,12 @@ export class NewsService {
   }
   
   private saveNewsListStatus() {
-    localStorage.setItem('newsList', JSON.stringify(this.newsList));
+    const newsListCurr = this.newsList.map(news => ({
+      ...news,
+      content: ''
+    }));
+
+    localStorage.setItem('newsList', JSON.stringify(newsListCurr));
   }
 
   loadNewsList(){

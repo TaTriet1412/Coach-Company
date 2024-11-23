@@ -15,12 +15,13 @@
                 <div class="col-lg-8">
                     <!-- Trending Top -->
                     <div *ngIf="newsList" class="trending-top mb-30">
-                        <div class="trend-top-img rounded shadow">
+                        <div class="trend-top-img rounded shadow c-pointer" (click)="goToDetailPage(newsList[0].id)">
                             <img *ngIf="!newsList[0].img" src="https://i.ytimg.com/vi/CQCP6xNA1Hc/maxresdefault.jpg" alt="Anh tin tuc 1">
                             <img *ngIf="newsList[0].img" [src]="'data:image/png;base64,' + newsList[0].img" alt="Anh tin tuc 1">
                             <div class="trend-top-cap">
                                 <span>Tin tức quan trọng</span>
-                                <h2><a (click)="goToDetailPage(newsList[0].id)">{{ newsList[0].title }}</a></h2>
+                                <h2><a >{{ newsList[0].title }}</a></h2>
+                                <span>{{ newsList[0].date_begin | date: "d/'M/yyyy, h:mm a" }}</span>
                             </div>
                         </div>
                     </div>
@@ -29,14 +30,15 @@
                     <div class="trending-bottom">
                         <div class="row" *ngIf="newsList!=undefined">
                             <div *ngFor="let news of newsList.slice(1, newsList.length < 4 ? newsList.length : 4); let i = index" class="col-lg-4">
-                                <div class="single-bottom mb-35">
+                                <div (click)="goToDetailPage(news.id)" class="c-pointer single-bottom mb-35">
                                     <div class="trend-bottom-img mb-30">
                                         <img *ngIf="!news.img" src="https://i.ytimg.com/vi/CQCP6xNA1Hc/maxresdefault.jpg" [alt]="'Anh tin tuc ' + (i + 2)">
                                         <img *ngIf="news.img" [src]="'data:image/png;base64,' + news.img" [alt]="'Anh tin tuc ' + (i + 2)">
                                     </div>
                                     <div class="trend-bottom-cap">
                                         <span class="color1">Tin tức mới</span>
-                                        <h4><a (click)="goToDetailPage(news.id)">{{ news.title }}</a></h4>
+                                        <span>{{ news.date_begin | date: "d/'M/yyyy, h:mm a" }}</span>
+                                        <h4><a >{{ news.title }}</a></h4>
                                     </div>
                                 </div>
                             </div>
@@ -46,15 +48,15 @@
             
                 <!-- Right content -->
                 <div class="col-lg-4" *ngIf="newsList && newsList.length > 4">
-                    <div *ngFor="let news of newsList.slice(4, newsList.length > 6 ? 6 : newsList.length); let i = index" class="trand-right-single d-flex">
+                    <div *ngFor="let news of newsList.slice(4, newsList.length > 6 ? 6 : newsList.length); let i = index" (click)="goToDetailPage(news.id)" class="c-pointer trand-right-single d-flex">
                         <div class="trand-right-img">
-                            <img *ngIf="!news.img" [src]="'assets/img/trending/right' + (i + 2) + '.jpg'" [alt]="'Anh tin tuc ' + (i + 4)">
-                            <img *ngIf="news.img" [src]="'data:image/png;base64,' + news.img" [alt]="'Anh tin tuc ' + (i + 4)">
+                            <img class="w-100" *ngIf="!news.img" [src]="'assets/img/trending/right' + (i + 2) + '.jpg'" [alt]="'Anh tin tuc ' + (i + 4)">
+                            <img class="w-100" *ngIf="news.img" [src]="'data:image/png;base64,' + news.img" [alt]="'Anh tin tuc ' + (i + 4)">
                         </div>
                         <div class="trand-right-cap">
                             <span class="color1">Tin tức mới</span>
                             <span>{{ news.date_begin | date: "d/'M/yyyy, h:mm a" }}</span>
-                            <h4><a (click)="goToDetailPage(news.id)">{{ news.description }}</a></h4>
+                            <h4><a >{{ news.description }}</a></h4>
                         </div>
                     </div>
                 </div>
@@ -81,14 +83,15 @@
                     <div class="weekly-news-active dot-style d-flex dot-style">
                         <div class="container">
                             <div class="row">
-                                <div *ngFor="let news of newsOfWeeks" class="weekly-single my-2 mx-0 col-12 col-md-6 col-lg-6 col-xl-4">
+                                <div *ngFor="let news of newsOfWeeks" (click)="goToDetailPage(news.id)" class="c-pointer weekly-single my-2 mx-0 col-12 col-md-6 col-lg-6 col-xl-4">
                                     <div class="weekly-img">
                                         <img *ngIf="news.img == null" src="https://sapanomad.com/wp-content/uploads/kadham-bus-hanoi-sapa-2.jpg" alt="anh tin tuc">
                                         <img *ngIf="news.img != null" [src]="'data:image/png;base64,'+news.img" alt="anh tin tuc">
                                     </div>
                                     <div class="weekly-caption">
                                         <span class="color1">Tin tức mới</span>
-                                        <h4><a (click)="goToDetailPage(news.id)">{{news.description}}</a></h4>
+                                        <span>{{ news.date_begin | date: "d/'M/yyyy, h:mm a" }}</span>
+                                        <h4><a >{{news.description}}</a></h4>
                                     </div>
                                 </div> 
                             </div>

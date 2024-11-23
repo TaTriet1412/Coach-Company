@@ -11,6 +11,7 @@ import { Company } from '../../dto/company';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 Chart.register(...registerables);
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 type TypeTime = 'year' | 'quarter' | 'month';
 
@@ -32,7 +33,7 @@ export class ChartComponent implements OnInit,OnChanges,OnDestroy {
     data: {
       labels: [],
       datasets: [{
-        label: 'Dataset',
+        label: 'Dữ liệu',
         data: [],
         backgroundColor: [
           'rgb(255, 99, 132)',
@@ -42,7 +43,47 @@ export class ChartComponent implements OnInit,OnChanges,OnDestroy {
         ],
         hoverOffset: 4
       }]
-    }
+    }, 
+    options: { 
+      plugins: { 
+        title: { 
+          display: true, 
+          text: 'Biểu đồ thống kê 4 năm gần nhất', 
+          font: { size: 18 } 
+        },
+        datalabels: { 
+          anchor: 'end', align: 'end', color: 'black', 
+          font: { weight: 'bold', size: 12 }, 
+          formatter: function(value:any, context:any) { 
+            return value.toLocaleString(); // Hiển thị số liệu có định dạng 
+          } 
+        }
+      } ,
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Năm',
+            font: {
+              size: 16,
+              weight: 'bold'
+            }
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'VNĐ',
+            font: {
+              size: 16,
+              weight: 'bold'
+            }
+          },
+          beginAtZero: true
+        }
+      }
+    },
+    plugins: [ChartDataLabels]
   };
   chart: any;
 
@@ -125,9 +166,21 @@ export class ChartComponent implements OnInit,OnChanges,OnDestroy {
     if (typeTime === 'quarter') {
       this.config.data.labels = this.getQuarterLabels();
       this.config.data.datasets[0].data = this.getQuarterData(yearDetail);
+      this.config.options.scales.x.title.text = "Quý";
+      if(yearDetail){
+        this.config.options.plugins.title.text = `Biểu đồ thống kê theo quý của năm ${yearDetail}`;
+      }else{
+        this.config.options.plugins.title.text = `Biểu đồ thống kê theo quý của năm ----`;
+      }
     } else {
       this.config.data.labels = this.getMonthLabels();
       this.config.data.datasets[0].data = this.getMonthData(yearDetail);
+      this.config.options.scales.x.title.text = "Tháng";
+      if(yearDetail){
+        this.config.options.plugins.title.text = `Biểu đồ thống kê theo tháng của năm ${yearDetail}`;
+      }else {
+        this.config.options.plugins.title.text = `Biểu đồ thống kê theo quý của năm ----`;
+      }
     }
     await this.initializeChart();
   }
@@ -135,6 +188,8 @@ export class ChartComponent implements OnInit,OnChanges,OnDestroy {
   async updateDataOfYears(): Promise<void>{
     this.config.data.labels = this.getYearsLabels();
     this.config.data.datasets[0].data = this.getYearsData();
+    this.config.options.scales.x.title.text = "Năm";
+    this.config.options.plugins.title.text = `Biểu đồ thống kê 4 năm gần nhất`;
     await this.initializeChart();
   }
 
@@ -249,7 +304,7 @@ export class ChartComponent implements OnInit,OnChanges,OnDestroy {
       // Calculate the width and height ratio to fit the PDF
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
-      const widthRatio = pdfWidth / imgWidth;
+      const widthRatio = pdfWidth / (imgWidth+20);
       const heightRatio = pdfHeight / imgHeight;
       const ratio = Math.min(widthRatio, heightRatio);
 
@@ -269,3 +324,4 @@ export class ChartComponent implements OnInit,OnChanges,OnDestroy {
 
   ngOnDestroy(): void { if (this.chart) { this.chart.destroy(); } }
 }
+

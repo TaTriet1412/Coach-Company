@@ -34,7 +34,7 @@ export class CoDriverComponent implements OnInit{
   updateUrl = '/admin/co-driver/update-co-driver';
   deleteUrl = 'users';
   pageType = 'co-driver';
-  headerList = ['Mã nhân viên','Họ tên','Email','Số điện thoại','Ngày sinh','Vai trò','Giới tính','Hình ảnh','Trạng thái','Ngày tạo'];
+  headerList = ['Mã nhân viên','Họ tên','Email','Số điện thoại','Ngày sinh','Vai trò','Giới tính','Hình ảnh','Trạng thái','Ngày cập nhật'];
   coDriverList!: User[];
   constructor(
     private router: Router,

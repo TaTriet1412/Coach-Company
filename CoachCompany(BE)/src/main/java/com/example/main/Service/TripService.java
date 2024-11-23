@@ -207,6 +207,7 @@ public class TripService {
         trip.setCodriver(FreeCoDriver(request.getCodriver_id(),time_start,time_end,id));
         trip.setBus(FreeBus(request.getBus_id(),time_start,time_end,id));
         trip.setEnable(request.isEnable());
+        trip.setDate_begin(LocalDateTime.now());
         return tripRepository.save(trip);
     }
 

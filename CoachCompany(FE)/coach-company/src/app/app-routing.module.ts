@@ -8,8 +8,8 @@ const routes: Routes = [
   { path: 'user', loadChildren: () => import('./Modules/user/user-routing.module').then(m => m.UserRoutingModule) },
   { path: 'admin', loadChildren: () => import('./Modules/admin/admin-routing.module').then(m => m.AdminRoutingModule), canActivate: [AuthAdminGuard] },
   { path: 'staff', loadChildren: () => import('./Modules/staff/staff-routing.module').then(m => m.StaffRoutingModule), canActivate: [AuthStaffGuard] },
-  { path: '', redirectTo: 'user/home', pathMatch: 'full' },
-  { path: '**', redirectTo: 'user/home' }
+  { path: '', redirectTo: 'user', pathMatch: 'full' },
+  { path: '**', redirectTo: 'user' }
 ];
 
 

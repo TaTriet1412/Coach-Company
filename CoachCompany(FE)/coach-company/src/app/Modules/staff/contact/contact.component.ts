@@ -38,7 +38,7 @@ export class ContactComponent implements OnInit{
   pageType = 'contact';
   headerList = ['Mã liên hệ','Tên khách hàng','Email',
     'Số điện thoại','Địa chỉ','Nghề nghiệp','Người phản hồi',
-    'Thời gian phản hồi','Ngày tạo'];
+    'Thời gian phản hồi','Ngày cập nhật'];
   contactList!: Contact[];
   employeeList!: User[];
   constructor(

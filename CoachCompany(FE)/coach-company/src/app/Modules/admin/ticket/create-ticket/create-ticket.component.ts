@@ -90,11 +90,10 @@ export class CreateTicketComponent implements OnInit{
             {
               next: (seatListIsOccupied: Seat[]) => {
                 this.seatListIsOccupied = seatListIsOccupied;
-  
                 // Filter seatList to get empty seats
-                this.seatList = seatList.filter(seat =>
-                  !seatListIsOccupied.some(occupiedSeat => occupiedSeat.id === seat.id)
-                );
+                  this.seatList = seatList.filter(seat =>
+                    !seatListIsOccupied.some(occupiedSeat => occupiedSeat.id === seat.id)
+                  );
   
                 // Trigger change detection
                 this.cdr.detectChanges();

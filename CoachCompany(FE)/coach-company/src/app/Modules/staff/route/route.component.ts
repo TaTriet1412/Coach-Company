@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ElementRef , ViewChild, ViewEncapsulation  } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef , ViewChild, ViewEncapsulation, AfterViewInit  } from '@angular/core';
 import { RouteService } from '../../../core/services/route.service';
 import { Route } from '../../dto/route';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,7 @@ import { MatPaginatorModule  } from '@angular/material/paginator';
 import { DataTablesModule} from "angular-datatables"
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../../dto/user';
-import { Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 import 'datatables.net' ;
 import { ShareModule } from '../../share/share.module';
 
@@ -32,12 +32,12 @@ import { ShareModule } from '../../share/share.module';
   ],
   encapsulation: ViewEncapsulation.None,
 })
-export class RouteComponent implements OnInit {
+export class RouteComponent implements OnInit, AfterViewInit {
   createUrl = '/admin/route/create-route';
   updateUrl = '/admin/route/update-route';
   deleteUrl = 'routes';
   pageType = 'route';
-  headerList = ['Mã tuyến','Điểm bắt đầu','Các điểm dừng','Điểm kết thúc','Thời lượng','Khoảng cách','Hình ảnh','Trạng thái','Giá','Ngày Tạo'];
+  headerList = ['Mã tuyến','Điểm bắt đầu','Các điểm dừng','Điểm kết thúc','Thời lượng','Khoảng cách','Hình ảnh','Trạng thái','Giá','Ngày cập nhật'];
   routeList!: Route[];
   constructor(
     private routeService:RouteService,
@@ -46,17 +46,23 @@ export class RouteComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ){}  
   
-  ngOnInit(): void {
-    this.routeService.getRoutes().subscribe(
-      {
-        next: (response:Route[]) => {
-          this.routeService.setRoutes(response)
-        },
-        error: (response: any) => console.log(response.error)
-      }
-    );
+  async ngOnInit(): Promise<void> {
+    const routeListCurr = await firstValueFrom(this.routeService.getRoutes())
+    this.routeService.setRoutes(routeListCurr)
     this.routeList = this.routeService.getRoutesCurrent();
+    await this.updateRoutesWithImages();
+    this.cdr.detectChanges();
   }
+
+
+  async updateRoutesWithImages(): Promise<void> { 
+    const updatedRoutes = await Promise.all(this.routeList.map(async route => { 
+      const currImg = await firstValueFrom(this.routeService.getRouteByIdAPI(route.id)); 
+      return { ...route, img: currImg.img // Assuming `img` is the property that needs to be updated 
+        };
+      })); 
+      this.routeList = updatedRoutes; 
+    }
 
   username = "triet"
   password = "123"
@@ -89,8 +95,10 @@ export class RouteComponent implements OnInit {
     }
   };
 
-  ngAfterViewInit(): void {
+  async ngAfterViewInit(): Promise<void> {
+    await (this.ngOnInit());
     this.initializeDataTable();
+    this.cdr.detectChanges();
   }
 
   initializeDataTable(): void {

@@ -263,3 +263,7 @@ button {
   background-color: #fff;
   color: #065eaa;
 }
+
+.p-heading{
+  padding: 12px 40px;
+}
