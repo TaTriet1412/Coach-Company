@@ -1,10 +1,5 @@
 package com.example.main.Service;
 
-import com.example.main.DTO.CreateRouteRequest;
-import com.example.main.DTO.CreateUserRequest;
-import com.example.main.DTO.UpdateRouteRequest;
-import com.example.main.DTO.UpdateUserRequest;
-import com.example.main.Entity.Route;
 import com.example.main.Entity.User;
 import com.example.main.Exception.FileException;
 import com.example.main.Exception.UserException;
@@ -38,7 +33,6 @@ public class UserService {
 
 //    File checker
     private final FileChecker fileChecker = new FileChecker();
-
 
 //    Đếm ngược thời gian
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
