@@ -15,7 +15,6 @@ const routes: Routes = [
     path: "",
     component: DefaultStaffUiComponent,
     children: [
-      { path: "", component: HomeStaffComponent},
       { path: "home", component: HomeStaffComponent},
       { path: "ticket", children: [
         {path: "", component: TicketComponent},
@@ -29,6 +28,8 @@ const routes: Routes = [
         {path: "", component: ContactComponent},
         {path: "process-contact/:id", component: ProcessContactComponent},
       ]},
+      { path: "", component: HomeStaffComponent},
+
     ]
   }
 ];

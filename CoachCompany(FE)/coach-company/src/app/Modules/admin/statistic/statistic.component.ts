@@ -61,20 +61,19 @@ export class StatisticComponent implements OnInit{
   }
 
   async fetchActualData(): Promise<void>{
-    await setTimeout(async() =>{
+    setTimeout(async () => {
       // Get tickets
       const ticketsResponse = await firstValueFrom(this.ticketService.getTickets());
       this.ticketService.setTicketList(ticketsResponse);
       this.ticketList = this.ticketService.getTicketList();
 
       // Fetch prices for each ticket
-      const priceObservables = this.ticketList.map(ticket =>
-        this.ticketService.getPrice(ticket.id).pipe(
-          map(price => {
-            ticket.price = price;
-            return ticket;
-          })
-        )
+      const priceObservables = this.ticketList.map(ticket => this.ticketService.getPrice(ticket.id).pipe(
+        map(price => {
+          ticket.price = price;
+          return ticket;
+        })
+      )
       );
 
       // Wait for all prices to be fetched
@@ -95,25 +94,25 @@ export class StatisticComponent implements OnInit{
           next: (response: Contact[]) => {
             this.contactService.setContactList(response);
             this.contactList = response;
-            const inProcessContact = this.contactList.filter(contact => contact.process_time==null);
+            const inProcessContact = this.contactList.filter(contact => contact.process_time == null);
             this.inProcessContactLength = inProcessContact.length;
             this.cdr.detectChanges();
           }
-        })
+        });
 
       // Update yearList
       const now = new Date();
-      let countYear = 0; 
-      while(true){
-        this.yearList.push(now.getFullYear()-countYear);
+      let countYear = 0;
+      while (true) {
+        this.yearList.push(now.getFullYear() - countYear);
         countYear++;
-        if(countYear==4) break;
+        if (countYear == 4) break;
       }
       this.yearList.reverse();
       this.isLoading = false;
       // Trigger change detection to update the UI
       this.cdr.detectChanges();
-    },2000)
+    }, 2000)
   }
 
   handleChangeTypeTime(event: any) {
@@ -136,6 +135,4 @@ export class StatisticComponent implements OnInit{
   exportChart(){
     if (this.chartComponent) { this.chartComponent.exportChart(); }
   }
-
-  
 }

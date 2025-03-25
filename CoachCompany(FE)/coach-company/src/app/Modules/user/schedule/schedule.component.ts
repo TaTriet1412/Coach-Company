@@ -65,8 +65,8 @@ export class ScheduleComponent  implements OnInit, AfterViewInit{
   }
 
   async ngAfterViewInit(): Promise<void> {
-      await (this.ngOnInit());
-      this.cdr.detectChanges();
+    await (this.ngOnInit());
+    this.cdr.detectChanges();
   }
 
   async onScheduleSearch(): Promise<void> {
@@ -79,7 +79,17 @@ export class ScheduleComponent  implements OnInit, AfterViewInit{
     this.startPoint = localStorage.getItem('start_point')!;
     this.endPoint = localStorage.getItem('end_point')!;
     const date = new Date(JSON.parse(localStorage.getItem('date_choose')!)!)
-    const dayString = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+    let currMonth: number | string = (date.getMonth()+1);
+    let currDate: number | string = date.getDate();
+    if(currMonth < 10){
+      currMonth = '0' + currMonth.toString();
+    }
+    if(currDate < 10) {
+      currDate = '0' + currDate.toString();
+    }
+
+    const dayString = date.getFullYear() + "-" + currMonth + "-" + currDate;
+
     
     if(this.routeCurr!= undefined) {
       const busListCurr = await firstValueFrom(this.busService.getBuses())
@@ -97,6 +107,12 @@ export class ScheduleComponent  implements OnInit, AfterViewInit{
         && new Date() < new Date(trip.time_start)
       );
 
+      // this.tripService.getTripList().forEach(trip => {
+      //   console.log(trip.time_start)
+      //   console.log(this.busService.getBusById(trip.busId)?.routeId == this.routeCurr?.id)
+      //   console.log( dayString == trip.time_start.substring(0,10))
+      //   console.log( new Date() < new Date(trip.time_start))
+      // })
 
       for (const trip of this.tripList) {
          this.occupiedSeats[trip.id] = await this.numberOfSeatsOccupiedOfTripId(trip.id);

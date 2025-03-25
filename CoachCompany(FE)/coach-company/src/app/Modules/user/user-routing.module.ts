@@ -18,7 +18,6 @@ import { DetailTicketComponent } from "./search-ticket/detail-ticket/detail-tick
 
 const routes: Routes = [
     { path: "", component: DefaultUserUiComponent,children: [
-      { path: "", redirectTo: "home", pathMatch: "full" },
       { path: "home", component: HomeUserComponent},
       { path: "schedule", component: ScheduleComponent},
       { path: "ticket", children: [
@@ -36,6 +35,8 @@ const routes: Routes = [
           { path: "verification-code",component: VerificationCodeComponent},
         { path: "reset-password",component: ResetPasswordComponent},]},
         { path: "choose-chair/:id", component: ChooseChairComponent},
+      { path: "", redirectTo: "home", pathMatch: "full" },
+
     ]
     },
     { path: "**", redirectTo: "", pathMatch: "full"}

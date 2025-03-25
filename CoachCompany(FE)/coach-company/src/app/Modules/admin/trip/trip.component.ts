@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, ElementRef , ViewChild, ViewEncap
 import { RouteService } from '../../../core/services/route.service';
 import { Route } from '../../dto/route';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {ChangeDetectionStrategy} from '@angular/core';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -41,8 +41,11 @@ export class TripComponent implements OnInit,AfterViewInit{
     public tripService:TripService,
     public router: Router,
     public http:HttpClient,
-    public cdr: ChangeDetectorRef
-  ){}  
+    public cdr: ChangeDetectorRef,
+    private route: ActivatedRoute
+  ){
+    console.log(route);
+  }  
   
   async ngOnInit(): Promise<void> {
     const tripList = await firstValueFrom(this.tripService.getTrips());

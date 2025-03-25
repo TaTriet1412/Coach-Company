@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AlertModule  } from '@coreui/angular';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../../core/services/user.service';
 
@@ -39,8 +38,8 @@ export class LoginComponent {
     const emailInputValue = this.userForm.get("email")?.value?.trim() || ""; 
     const passwordInputValue = this.userForm.get("password")?.value?.trim() || ""; 
     if (emailInputValue==="") {
-        this.warningMessage = "Vui lòng nhập email";
-        this.visibleWarning = true;
+      this.warningMessage = "Vui lòng nhập email";
+      this.visibleWarning = true;
     }else if(!emailPattern.test(emailInputValue)){
       this.warningMessage = "Email không hợp lệ";
       this.visibleWarning = true;      
@@ -56,7 +55,7 @@ export class LoginComponent {
       }
       this.userService.loginAccount(userFormValue)
         .subscribe({
-          next: (response:any) => {
+          next: async (response:any) => {
             // Ẩn error khi người dùng đăng nhập đúng
             this.visibleError = false
             this.userService.setUser(response);

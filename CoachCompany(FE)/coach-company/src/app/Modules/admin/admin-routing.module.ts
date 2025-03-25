@@ -36,7 +36,6 @@ const routes: Routes = [
   { path: "", 
     component: DefaultAdminUiComponent,
     children: [
-      { path: "", component: StatisticComponent},
       { path: "home", component: StatisticComponent},
       { path: "statistic", component: StatisticComponent},
       { 
@@ -113,6 +112,8 @@ const routes: Routes = [
             { path: "process-contact/:id", component: ProcessContactComponent},
           ]
       },
+      { path: "", component: StatisticComponent, pathMatch: "full"},
+      { path: "**", component: StatisticComponent},
     ]
   },
   ];

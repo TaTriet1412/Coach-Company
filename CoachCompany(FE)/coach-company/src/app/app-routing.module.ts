@@ -5,17 +5,27 @@ import { AuthStaffGuard } from './core/guards/auth_staff.guard';
 
 
 const routes: Routes = [
-  { path: 'user', loadChildren: () => import('./Modules/user/user-routing.module').then(m => m.UserRoutingModule) },
-  { path: 'admin', loadChildren: () => import('./Modules/admin/admin-routing.module').then(m => m.AdminRoutingModule), canActivate: [AuthAdminGuard] },
-  { path: 'staff', loadChildren: () => import('./Modules/staff/staff-routing.module').then(m => m.StaffRoutingModule), canActivate: [AuthStaffGuard] },
+  { 
+    path: 'user', 
+    loadChildren: () => import('./Modules/user/user.module').then(m => m.UserModule) 
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./Modules/admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AuthAdminGuard]
+  },
+  { path: 'staff', 
+    loadChildren: () => import('./Modules/staff/staff.module').then(m => m.StaffModule), 
+    canActivate: [AuthStaffGuard] 
+  },
   { path: '', redirectTo: 'user', pathMatch: 'full' },
-  { path: '**', redirectTo: 'user' }
+  { path: '**', redirectTo: 'user' },
 ];
 
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{useHash: true})],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

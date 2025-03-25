@@ -11,6 +11,7 @@ export class AuthStaffGuard implements CanActivate {
 
   canActivate(): boolean {
     if (this.authService.getAuthStatus() && this.authService.getStaffStatus()) {
+      sessionStorage.setItem('currentUrl', location.hash);
       return true;
     } else {
       this.router.navigate(['/']);

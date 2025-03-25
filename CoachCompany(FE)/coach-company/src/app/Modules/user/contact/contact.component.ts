@@ -17,8 +17,8 @@ import { ShareModule } from '../../share/share.module';
 })
 export class ContactComponent implements OnInit {
   @ViewChild("iframe") iframe!:ElementRef;
-  company!: Company;
   map!: string;
+  company!: Company;
 
   contactForm= new FormGroup({
     name: new FormControl(''),
