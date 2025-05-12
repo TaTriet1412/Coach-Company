@@ -21,44 +21,44 @@ This project is divided into two main parts: a Spring Boot backend and an Angula
 
 **Backend (Spring Boot) - Example Structure:**
 ```
-coach-company/<br>
-├── backend/<br>
-│   ├── src/<br>
-│   │   ├── main/<br>
-│   │   │   ├── java/<br>
-│   │   │   │   └── com/<br>
-│   │   │   │       └── example/<br>
-│   │   │   │           └── main/<br>
-│   │   │   │               ├── CoachCompanyApplication.java  # Main Spring Boot application class<br>
-│   │   │   │               ├── config/                       # Configuration classes<br>
-│   │   │   │               ├── controller/                   # REST controllers<br>
-│   │   │   │               ├── model/                        # Entity classes<br>
-│   │   │   │               ├── repository/                   # Repository interfaces<br>
-│   │   │   │               └── service/                      # Service classes<br>
-│   │   └── resources/                                     # Resources (e.g., application.properties)<br>
-│   │   └── test/                                              # Test source files<br>
-│   ├── target/                                                # Compiled bytecode and other build outputs<br>
-│   ├── pom.xml                                                # Maven configuration file<br>
-│   └── mvnw                                                   # Maven wrapper script<br>
+coach-company/
+├── backend/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   │   └── com/
+│   │   │   │       └── example/
+│   │   │   │           └── main/
+│   │   │   │               ├── CoachCompanyApplication.java  # Main Spring Boot application class
+│   │   │   │               ├── config/                       # Configuration classes
+│   │   │   │               ├── controller/                   # REST controllers
+│   │   │   │               ├── model/                        # Entity classes
+│   │   │   │               ├── repository/                   # Repository interfaces
+│   │   │   │               └── service/                      # Service classes
+│   │   └── resources/                                     # Resources (e.g., application.properties)
+│   │   └── test/                                              # Test source files
+│   ├── target/                                                # Compiled bytecode and other build outputs
+│   ├── pom.xml                                                # Maven configuration file
+│   └── mvnw                                                   # Maven wrapper script
 ```
 
 **Frontend (Angular) - Example Structure:**
 ```
-coach-company/<br>
-├── frontend/<br>
-│   ├── src/<br>
-│   │   ├── app/<br>
-│   │   │   ├── components/                                    # Angular components<br>
-│   │   │   ├── services/                                      # Angular services<br>
-│   │   │   ├── models/                                        # TypeScript models<br>
-│   │   │   ├── app-routing.module.ts                          # Routing module<br>
-│   │   │   ├── app.component.html                             # Main component template<br>
-│   │   │   ├── app.component.ts                               # Main component TypeScript file<br>
-│   │   │   └── app.module.ts                                  # Main module<br>
-│   │   ├── assets/                                            # Static assets (e.g., images, styles)<br>
-│   │   └── environments/                                      # Environment-specific configuration<br>
-│   ├── angular.json                                           # Angular CLI configuration file<br>
-│   └── package.json                                           # Node.js dependencies and scripts<br>
+coach-company/
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── components/                                    # Angular components
+│   │   │   ├── services/                                      # Angular services
+│   │   │   ├── models/                                        # TypeScript models
+│   │   │   ├── app-routing.module.ts                          # Routing module
+│   │   │   ├── app.component.html                             # Main component template
+│   │   │   ├── app.component.ts                               # Main component TypeScript file
+│   │   │   └── app.module.ts                                  # Main module
+│   │   ├── assets/                                            # Static assets (e.g., images, styles)
+│   │   └── environments/                                      # Environment-specific configuration
+│   ├── angular.json                                           # Angular CLI configuration file
+│   └── package.json                                           # Node.js dependencies and scripts
 ```
 
 ## Setup and Run
